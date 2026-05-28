@@ -2,16 +2,19 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { MessageCircle, Clock } from "lucide-react";
+import { sanitizePhone, isValidPhone, PHONE_ERROR_HE, PHONE_ERROR_EN } from "@/lib/phone";
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "972533721938";
 
 export default function ContactPage() {
   const t = useTranslations("contact");
+  const locale = useLocale();
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [phoneError, setPhoneError] = useState("");
 
   const handleWhatsApp = () => {
     const text = encodeURIComponent("שלום רינה, אשמח לקבל פרטים נוספים");
@@ -20,6 +23,11 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isValidPhone(form.phone)) {
+      setPhoneError(locale === "he" ? PHONE_ERROR_HE : PHONE_ERROR_EN);
+      return;
+    }
+    setPhoneError("");
     setLoading(true);
     await new Promise((r) => setTimeout(r, 900));
     setSent(true);
@@ -87,15 +95,24 @@ export default function ContactPage() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               {fields.map(({ key, type }) => (
-                <input
-                  key={key}
-                  type={type}
-                  placeholder={t(key as "name" | "phone" | "email")}
-                  value={form[key]}
-                  onChange={(e) => setForm((p) => ({ ...p, [key]: e.target.value }))}
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-[var(--charcoal)] placeholder:text-gray-400 focus:outline-none focus:border-[var(--gold)] transition-colors text-sm"
-                />
+                <div key={key}>
+                  <input
+                    type={type}
+                    placeholder={t(key as "name" | "phone" | "email")}
+                    value={form[key]}
+                    onChange={(e) =>
+                      key === "phone"
+                        ? setForm((p) => ({ ...p, phone: sanitizePhone(e.target.value) }))
+                        : setForm((p) => ({ ...p, [key]: e.target.value }))
+                    }
+                    inputMode={key === "phone" ? "numeric" : undefined}
+                    required
+                    className={`w-full px-4 py-3 rounded-xl border bg-white text-[var(--charcoal)] placeholder:text-gray-400 focus:outline-none focus:border-[var(--gold)] transition-colors text-sm ${key === "phone" && phoneError ? "border-red-400" : "border-gray-200"}`}
+                  />
+                  {key === "phone" && phoneError && (
+                    <p className="text-red-500 text-xs mt-1 px-1">{phoneError}</p>
+                  )}
+                </div>
               ))}
               <textarea
                 placeholder={t("message")}

@@ -4,6 +4,7 @@ import { useState, useTransition, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, X, Loader2, ChevronDown } from "lucide-react";
 import { createManualOrder, type ManualOrderItem } from "@/app/admin/actions/create-order";
+import { sanitizePhone, isValidPhone, PHONE_ERROR_HE } from "@/lib/phone";
 
 type Product = {
   id: string;
@@ -172,6 +173,10 @@ export default function CreateOrderForm({ products }: { products: Product[] }) {
       setError("שם, טלפון ואימייל הם שדות חובה");
       return;
     }
+    if (!isValidPhone(customer.phone)) {
+      setError(PHONE_ERROR_HE);
+      return;
+    }
     if (items.length === 0) {
       setError("נדרש לפחות פריט אחד");
       return;
@@ -214,7 +219,7 @@ export default function CreateOrderForm({ products }: { products: Product[] }) {
             <Input value={customer.name} onChange={(e) => setCustomer((c) => ({ ...c, name: e.target.value }))} placeholder="ישראלה ישראלי" />
           </Field>
           <Field label="טלפון *">
-            <Input value={customer.phone} onChange={(e) => setCustomer((c) => ({ ...c, phone: e.target.value }))} placeholder="050-1234567" />
+            <Input value={customer.phone} onChange={(e) => setCustomer((c) => ({ ...c, phone: sanitizePhone(e.target.value) }))} placeholder="0501234567" inputMode="numeric" />
           </Field>
           <Field label="אימייל *">
             <Input type="email" value={customer.email} onChange={(e) => setCustomer((c) => ({ ...c, email: e.target.value }))} placeholder="name@example.com" />

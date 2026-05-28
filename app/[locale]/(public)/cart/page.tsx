@@ -8,6 +8,7 @@ import { Trash2, Upload, CheckCircle } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { createClient } from "@/lib/supabase/client";
 import { submitOrder } from "@/app/actions/submit-order";
+import { sanitizePhone, isValidPhone, PHONE_ERROR_HE, PHONE_ERROR_EN } from "@/lib/phone";
 
 const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/gif", "application/pdf"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
@@ -62,6 +63,12 @@ export default function CartPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    if (!isValidPhone(form.phone)) {
+      setError(locale === "he" ? PHONE_ERROR_HE : PHONE_ERROR_EN);
+      setLoading(false);
+      return;
+    }
 
     // Upload logo client-side (binary) then pass URL to server action
     let logoUrl: string | undefined;
@@ -162,7 +169,7 @@ export default function CartPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid sm:grid-cols-2 gap-4">
             <input type="text" placeholder={t("name")} value={form.name} onChange={set("name")} required className={inputClass} />
-            <input type="tel" placeholder={t("phone")} value={form.phone} onChange={set("phone")} required className={inputClass} />
+            <input type="tel" placeholder={t("phone")} value={form.phone} onChange={(e) => setForm((p) => ({ ...p, phone: sanitizePhone(e.target.value) }))} required inputMode="numeric" className={inputClass} />
           </div>
           <input type="email" placeholder={t("email")} value={form.email} onChange={set("email")} required className={inputClass} />
 
