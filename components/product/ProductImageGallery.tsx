@@ -14,7 +14,7 @@ export default function ProductImageGallery({ images, name }: Props) {
 
   if (images.length === 0) {
     return (
-      <div className="aspect-[4/5] w-full rounded-2xl bg-[#EEE5D8] flex items-center justify-center">
+      <div className="aspect-square w-full max-h-[480px] rounded-2xl bg-[#EEE5D8] flex items-center justify-center">
         <span className="text-6xl text-[#C9A96E]/30">✦</span>
       </div>
     );
@@ -23,7 +23,7 @@ export default function ProductImageGallery({ images, name }: Props) {
   return (
     <div className="space-y-3">
       {/* Main image */}
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-[#EEE5D8]">
+      <div className="relative aspect-square w-full max-h-[480px] overflow-hidden rounded-2xl bg-[#EEE5D8]">
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
