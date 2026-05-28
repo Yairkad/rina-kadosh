@@ -20,7 +20,7 @@ export default function AboutSection({ locale }: Props) {
   const isHe = locale === "he";
 
   return (
-    <section className="bg-[var(--charcoal)] border-t border-white/5 py-20">
+    <section className="bg-[var(--cream)] py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title */}
         <motion.div
@@ -33,14 +33,14 @@ export default function AboutSection({ locale }: Props) {
           <span className="text-xs uppercase tracking-widest text-[var(--gold)] block mb-3">
             {isHe ? "הסיפור שלי" : "My Story"}
           </span>
-          <h2 className="text-3xl font-bold text-white">
+          <h2 className="text-3xl font-bold text-[var(--charcoal)]">
             {isHe ? "אודות רינה קדוש" : "About Rina Kadosh"}
           </h2>
         </motion.div>
 
         {/* Story */}
         <motion.p
-          className="text-gray-300 text-base sm:text-lg leading-relaxed text-center max-w-2xl mx-auto mb-16"
+          className="text-[var(--muted)] text-base sm:text-lg leading-relaxed text-center max-w-2xl mx-auto mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -62,7 +62,7 @@ export default function AboutSection({ locale }: Props) {
               <div className="text-3xl sm:text-4xl font-bold text-[var(--gold)] mb-1">
                 {value}
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-sm text-[var(--muted)]">
                 {isHe ? label_he : label_en}
               </div>
             </div>
