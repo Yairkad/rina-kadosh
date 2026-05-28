@@ -128,6 +128,70 @@
       "related_bugs": [],
       "occurrences": 3,
       "last_seen": "2026-05-28T17:58:53.505Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-05-28T18:01:50.625Z",
+      "error_message": "CSS fix: title, description",
+      "file": "app/[locale]/layout.tsx",
+      "root_cause": "title: \"רינה קדוש | Rina Kadosh\", → \"רינה קדוש | מוצרים מודפסים לאירועים\",; description: \"מוצרים מודפסים למיתוג ושדרוג אווירה באירועים\", → \"מוצרים מודפסים מעוצבים לחתונות, בר מצוות, שבתות ואירועי חברה.\",",
+      "fix": "Changed title: \"רינה קדוש | Rina Kadosh\", → \"רינה קדוש | מוצרים מודפסים לאירועים\",; description: \"מוצרים מודפסים למיתוג ושדרוג אווירה באירועים\", → \"מוצרים מודפסים מעוצבים לחתונות, בר מצוות, שבתות ואירועי חברה.\",",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T18:01:50.625Z"
+    },
+    {
+      "id": "bug-010",
+      "timestamp": "2026-05-28T18:09:08.781Z",
+      "error_message": "CSS fix: url",
+      "file": "app/[locale]/layout.tsx",
+      "root_cause": "url: \"https://rina-kadosh.vercel.app/og-image.jpg\", → \"https://rina-kadosh.vercel.app/api/og\",",
+      "fix": "Changed url: \"https://rina-kadosh.vercel.app/og-image.jpg\", → \"https://rina-kadosh.vercel.app/api/og\",",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T18:09:08.781Z"
+    },
+    {
+      "id": "bug-011",
+      "timestamp": "2026-05-28T18:09:33.050Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/layout.tsx",
+      "root_cause": "Had \"https://rina-kadosh.vercel.app/og-image.jpg\"",
+      "fix": "Changed to \"https://rina-kadosh.vercel.app/api/og\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T18:09:33.050Z"
+    },
+    {
+      "id": "bug-012",
+      "timestamp": "2026-05-28T18:09:49.395Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T18:09:49.395Z"
     }
   ]
 }

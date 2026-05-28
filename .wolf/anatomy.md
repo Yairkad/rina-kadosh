@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-28T17:58:53.476Z
-> Files: 46 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-28T18:18:24.455Z
+> Files: 69 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -13,7 +13,7 @@
 
 - `.gitignore` — Git ignore rules (~115 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
-- `middleware.ts` — Exports config (~62 tok)
+- `middleware.ts` — Exports config (~144 tok)
 - `next.config.mjs` — Declares withNextIntl (~122 tok)
 - `OVERVIEW.html` — רינה קדוש — סיכום האתר (~7732 tok)
 - `SPEC.md` — רינה קדוש / Rina Kadosh — מפרט פרויקט מלא (~3397 tok)
@@ -35,7 +35,7 @@
 
 ## app/[locale]/
 
-- `layout.tsx` — metadata (~360 tok)
+- `layout.tsx` — metadata (~589 tok)
 
 ## app/[locale]/(public)/
 
@@ -58,6 +58,10 @@
 
 - `page.tsx` — StylePage (~1777 tok)
 
+## app/[locale]/(public)/catalog/[event]/[style]/[product]/
+
+- `page.tsx` — SITE_URL (~2032 tok)
+
 ## app/[locale]/(public)/contact/
 
 - `page.tsx` — WHATSAPP_NUMBER — renders form (~1368 tok)
@@ -69,6 +73,65 @@
 ## app/[locale]/(public)/order-status/
 
 - `page.tsx` — STATUS_STEPS (~2096 tok)
+
+## app/admin/
+
+- `login/page.tsx` — AdminLoginPage — email/password form, checks is_admin (~430 tok)
+
+## app/admin/(protected)/
+
+- `layout.tsx` — AdminProtectedLayout — auth check (server), renders AdminSidebar (~240 tok)
+- `page.tsx` — redirect → /admin/dashboard (~35 tok)
+
+## app/admin/(protected)/catalog/
+
+- `page.tsx` — CatalogPage (~299 tok)
+
+## app/admin/(protected)/dashboard/
+
+- `page.tsx` — DashboardPage — KPI cards (today/pending/in_production/revenue) + recent orders table (~350 tok)
+
+## app/admin/(protected)/orders/
+
+- `page.tsx` — OrdersPage — list with status filter tabs + CSV export link (~280 tok)
+
+## app/admin/(protected)/orders/[id]/
+
+- `page.tsx` — STATUS_LABELS (~2941 tok)
+
+## app/admin/(protected)/products/
+
+- `page.tsx` — STATUS_LABELS — renders table (~2177 tok)
+
+## app/admin/(protected)/products/[id]/
+
+- `page.tsx` — EditProductPage (~586 tok)
+
+## app/admin/(protected)/products/new/
+
+- `page.tsx` — NewProductPage (~240 tok)
+
+## app/admin/actions/
+
+- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 2 more (~1047 tok)
+- `orders.ts` — Exports updateOrderStatus, updateOrderNotes (~616 tok)
+- `products.ts` — Exports ProductFormData, createProduct, updateProduct, archiveProduct (~699 tok)
+
+## app/admin/login/
+
+- `page.tsx` — AdminLoginPage — renders form (~1002 tok)
+
+## app/api/og/
+
+- `route.tsx` — runtime (~1593 tok)
+
+## components/admin/
+
+- `AdminSidebar.tsx` — AdminSidebar — sidebar nav 8 items + sign-out button (~789 tok)
+- `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
+- `CatalogManager.tsx` — EMPTY_FORM — renders form (~4249 tok)
+- `OrderStatusUpdate.tsx` — client component — status buttons + notes textarea + server action save (~1176 tok)
+- `ProductForm.tsx` — STATUS_OPTIONS (~3769 tok)
 
 ## components/cart/
 
@@ -92,6 +155,11 @@
 - `Footer.tsx` — Footer (~677 tok)
 - `Navbar.tsx` — Navbar (~1642 tok)
 - `WhatsAppButton.tsx` — WHATSAPP_NUMBER (~528 tok)
+
+## components/product/
+
+- `ProductAddToCart.tsx` — ProductAddToCart (~1202 tok)
+- `ProductImageGallery.tsx` — ProductImageGallery (~568 tok)
 
 ## contexts/
 
