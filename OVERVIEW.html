@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>רינה קדוש — סיכום האתר</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #faf9f7;
+    color: #2d2d2d;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #c9a96e 0%, #e8d5b0 50%, #f5ede0 100%);
+    text-align: center;
+    padding: 60px 20px 50px;
+  }
+  .hero h1 {
+    font-size: 2.6rem;
+    color: #5a3e28;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .hero p {
+    font-size: 1.15rem;
+    color: #7a5c3e;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .hero .badge {
+    display: inline-block;
+    background: #5a3e28;
+    color: #fff;
+    border-radius: 20px;
+    padding: 4px 18px;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── WRAPPER ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 50px 0 30px;
+    border-bottom: 1px solid #e8e0d6;
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c9a96e;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .section h2 {
+    font-size: 1.7rem;
+    color: #5a3e28;
+    margin-bottom: 20px;
+  }
+  .section p { color: #555; margin-bottom: 12px; }
+
+  /* ── CARDS ROW ── */
+  .cards {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #e8e0d6;
+    border-radius: 14px;
+    padding: 22px 20px;
+    flex: 1;
+    min-width: 200px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .card .icon { font-size: 2rem; margin-bottom: 10px; }
+  .card h3 { font-size: 1rem; color: #5a3e28; margin-bottom: 6px; }
+  .card p { font-size: 0.9rem; color: #777; }
+
+  /* ── FLOW ── */
+  .flow {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    flex-wrap: wrap;
+    margin: 24px 0;
+  }
+  .flow-step {
+    text-align: center;
+    flex: 1;
+    min-width: 110px;
+    position: relative;
+  }
+  .flow-step .circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c9a96e, #e8d5b0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin: 0 auto 10px;
+    box-shadow: 0 3px 10px rgba(201,169,110,0.3);
+  }
+  .flow-step .label { font-size: 0.85rem; color: #5a3e28; font-weight: 600; }
+  .flow-step .sub { font-size: 0.75rem; color: #999; margin-top: 3px; }
+  .flow-arrow {
+    font-size: 1.4rem;
+    color: #c9a96e;
+    padding-top: 16px;
+    flex-shrink: 0;
+    min-width: 24px;
+    text-align: center;
+  }
+
+  /* ── STATUS BADGES ── */
+  .statuses {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .status-badge {
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .s-pending   { background: #f0f0f0; color: #666; }
+  .s-confirmed { background: #dbeafe; color: #1d4ed8; }
+  .s-production{ background: #fef3c7; color: #b45309; }
+  .s-ready     { background: #d1fae5; color: #065f46; }
+  .s-delivered { background: #bbf7d0; color: #14532d; }
+  .s-cancelled { background: #fee2e2; color: #991b1b; }
+
+  /* ── SCREEN MOCKUP ── */
+  .mockup {
+    background: #fff;
+    border: 2px solid #e0d8ce;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    margin: 24px 0;
+    font-size: 0.85rem;
+  }
+  .mockup-bar {
+    background: #5a3e28;
+    color: #e8d5b0;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+  }
+  .mockup-bar .logo { font-weight: 700; font-size: 1rem; letter-spacing: 1px; }
+  .mockup-bar .nav { display: flex; gap: 14px; opacity: 0.85; font-size: 0.78rem; }
+  .mockup-body { padding: 20px; }
+
+  /* hero mockup */
+  .mockup-hero {
+    background: linear-gradient(135deg, #f5ede0, #e8d5b0);
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+  }
+  .mockup-hero h2 { font-size: 1.3rem; color: #5a3e28; margin-bottom: 6px; }
+  .mockup-hero p { color: #7a5c3e; font-size: 0.82rem; }
+  .mockup-hero .btn {
+    display: inline-block;
+    background: #5a3e28;
+    color: #fff;
+    padding: 8px 22px;
+    border-radius: 20px;
+    margin-top: 12px;
+    font-size: 0.82rem;
+  }
+
+  /* catalog grid mockup */
+  .mockup-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .mockup-product {
+    border: 1px solid #e8e0d6;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #faf9f7;
+  }
+  .mockup-product .img-ph {
+    height: 70px;
+    background: linear-gradient(135deg, #e8d5b0, #d4bc96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+  }
+  .mockup-product .info { padding: 8px; }
+  .mockup-product .pname { font-weight: 600; font-size: 0.78rem; color: #5a3e28; }
+  .mockup-product .price { font-size: 0.73rem; color: #c9a96e; }
+  .mockup-product .add-btn {
+    display: block;
+    background: #5a3e28;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    font-size: 0.72rem;
+    border-radius: 0 0 10px 10px;
+  }
+
+  /* admin mockup */
+  .mockup-admin { display: flex; gap: 16px; }
+  .mockup-sidebar {
+    width: 110px;
+    background: #5a3e28;
+    border-radius: 10px;
+    padding: 14px 10px;
+    flex-shrink: 0;
+  }
+  .mockup-sidebar .s-item {
+    color: #e8d5b0;
+    font-size: 0.72rem;
+    padding: 6px 8px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+  .mockup-sidebar .s-item.active { background: rgba(255,255,255,0.15); }
+  .mockup-content { flex: 1; }
+  .kpi-row { display: flex; gap: 10px; margin-bottom: 14px; }
+  .kpi-box {
+    flex: 1;
+    background: #faf9f7;
+    border: 1px solid #e8e0d6;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+  .kpi-box .num { font-size: 1.3rem; font-weight: 700; color: #5a3e28; }
+  .kpi-box .lbl { font-size: 0.68rem; color: #999; }
+  .order-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: #faf9f7;
+    border: 1px solid #e8e0d6;
+    margin-bottom: 6px;
+    font-size: 0.75rem;
+  }
+
+  /* ── CART MOCKUP ── */
+  .cart-mockup {
+    background: #fff;
+    border: 2px solid #e0d8ce;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+    max-width: 280px;
+    margin: 24px auto;
+    font-size: 0.82rem;
+  }
+  .cart-header {
+    background: #5a3e28;
+    color: #e8d5b0;
+    padding: 10px 14px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+  }
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f0ebe3;
+  }
+  .cart-item .name { color: #5a3e28; font-weight: 600; }
+  .cart-item .qty { color: #c9a96e; font-size: 0.75rem; }
+  .cart-total {
+    padding: 10px 14px;
+    font-weight: 700;
+    color: #5a3e28;
+    text-align: left;
+    background: #faf9f7;
+    font-size: 0.9rem;
+  }
+  .cart-btn {
+    background: #5a3e28;
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  /* ── TWO COLS ── */
+  .two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  @media (max-width: 600px) {
+    .two-cols { grid-template-columns: 1fr; }
+    .flow-arrow { display: none; }
+    .mockup-grid { grid-template-columns: repeat(2, 1fr); }
+    .kpi-row { flex-wrap: wrap; }
+  }
+
+  /* ── LIST ── */
+  .feature-list { list-style: none; margin-top: 16px; }
+  .feature-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0ebe3;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 0.93rem;
+    color: #555;
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .feature-list .dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c9a96e, #e8d5b0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: #5a3e28;
+    font-weight: 700;
+  }
+
+  /* ── MOBILE DEMO ── */
+  .phone-frame {
+    width: 200px;
+    background: #1a1a1a;
+    border-radius: 30px;
+    padding: 12px 8px;
+    margin: 0 auto;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  }
+  .phone-screen {
+    background: #faf9f7;
+    border-radius: 22px;
+    overflow: hidden;
+    min-height: 340px;
+  }
+  .phone-nav {
+    background: #5a3e28;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    font-size: 0.6rem;
+    color: #e8d5b0;
+  }
+  .phone-nav span { text-align: center; }
+  .phone-content { padding: 10px 8px; }
+  .phone-product {
+    border: 1px solid #e8e0d6;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    background: #fff;
+  }
+  .phone-product .ph-img {
+    height: 55px;
+    background: linear-gradient(135deg, #e8d5b0, #d4bc96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+  .phone-product .ph-info { padding: 6px 8px; font-size: 0.65rem; }
+  .phone-product .ph-name { font-weight: 700; color: #5a3e28; }
+  .phone-product .ph-price { color: #c9a96e; }
+  .phone-product .ph-add {
+    background: #5a3e28;
+    color: #fff;
+    text-align: center;
+    padding: 4px;
+    font-size: 0.62rem;
+  }
+  .float-wa {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    background: #25d366;
+    color: #fff;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  }
+  .phone-wrap { position: relative; display: inline-block; }
+  .phone-wrap-center { text-align: center; margin: 24px 0; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: linear-gradient(135deg, #fef9f0, #fdf3e3);
+    border: 1px solid #e8d5b0;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .highlight h3 { color: #5a3e28; margin-bottom: 8px; font-size: 1rem; }
+  .highlight p { font-size: 0.9rem; color: #7a5c3e; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #5a3e28;
+    color: #e8d5b0;
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 0.85rem;
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ HERO -->
+<div class="hero">
+  <div class="badge">סיכום האתר לבעלת העסק</div>
+  <h1>רינה קדוש ✨</h1>
+  <p>כך ייראה ויתנהג האתר החדש שלך — מוסבר בפשטות, ללא מונחים טכניים</p>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════ מה זה בעצם -->
+  <div class="section">
+    <div class="section-label">סקירה כללית</div>
+    <h2>שני חלקים לאתר</h2>
+    <p>האתר מחולק לשני עולמות נפרדים:</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="icon">🌸</div>
+        <h3>החלק הציבורי</h3>
+        <p>מה שלקוחות רואות — קטלוג, מוצרים, גלריה, ושליחת הזמנות</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔐</div>
+        <h3>לוח הניהול שלך</h3>
+        <p>רק את נכנסת עם סיסמה — ניהול הזמנות, מוצרים, ועוד</p>
+      </div>
+      <div class="card">
+        <div class="icon">🌍</div>
+        <h3>דו-לשוני</h3>
+        <p>כל האתר בעברית ואנגלית — לחיצה אחת עוברת בין השפות</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ הקטלוג -->
+  <div class="section">
+    <div class="section-label">הקטלוג</div>
+    <h2>איך לקוחה מוצאת מה שהיא מחפשת</h2>
+    <p>הקטלוג בנוי ב-3 שלבים פשוטים — מהכללי לפרטי:</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="circle">💒</div>
+        <div class="label">בחירת אירוע</div>
+        <div class="sub">חתונה / שבת / עסקי...</div>
+      </div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">
+        <div class="circle">🎨</div>
+        <div class="label">בחירת סגנון</div>
+        <div class="sub">קלאסי / מודרני / בוהו...</div>
+      </div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">
+        <div class="circle">🛍️</div>
+        <div class="label">גריד מוצרים</div>
+        <div class="sub">כל המוצרים לסגנון</div>
+      </div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">
+        <div class="circle">📦</div>
+        <div class="label">דף מוצר</div>
+        <div class="sub">פרטים מלאים</div>
+      </div>
+    </div>
+
+    <!-- mockup קטלוג -->
+    <div class="mockup">
+      <div class="mockup-bar">
+        <span class="logo">Rina Kadosh</span>
+        <div class="nav"><span>קטלוג</span><span>גלריה</span><span>צור קשר</span><span>🛒 3</span></div>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-hero">
+          <h2>חתונה — סגנון קלאסי ✨</h2>
+          <p>מוצרים מותאמים אישית לחתונה הקלאסית שלך</p>
+        </div>
+
+        <p style="font-size:0.78rem;color:#c9a96e;font-weight:700;margin-bottom:10px;">✨ חבילות מומלצות לסגנון זה</p>
+        <div style="display:flex;gap:8px;margin-bottom:16px;">
+          <div style="flex:1;background:#fef9f0;border:1px dashed #c9a96e;border-radius:8px;padding:8px;font-size:0.72rem;text-align:center;">
+            <div style="font-size:1.2rem;">🎁</div>
+            <div style="color:#5a3e28;font-weight:700;">חבילת שבת מפנקת</div>
+            <div style="color:#c9a96e;">₪180 <s style="color:#ccc;">₪220</s></div>
+          </div>
+          <div style="flex:1;background:#fef9f0;border:1px dashed #c9a96e;border-radius:8px;padding:8px;font-size:0.72rem;text-align:center;">
+            <div style="font-size:1.2rem;">🎁</div>
+            <div style="color:#5a3e28;font-weight:700;">חבילת מזכרות</div>
+            <div style="color:#c9a96e;">₪250 <s style="color:#ccc;">₪300</s></div>
+          </div>
+        </div>
+
+        <p style="font-size:0.78rem;color:#999;margin-bottom:10px;">כל המוצרים</p>
+        <div class="mockup-grid">
+          <div class="mockup-product">
+            <div class="img-ph">🖼️</div>
+            <div class="info"><div class="pname">פלייסמט ממותג</div><div class="price">₪15/יח' • מינ' 20</div></div>
+            <div class="add-btn">+ הוסף לסל</div>
+          </div>
+          <div class="mockup-product">
+            <div class="img-ph">🎀</div>
+            <div class="info"><div class="pname">מארז מתנה</div><div class="price">₪45/יח' • מינ' 10</div></div>
+            <div class="add-btn">+ הוסף לסל</div>
+          </div>
+          <div class="mockup-product">
+            <div class="img-ph">📋</div>
+            <div class="info"><div class="pname">כרטיס ברכה</div><div class="price">₪8/יח' • מינ' ₪200</div></div>
+            <div class="add-btn">+ הוסף לסל</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ הסל וההזמנה -->
+  <div class="section">
+    <div class="section-label">הזמנה</div>
+    <h2>איך לקוחה מזמינה</h2>
+
+    <div class="two-cols">
+      <div>
+        <p>לכל מוצר יש <strong>כמות מינימלית</strong> — המערכת לא תאפשר להוסיף פחות מהמינימום ותסביר בבירור מה הדרישה.</p>
+        <p style="margin-top:10px;">מוצרים שנבחרו נאספים ב<strong>סל קניות</strong> — לחיצה על הסל בכל דף פותחת תפריט צד עם כל הפריטים.</p>
+        <p style="margin-top:10px;">כשמוכנה לשלוח — הלקוחה ממלאת טופס קצר:</p>
+        <ul class="feature-list" style="margin-top:10px;">
+          <li><div class="dot">✓</div><span><strong>שם, טלפון, מייל</strong> — חובה</span></li>
+          <li><div class="dot">✓</div><span><strong>איסוף או משלוח</strong> — בחירה</span></li>
+          <li><div class="dot">○</div><span><strong>העלאת לוגו</strong> — אופציונלי</span></li>
+          <li><div class="dot">○</div><span><strong>בקשות מיוחדות</strong> — אופציונלי</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="cart-mockup">
+          <div class="cart-header"><span>🛒 הסל שלי</span><span>3 פריטים</span></div>
+          <div class="cart-item">
+            <div><div class="name">פלייסמט ממותג</div><div class="qty">× 30 יח'</div></div>
+            <div style="color:#5a3e28;font-weight:700;">₪450</div>
+          </div>
+          <div class="cart-item">
+            <div><div class="name">🎁 חבילת שבת</div><div class="qty">× 1 חבילה</div></div>
+            <div style="color:#5a3e28;font-weight:700;">₪180</div>
+          </div>
+          <div class="cart-item">
+            <div><div class="name">כרטיס ברכה</div><div class="qty">× 50 יח'</div></div>
+            <div style="color:#5a3e28;font-weight:700;">₪400</div>
+          </div>
+          <div class="cart-total">סה"כ: ₪1,030</div>
+          <div class="cart-btn">שלח הזמנה ←</div>
+        </div>
+        <p style="text-align:center;font-size:0.78rem;color:#aaa;margin-top:8px;">סל ממתין בצד — נגיש מכל דף</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ סטטוסים -->
+  <div class="section">
+    <div class="section-label">מעקב הזמנות</div>
+    <h2>סטטוסי הזמנה</h2>
+    <p>כל הזמנה עוברת מסלול ברור — את שולטת בכל שלב:</p>
+
+    <div class="statuses" style="margin-top:20px;">
+      <div class="status-badge s-pending">⏳ ממתין לאישור</div>
+      <div style="padding:6px 4px;color:#ccc;font-size:1.2rem;">→</div>
+      <div class="status-badge s-confirmed">✅ אושר</div>
+      <div style="padding:6px 4px;color:#ccc;font-size:1.2rem;">→</div>
+      <div class="status-badge s-production">⚙️ בייצור</div>
+      <div style="padding:6px 4px;color:#ccc;font-size:1.2rem;">→</div>
+      <div class="status-badge s-ready">📦 מוכן למסירה</div>
+      <div style="padding:6px 4px;color:#ccc;font-size:1.2rem;">→</div>
+      <div class="status-badge s-delivered">🎉 נמסר</div>
+    </div>
+    <div style="margin-top:10px;">
+      <span class="status-badge s-cancelled" style="display:inline-flex;">❌ בוטל — אפשרי בכל שלב</span>
+    </div>
+
+    <div class="highlight" style="margin-top:24px;">
+      <h3>📧 מיילים אוטומטיים</h3>
+      <p>המערכת שולחת מיילים אוטומטיים ללא פעולה מצידך:<br>
+      • <strong>ללקוחה:</strong> אישור קבלת הזמנה עם מספר הזמנה<br>
+      • <strong>לך:</strong> התראה על הזמנה חדשה<br>
+      • <strong>ללקוחה:</strong> "ההזמנה שלך מוכנה!" כשמעדכנת לסטטוס מוכן</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ לוח ניהול -->
+  <div class="section">
+    <div class="section-label">לוח הניהול שלך</div>
+    <h2>מה תראי כשנכנסת לאדמין</h2>
+
+    <div class="mockup">
+      <div class="mockup-bar">
+        <span>🔐 לוח ניהול — רינה קדוש</span>
+        <span style="opacity:0.7;font-size:0.75rem;">התנתקות</span>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-admin">
+          <div class="mockup-sidebar">
+            <div class="s-item active">📊 דשבורד</div>
+            <div class="s-item">📋 הזמנות</div>
+            <div class="s-item">🖨️ תור ייצור</div>
+            <div class="s-item">🛍️ מוצרים</div>
+            <div class="s-item">🎁 חבילות</div>
+            <div class="s-item">🖼️ גלריה</div>
+            <div class="s-item">📂 קטלוג</div>
+            <div class="s-item">✍️ הזמנה ידנית</div>
+          </div>
+          <div class="mockup-content">
+            <div class="kpi-row">
+              <div class="kpi-box"><div class="num">47</div><div class="lbl">הזמנות החודש</div></div>
+              <div class="kpi-box"><div class="num">₪8.2K</div><div class="lbl">הכנסות</div></div>
+              <div class="kpi-box"><div class="num">5</div><div class="lbl">ממתינות</div></div>
+            </div>
+            <p style="font-size:0.72rem;color:#999;margin-bottom:8px;">הזמנות אחרונות</p>
+            <div class="order-row">
+              <span style="color:#5a3e28;font-weight:600;">RK-2026-00045</span>
+              <span class="status-badge s-production" style="font-size:0.68rem;padding:3px 10px;">⚙️ בייצור</span>
+            </div>
+            <div class="order-row">
+              <span style="color:#5a3e28;font-weight:600;">RK-2026-00044</span>
+              <span class="status-badge s-pending" style="font-size:0.68rem;padding:3px 10px;">⏳ ממתין</span>
+            </div>
+            <div class="order-row">
+              <span style="color:#5a3e28;font-weight:600;">RK-2026-00043</span>
+              <span class="status-badge s-ready" style="font-size:0.68rem;padding:3px 10px;">📦 מוכן</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:20px;">
+      <div class="card">
+        <div class="icon">🖨️</div>
+        <h3>תור ייצור</h3>
+        <p>רואה בבוקר מה צריך לדפוס היום, ממויין לפי תאריך האירוע</p>
+      </div>
+      <div class="card">
+        <div class="icon">✍️</div>
+        <h3>הזמנה ידנית</h3>
+        <p>דיברת עם לקוחה בטלפון? פותחת הזמנה עבורה ישירות מהניהול</p>
+      </div>
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>רווחיות</h3>
+        <p>הדשבורד מציג הכנסות ורווח — אילו מוצרים הכי משתלמים</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ מובייל -->
+  <div class="section">
+    <div class="section-label">חוויה במובייל</div>
+    <h2>מותאם מושלם לטלפון</h2>
+    <p>רוב הלקוחות מגיעות מהטלפון — האתר בנוי mobile-first: כל כפתור גדול, ניווט בתחתית, חוויה כמו אפליקציה.</p>
+
+    <div class="phone-wrap-center">
+      <div class="phone-wrap">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div style="background:#5a3e28;color:#e8d5b0;padding:8px;text-align:center;font-size:0.75rem;font-weight:700;">Rina Kadosh ✨</div>
+            <div class="phone-content">
+              <p style="font-size:0.65rem;color:#c9a96e;font-weight:700;margin-bottom:6px;">חתונה — קלאסי</p>
+              <div class="phone-product">
+                <div class="ph-img">🖼️</div>
+                <div class="ph-info">
+                  <div class="ph-name">פלייסמט ממותג</div>
+                  <div class="ph-price">₪15/יח' • מינ' 20</div>
+                </div>
+                <div class="ph-add">+ הוסף לסל</div>
+              </div>
+              <div class="phone-product">
+                <div class="ph-img">🎀</div>
+                <div class="ph-info">
+                  <div class="ph-name">מארז מתנה</div>
+                  <div class="ph-price">₪45/יח' • מינ' 10</div>
+                </div>
+                <div class="ph-add">+ הוסף לסל</div>
+              </div>
+            </div>
+            <div class="phone-nav">
+              <span>🏠<br>בית</span>
+              <span>📂<br>קטלוג</span>
+              <span>🖼️<br>גלריה</span>
+              <span>🛒<br>סל</span>
+            </div>
+          </div>
+        </div>
+        <div class="float-wa">💬</div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <h3>💬 כפתור WhatsApp תמיד נגיש</h3>
+      <p>בכל דף ציבורי — כפתור WhatsApp קטן בפינה. לחיצה פותחת שיחה ישירה איתך.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ מעקב הזמנה -->
+  <div class="section">
+    <div class="section-label">שירות לקוחות</div>
+    <h2>לקוחה רוצה לבדוק איפה ההזמנה שלה</h2>
+    <p>עמוד מיוחד בשם "מעקב הזמנה" — הלקוחה מזינה את <strong>מספר ההזמנה</strong> שקיבלה במייל ו<strong>כתובת המייל</strong> שלה, ורואה מיד את הסטטוס הנוכחי.</p>
+    <p style="margin-top:8px;">ללא צורך ביצירת חשבון, ללא סיסמה.</p>
+
+    <div class="mockup" style="max-width:420px;margin:20px auto;">
+      <div class="mockup-bar"><span>🔍 מעקב הזמנה</span></div>
+      <div class="mockup-body" style="text-align:center;">
+        <div style="margin-bottom:12px;">
+          <input style="border:1px solid #e0d8ce;border-radius:8px;padding:8px 12px;width:100%;font-size:0.82rem;text-align:right;" placeholder="מספר הזמנה (לדוגמה: RK-2026-00045)" disabled>
+        </div>
+        <div style="margin-bottom:14px;">
+          <input style="border:1px solid #e0d8ce;border-radius:8px;padding:8px 12px;width:100%;font-size:0.82rem;text-align:right;" placeholder="כתובת מייל" disabled>
+        </div>
+        <div style="background:#5a3e28;color:#fff;padding:10px;border-radius:8px;font-size:0.85rem;">חפשי הזמנה ←</div>
+        <div style="margin-top:16px;padding:12px;background:#d1fae5;border-radius:10px;text-align:right;">
+          <div style="font-weight:700;color:#065f46;">📦 ההזמנה שלך מוכנה לאיסוף!</div>
+          <div style="font-size:0.78rem;color:#047857;margin-top:4px;">RK-2026-00045 • 3 פריטים • ₪1,030</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ חבילות -->
+  <div class="section">
+    <div class="section-label">חבילות</div>
+    <h2>חבילות מוכנות עם מחיר מיוחד</h2>
+    <p>אפשר ליצור חבילות מוכנות שמשלבות כמה מוצרים יחד במחיר מוזל. הלקוחה מוסיפה הכל בלחיצה אחת.</p>
+
+    <div class="cards">
+      <div class="card" style="border:2px solid #c9a96e;background:#fef9f0;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div class="icon">🎁</div>
+          <span style="background:#c9a96e;color:#fff;border-radius:10px;padding:2px 10px;font-size:0.72rem;font-weight:700;">חבילה</span>
+        </div>
+        <h3>חבילת שבת מפנקת</h3>
+        <p style="font-size:0.8rem;color:#7a5c3e;">מארז נרות + כרטיס ברכה + שקית ממותגת</p>
+        <div style="margin-top:12px;display:flex;align-items:center;gap:10px;">
+          <span style="font-size:1.1rem;font-weight:700;color:#5a3e28;">₪180</span>
+          <span style="font-size:0.8rem;color:#bbb;text-decoration:line-through;">₪220</span>
+          <span style="background:#fef3c7;color:#b45309;border-radius:8px;padding:2px 8px;font-size:0.72rem;font-weight:700;">חסכון 18%</span>
+        </div>
+        <div style="background:#5a3e28;color:#fff;text-align:center;padding:8px;border-radius:8px;margin-top:12px;font-size:0.82rem;">הוסף חבילה לסל ←</div>
+      </div>
+      <div class="card">
+        <div class="icon">✨</div>
+        <h3>היתרון</h3>
+        <p>הלקוחה לא יכולה להסיר פריט בודד מהחבילה — המחיר המיוחד נשמר שלם</p>
+      </div>
+      <div class="card">
+        <div class="icon">🛠️</div>
+        <h3>ניהול קל</h3>
+        <p>יוצרת חבילות מלוח הניהול — בוחרת מוצרים, כמויות, ומחיר מיוחד</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ גלריה -->
+  <div class="section">
+    <div class="section-label">גלריה</div>
+    <h2>עבודות קודמות</h2>
+    <p>עמוד גלריה מיוחד שמציג עבודות שעשית — ממויין לפי סוג אירוע. תמונות שמעוררות השראה ומייצרות אמון.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px;">
+      <div style="background:linear-gradient(135deg,#e8d5b0,#d4bc96);border-radius:10px;height:80px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">💒</div>
+      <div style="background:linear-gradient(135deg,#fde8e8,#f5c6c6);border-radius:10px;height:80px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🎊</div>
+      <div style="background:linear-gradient(135deg,#e8f5e8,#c6e8c6);border-radius:10px;height:80px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🕍</div>
+      <div style="background:linear-gradient(135deg,#e8e8f5,#c6c6e8);border-radius:10px;height:80px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">💼</div>
+    </div>
+    <p style="text-align:center;font-size:0.78rem;color:#aaa;margin-top:8px;">חתונה • שמחות • שבת • עסקי</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ SEO -->
+  <div class="section">
+    <div class="section-label">נראות בגוגל</div>
+    <h2>לקוחות ימצאו אותך בגוגל</h2>
+    <p>האתר בנוי כך שיופיע גבוה בתוצאות החיפוש. למשל:</p>
+
+    <div class="highlight">
+      <div style="background:#fff;border:1px solid #e0d8ce;border-radius:10px;padding:14px 16px;font-size:0.85rem;">
+        <div style="color:#1a0dab;font-size:1rem;margin-bottom:2px;">פלייסמטים ממותגים לחתונה | רינה קדוש</div>
+        <div style="color:#006621;font-size:0.78rem;margin-bottom:4px;">rinakadosh.co.il › catalog › wedding › classic</div>
+        <div style="color:#555;">פלייסמטים מותאמים אישית לחתונה הקלאסית שלך. מיתוג מקצועי, הדפסה איכותית, מינימום 20 יחידות...</div>
+      </div>
+      <p style="margin-top:10px;font-size:0.82rem;">כך נראית תוצאה שלך בגוגל — כותרת, כתובת, ותיאור — הכל מוגדר אוטומטית, ואפשר לדרוס ידנית לכל מוצר.</p>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  <p style="font-size:1rem;margin-bottom:6px;">✨ רינה קדוש — מוצרים מודפסים למיתוג ואווירה</p>
+  <p style="opacity:0.6;">מסמך זה נוצר לצורך הבנת האתר לפני הפיתוח</p>
+</footer>
+
+</body>
+</html>

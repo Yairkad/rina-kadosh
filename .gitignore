@@ -1,0 +1,25 @@
+# Claude / OpenWolf internal state
+.mcp.json
+.claude/settings.local.json
+.wolf/_session.json
+.wolf/hooks/_session.json
+.wolf/token-ledger.json
+.wolf/cron-state.json
+.wolf/designqc-report.json
+.wolf/designqc-captures/
+.wolf/suggestions.json
+
+# Supabase temp files
+supabase/.temp/
+
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
