@@ -9,7 +9,6 @@ import {
   Package,
   Layers,
   BookOpen,
-  ImageIcon,
   Wrench,
   Plus,
   LogOut,
@@ -22,7 +21,6 @@ const NAV_ITEMS = [
   { href: "/admin/products", label: "מוצרים", icon: Package },
   { href: "/admin/bundles", label: "חבילות", icon: Layers },
   { href: "/admin/catalog", label: "קטלוג", icon: BookOpen },
-  { href: "/admin/gallery", label: "גלריה", icon: ImageIcon },
   { href: "/admin/production", label: "תור ייצור", icon: Wrench },
   { href: "/admin/create-order", label: "הזמנה ידנית", icon: Plus },
 ];
