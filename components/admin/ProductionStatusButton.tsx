@@ -21,7 +21,8 @@ export default function ProductionStatusButton({
 
   function handleClick() {
     startTransition(async () => {
-      await updateOrderStatus(orderId, newStatus);
+      const res = await updateOrderStatus(orderId, newStatus);
+      if (res?.error) { alert(`שגיאה: ${res.error}`); return; }
       router.refresh();
     });
   }

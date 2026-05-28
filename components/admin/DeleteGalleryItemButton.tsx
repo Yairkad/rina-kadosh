@@ -12,7 +12,8 @@ export default function DeleteGalleryItemButton({ itemId }: { itemId: string }) 
   function handleDelete() {
     if (!confirm("למחוק פריט זה לצמיתות?")) return;
     startTransition(async () => {
-      await deleteGalleryItem(itemId);
+      const res = await deleteGalleryItem(itemId);
+      if (res?.error) { alert(`שגיאה: ${res.error}`); return; }
       router.refresh();
     });
   }

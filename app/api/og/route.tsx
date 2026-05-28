@@ -13,9 +13,21 @@ async function loadFont(): Promise<ArrayBuffer | null> {
     const url = css.match(/url\((https:\/\/[^)]+)\)/)?.[1];
     if (!url) return null;
     return fetch(url).then((r) => r.arrayBuffer());
-  } catch {
+  } catch (e) {
+    console.warn("[og] font load failed", e);
     return null;
   }
+}
+
+const SUPABASE_HOST = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").replace(/^https?:\/\//, "");
+
+function safeImgUrl(raw: string | null): string | null {
+  if (!raw) return null;
+  try {
+    const { hostname } = new URL(raw);
+    if (hostname === SUPABASE_HOST || hostname === "images.unsplash.com") return raw;
+  } catch {}
+  return null;
 }
 
 export async function GET(req: NextRequest) {
@@ -23,7 +35,7 @@ export async function GET(req: NextRequest) {
   const name = searchParams.get("name");       // product name (optional)
   const price = searchParams.get("price");     // price per unit (optional)
   const category = searchParams.get("category"); // event type (optional)
-  const img = searchParams.get("img");         // product image URL (optional)
+  const img = safeImgUrl(searchParams.get("img")); // validated product image URL
 
   const fontData = await loadFont();
   const fonts = fontData

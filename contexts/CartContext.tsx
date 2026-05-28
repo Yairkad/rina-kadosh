@@ -145,7 +145,9 @@ function saveCart(items: CartItem[]) {
       STORAGE_KEY,
       JSON.stringify({ items, savedAt: Date.now() })
     );
-  } catch {}
+  } catch (e) {
+    console.warn("[cart] save failed", e);
+  }
 }
 
 function loadCart(): CartItem[] | null {
@@ -206,7 +208,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = useCallback(() => {
     dispatch({ type: "CLEAR" });
-    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) { console.warn("[cart] clear failed", e); }
   }, []);
 
   const openDrawer = useCallback(() => dispatch({ type: "OPEN_DRAWER" }), []);

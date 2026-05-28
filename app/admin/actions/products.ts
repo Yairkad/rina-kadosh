@@ -52,6 +52,8 @@ export async function createProduct(data: ProductFormData) {
   if (error) return { error: error.message };
 
   revalidatePath("/admin/products");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true, id: created.id };
 }
 
@@ -73,6 +75,8 @@ export async function updateProduct(id: string, data: Partial<ProductFormData>) 
 
   revalidatePath("/admin/products");
   revalidatePath(`/admin/products/${id}`);
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true };
 }
 
@@ -88,5 +92,7 @@ export async function archiveProduct(id: string) {
   if (error) return { error: error.message };
 
   revalidatePath("/admin/products");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true };
 }

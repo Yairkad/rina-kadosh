@@ -12,9 +12,9 @@ export default function ArchiveBundleButton({ bundleId }: { bundleId: string }) 
   function handleArchive() {
     if (!confirm("להעביר חבילה זו לארכיון?")) return;
     startTransition(async () => {
-      await archiveBundle(bundleId);
+      const res = await archiveBundle(bundleId);
+      if (res?.error) { alert(`שגיאה: ${res.error}`); return; }
       router.push("/admin/bundles");
-      router.refresh();
     });
   }
 

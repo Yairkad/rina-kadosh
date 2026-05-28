@@ -7,6 +7,10 @@ import Link from "next/link";
 import { Trash2, Upload, CheckCircle } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { createClient } from "@/lib/supabase/client";
+import { submitOrder } from "@/app/actions/submit-order";
+
+const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/gif", "application/pdf"];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
 export default function CartPage() {
   const locale = useLocale();
@@ -35,58 +39,70 @@ export default function CartPage() {
   const inputClass =
     "w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-[var(--charcoal)] placeholder:text-gray-400 focus:outline-none focus:border-[var(--gold)] transition-colors text-sm";
 
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] ?? null;
+    if (!file) { setLogoFile(null); return; }
+
+    if (!ALLOWED_MIME.includes(file.type)) {
+      setError(locale === "he" ? "סוג קובץ לא נתמך. השתמש ב-JPG, PNG, WEBP, GIF או PDF." : "Unsupported file type. Use JPG, PNG, WEBP, GIF or PDF.");
+      e.target.value = "";
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      setError(locale === "he" ? "הקובץ גדול מדי (מקסימום 5MB)." : "File too large (max 5MB).");
+      e.target.value = "";
+      return;
+    }
+
+    setError(null);
+    setLogoFile(file);
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    const supabase = createClient();
-
-    // Upload logo if provided
-    let logoUrl: string | null = null;
+    // Upload logo client-side (binary) then pass URL to server action
+    let logoUrl: string | undefined;
     if (logoFile) {
-      const ext = logoFile.name.split(".").pop();
+      const supabase = createClient();
+      const ext = logoFile.name.split(".").pop()?.toLowerCase();
       const path = `orders/${Date.now()}.${ext}`;
-      const { data: uploadData } = await supabase.storage.from("logos").upload(path, logoFile);
-      if (uploadData) {
-        logoUrl = supabase.storage.from("logos").getPublicUrl(path).data.publicUrl;
+      const { data: uploadData, error: uploadError } = await supabase.storage.from("logos").upload(path, logoFile);
+      if (uploadError || !uploadData) {
+        setError(locale === "he" ? "לא ניתן להעלות את הלוגו. אנא נסה שוב." : "Could not upload logo. Please try again.");
+        setLoading(false);
+        return;
       }
+      logoUrl = supabase.storage.from("logos").getPublicUrl(path).data.publicUrl;
     }
 
-    const orderItems = items.map((item) => ({
-      product_id: item.id,
-      name_he: item.name,
-      quantity: item.quantity,
-      unit_price: item.price_per_unit,
-      is_bundle: item.is_bundle,
-    }));
-
-    const { data, error: orderError } = await supabase
-      .from("orders")
-      .insert({
-        customer_name: form.name,
-        customer_phone: form.phone,
-        customer_email: form.email.toLowerCase(),
-        delivery_method: form.delivery_method,
-        delivery_address: form.delivery_method === "delivery" ? form.address : null,
-        delivery_notes: form.delivery_notes || null,
-        logo_url: logoUrl,
-        special_requests: form.notes || null,
-        items: orderItems,
-        total_amount: totalAmount,
-        status: "pending",
-      })
-      .select("order_number")
-      .single();
+    // Server action validates prices, computes total, inserts order
+    const result = await submitOrder({
+      customer_name:    form.name,
+      customer_phone:   form.phone,
+      customer_email:   form.email,
+      delivery_method:  form.delivery_method,
+      delivery_address: form.delivery_method === "delivery" ? form.address : undefined,
+      delivery_notes:   form.delivery_notes || undefined,
+      logo_url:         logoUrl,
+      special_requests: form.notes || undefined,
+      items: items.map((item) => ({
+        id:        item.id,
+        is_bundle: item.is_bundle,
+        quantity:  item.quantity,
+      })),
+    });
 
     setLoading(false);
 
-    if (orderError) {
+    if ("error" in result) {
       setError(locale === "he" ? "שגיאה בשליחת ההזמנה. אנא נסה שוב." : "Error submitting order. Please try again.");
       return;
     }
 
-    setOrderNumber(data.order_number);
+    setOrderNumber(result.order_number);
     clearCart();
   };
 
@@ -191,8 +207,8 @@ export default function CartPage() {
           <input type="text" placeholder={t("deliveryNotes")} value={form.delivery_notes} onChange={set("delivery_notes")} className={inputClass} />
 
           {/* Logo upload */}
-          <input ref={fileRef} type="file" accept="image/*,.pdf,.ai,.eps,.svg" className="hidden"
-            onChange={(e) => setLogoFile(e.target.files?.[0] ?? null)} />
+          <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif,application/pdf" className="hidden"
+            onChange={handleFileChange} />
           <button
             type="button"
             onClick={() => fileRef.current?.click()}

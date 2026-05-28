@@ -52,6 +52,8 @@ export async function createBundle(data: BundleFormData) {
   if (error) return { error: error.message };
 
   revalidatePath("/admin/bundles");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true, id: created.id };
 }
 
@@ -70,6 +72,8 @@ export async function updateBundle(id: string, data: Partial<BundleFormData>) {
 
   revalidatePath("/admin/bundles");
   revalidatePath(`/admin/bundles/${id}`);
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true };
 }
 
@@ -82,5 +86,7 @@ export async function archiveBundle(id: string) {
   if (error) return { error: error.message };
 
   revalidatePath("/admin/bundles");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true };
 }

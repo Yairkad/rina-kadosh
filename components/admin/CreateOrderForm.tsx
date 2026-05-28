@@ -48,11 +48,11 @@ export default function CreateOrderForm({ products }: { products: Product[] }) {
   const [selectedProductId, setSelectedProductId] = useState("");
   const [selectedQty, setSelectedQty] = useState(1);
 
-  const totalAmount = items.reduce((sum, i) => sum + i.price_per_unit * i.quantity, 0);
+  const totalAmount = Math.round(items.reduce((sum, i) => sum + i.price_per_unit * i.quantity, 0) * 100) / 100;
 
   function addItem() {
     const product = products.find((p) => p.id === selectedProductId);
-    if (!product) return;
+    if (!product || selectedQty <= 0) return;
 
     setItems((prev) => {
       const existing = prev.find((i) => i.id === product.id);
