@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, X, Loader2, ArrowRight } from "lucide-react";
-import { createBundle, updateBundle, type BundleFormData, type BundleItem } from "@/app/admin/actions/bundles";
+import { createBundle, updateBundle, type BundleFormData } from "@/app/admin/actions/bundles";
 
 type Product = { id: string; name_he: string; price_per_unit: number };
 type EventType = { id: string; name_he: string; name_en: string };
