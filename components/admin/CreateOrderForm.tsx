@@ -80,7 +80,7 @@ function ProductCombobox({
   return (
     <div ref={containerRef} className="relative flex-1">
       <div
-        className="flex items-center gap-2 text-sm px-3 py-2.5 rounded-lg border border-stone-200 focus-within:ring-2 focus-within:ring-stone-400 bg-white transition cursor-text"
+        className="flex items-center gap-2 w-full text-sm px-3 py-2.5 rounded-lg border border-stone-200 focus-within:ring-2 focus-within:ring-stone-400 bg-white transition cursor-text"
         onClick={() => { setOpen(true); }}
       >
         <input
@@ -263,12 +263,12 @@ export default function CreateOrderForm({ products }: { products: Product[] }) {
             value={selectedProductId}
             onChange={setSelectedProductId}
           />
-          <Input
+          <input
             type="number"
             min={1}
             value={selectedQty}
             onChange={(e) => setSelectedQty(Number(e.target.value))}
-            className="w-14 text-center"
+            className="w-14 shrink-0 text-center text-sm px-2 py-2.5 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 transition"
           />
           <button
             onClick={addItem}
