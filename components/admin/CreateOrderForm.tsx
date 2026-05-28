@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, X, Loader2 } from "lucide-react";
+import { Plus, X, Loader2, ChevronDown } from "lucide-react";
 import { createManualOrder, type ManualOrderItem } from "@/app/admin/actions/create-order";
 
 type Product = {
@@ -28,6 +28,89 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
     <div>
       <label className="block text-xs font-medium text-stone-600 mb-1.5">{label}</label>
       {children}
+    </div>
+  );
+}
+
+function ProductCombobox({
+  products,
+  value,
+  onChange,
+}: {
+  products: Product[];
+  value: string;
+  onChange: (id: string) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const selected = products.find((p) => p.id === value);
+
+  const filtered = query.trim()
+    ? products.filter((p) =>
+        p.name_he.includes(query) || p.name_en.toLowerCase().includes(query.toLowerCase())
+      )
+    : products;
+
+  useEffect(() => {
+    function onClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+        setQuery("");
+      }
+    }
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
+  function handleSelect(id: string) {
+    onChange(id);
+    setOpen(false);
+    setQuery("");
+  }
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setQuery(e.target.value);
+    onChange("");
+    setOpen(true);
+  }
+
+  return (
+    <div ref={containerRef} className="relative flex-1">
+      <div
+        className="flex items-center gap-2 text-sm px-3 py-2.5 rounded-lg border border-stone-200 focus-within:ring-2 focus-within:ring-stone-400 bg-white transition cursor-text"
+        onClick={() => { setOpen(true); }}
+      >
+        <input
+          type="text"
+          value={open ? query : (selected ? `${selected.name_he} — ₪${Number(selected.price_per_unit).toLocaleString("he-IL")}` : "")}
+          onChange={handleInputChange}
+          onFocus={() => setOpen(true)}
+          placeholder="הקלד לחיפוש מוצר..."
+          className="flex-1 outline-none bg-transparent min-w-0"
+        />
+        <ChevronDown size={14} className={`text-stone-400 shrink-0 transition-transform ${open ? "rotate-180" : ""}`} />
+      </div>
+
+      {open && (
+        <ul className="absolute z-50 mt-1 w-full max-h-60 overflow-y-auto bg-white border border-stone-200 rounded-lg shadow-lg">
+          {filtered.length === 0 ? (
+            <li className="px-4 py-3 text-sm text-stone-400">לא נמצאו מוצרים</li>
+          ) : (
+            filtered.map((p) => (
+              <li
+                key={p.id}
+                onMouseDown={() => handleSelect(p.id)}
+                className={`flex justify-between items-center px-4 py-2.5 text-sm cursor-pointer hover:bg-stone-50 transition-colors ${p.id === value ? "bg-stone-100 font-medium" : ""}`}
+              >
+                <span className="text-stone-800">{p.name_he}</span>
+                <span className="text-stone-400 text-xs">₪{Number(p.price_per_unit).toLocaleString("he-IL")}</span>
+              </li>
+            ))
+          )}
+        </ul>
+      )}
     </div>
   );
 }
@@ -170,24 +253,17 @@ export default function CreateOrderForm({ products }: { products: Product[] }) {
         <h2 className="font-semibold text-stone-800 text-sm">פריטים</h2>
 
         <div className="flex gap-2">
-          <select
+          <ProductCombobox
+            products={products}
             value={selectedProductId}
-            onChange={(e) => setSelectedProductId(e.target.value)}
-            className="flex-1 text-sm px-3 py-2.5 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 bg-white transition"
-          >
-            <option value="">— בחר מוצר —</option>
-            {products.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name_he} — ₪{Number(p.price_per_unit).toLocaleString("he-IL")}
-              </option>
-            ))}
-          </select>
+            onChange={setSelectedProductId}
+          />
           <Input
             type="number"
             min={1}
             value={selectedQty}
             onChange={(e) => setSelectedQty(Number(e.target.value))}
-            className="w-20"
+            className="w-14 text-center"
           />
           <button
             onClick={addItem}
