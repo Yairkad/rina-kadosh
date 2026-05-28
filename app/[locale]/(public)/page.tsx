@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { getLocale, getTranslations } from "next-intl/server";
-import Link from "next/link";
+import { getLocale } from "next-intl/server";
 import HeroSection from "@/components/home/HeroSection";
 import WhySection from "@/components/home/WhySection";
 import ExpandingEventCards from "@/components/catalog/ExpandingEventCards";
@@ -8,7 +7,6 @@ import type { EventTypeItem } from "@/components/catalog/ExpandingEventCards";
 
 export default async function HomePage() {
   const locale = await getLocale();
-  const t = await getTranslations("home");
   const supabase = await createClient();
 
   const { data: eventTypes } = await supabase
@@ -45,20 +43,6 @@ export default async function HomePage() {
 
       <WhySection />
 
-      {/* Bottom CTA */}
-      <section className="py-20 px-4 bg-[var(--cream)]">
-        <div className="max-w-xl mx-auto text-center">
-          <h2 className="text-2xl font-semibold text-[var(--charcoal)] mb-6">
-            {t("contact_cta")}
-          </h2>
-          <Link
-            href={`/${locale}/contact`}
-            className="inline-block px-10 py-3.5 rounded-full bg-[var(--gold)] text-white font-medium text-sm hover:bg-[#b8915a] transition-colors shadow-md"
-          >
-            {t("contact_cta")}
-          </Link>
-        </div>
-      </section>
     </>
   );
 }

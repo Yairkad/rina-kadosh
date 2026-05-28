@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-28T18:18:24.455Z
-> Files: 69 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-28T18:58:17.521Z
+> Files: 85 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -40,7 +40,7 @@
 ## app/[locale]/(public)/
 
 - `layout.tsx` — PublicLayout (~150 tok)
-- `page.tsx` — HomePage (~620 tok)
+- `page.tsx` — HomePage (~432 tok)
 
 ## app/[locale]/(public)/cart/
 
@@ -60,7 +60,7 @@
 
 ## app/[locale]/(public)/catalog/[event]/[style]/[product]/
 
-- `page.tsx` — SITE_URL (~2032 tok)
+- `page.tsx` — SITE_URL (~2073 tok)
 
 ## app/[locale]/(public)/contact/
 
@@ -83,13 +83,41 @@
 - `layout.tsx` — AdminProtectedLayout — auth check (server), renders AdminSidebar (~240 tok)
 - `page.tsx` — redirect → /admin/dashboard (~35 tok)
 
+## app/admin/(protected)/bundles/
+
+- `page.tsx` — STATUS_COLORS — renders table (~1713 tok)
+
+## app/admin/(protected)/bundles/[id]/
+
+- `page.tsx` — EditBundlePage (~586 tok)
+
+## app/admin/(protected)/bundles/new/
+
+- `page.tsx` — NewBundlePage (~264 tok)
+
 ## app/admin/(protected)/catalog/
 
 - `page.tsx` — CatalogPage (~299 tok)
 
+## app/admin/(protected)/create-order/
+
+- `page.tsx` — CreateOrderPage (~213 tok)
+
 ## app/admin/(protected)/dashboard/
 
 - `page.tsx` — DashboardPage — KPI cards (today/pending/in_production/revenue) + recent orders table (~350 tok)
+
+## app/admin/(protected)/gallery/
+
+- `page.tsx` — GalleryPage (~1059 tok)
+
+## app/admin/(protected)/gallery/[id]/
+
+- `page.tsx` — EditGalleryItemPage (~315 tok)
+
+## app/admin/(protected)/gallery/new/
+
+- `page.tsx` — NewGalleryItemPage (~168 tok)
 
 ## app/admin/(protected)/orders/
 
@@ -99,9 +127,13 @@
 
 - `page.tsx` — STATUS_LABELS (~2941 tok)
 
+## app/admin/(protected)/production/
+
+- `page.tsx` — COLUMNS (~1357 tok)
+
 ## app/admin/(protected)/products/
 
-- `page.tsx` — STATUS_LABELS — renders table (~2177 tok)
+- `page.tsx` — STATUS_LABELS — renders table (~2189 tok)
 
 ## app/admin/(protected)/products/[id]/
 
@@ -113,7 +145,10 @@
 
 ## app/admin/actions/
 
+- `bundles.ts` — Exports BundleItem, BundleFormData, createBundle, updateBundle, archiveBundle (~699 tok)
 - `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 2 more (~1047 tok)
+- `create-order.ts` — Exports ManualOrderItem, ManualOrderData, createManualOrder (~465 tok)
+- `gallery.ts` — Exports GalleryFormData, createGalleryItem, updateGalleryItem, deleteGalleryItem (~511 tok)
 - `orders.ts` — Exports updateOrderStatus, updateOrderNotes (~616 tok)
 - `products.ts` — Exports ProductFormData, createProduct, updateProduct, archiveProduct (~699 tok)
 
@@ -128,10 +163,15 @@
 ## components/admin/
 
 - `AdminSidebar.tsx` — AdminSidebar — sidebar nav 8 items + sign-out button (~789 tok)
+- `ArchiveBundleButton.tsx` — ArchiveBundleButton (~269 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
+- `BundleForm.tsx` — Field (~3944 tok)
 - `CatalogManager.tsx` — EMPTY_FORM — renders form (~4249 tok)
-- `OrderStatusUpdate.tsx` — client component — status buttons + notes textarea + server action save (~1176 tok)
+- `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~259 tok)
+- `GalleryItemForm.tsx` — GalleryItemForm (~2096 tok)
+- `OrderStatusUpdate.tsx` — STATUS_OPTIONS (~1171 tok)
 - `ProductForm.tsx` — STATUS_OPTIONS (~3769 tok)
+- `ProductionStatusButton.tsx` — ProductionStatusButton (~306 tok)
 
 ## components/cart/
 
@@ -158,7 +198,7 @@
 
 ## components/product/
 
-- `ProductAddToCart.tsx` — ProductAddToCart (~1202 tok)
+- `ProductAddToCart.tsx` — ProductAddToCart (~1201 tok)
 - `ProductImageGallery.tsx` — ProductImageGallery (~568 tok)
 
 ## contexts/
@@ -185,8 +225,8 @@
 
 ## messages/
 
-- `en.json` (~976 tok)
-- `he.json` (~886 tok)
+- `en.json` (~974 tok)
+- `he.json` (~883 tok)
 
 ## supabase/migrations/
 

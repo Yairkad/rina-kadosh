@@ -9,7 +9,7 @@ export default function HeroSection() {
   const locale = useLocale();
 
   return (
-    <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#FAF8F5] via-[#F5EEE3] to-[#FAF8F5]">
+    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#FAF8F5] via-[#F5EEE3] to-[#FAF8F5]">
       {/* Background glow blobs */}
       <motion.div
         className="absolute top-16 end-[8%] w-72 h-72 rounded-full bg-[var(--gold)] opacity-[0.08] blur-3xl pointer-events-none"

@@ -249,3 +249,44 @@
 | 21:18 | Created components/admin/ArchiveProductButton.tsx | — | ~276 |
 | 21:18 | Session end: 29 writes across 15 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 11 reads | ~35885 tok |
 | 21:24 | Session end: 29 writes across 15 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 11 reads | ~35885 tok |
+| 21:29 | Session end: 29 writes across 15 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 11 reads | ~35885 tok |
+| 21:30 | Edited app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx | inline fix | ~46 |
+| 21:30 | Edited app/admin/(protected)/products/page.tsx | CSS: event_types, design_styles | ~62 |
+| 21:30 | Edited components/admin/OrderStatusUpdate.tsx | inline fix | ~18 |
+| 21:30 | Session end: 32 writes across 15 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 13 reads | ~38188 tok |
+| 21:30 | Session end: 32 writes across 15 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 13 reads | ~38188 tok |
+| 21:31 | Edited app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx | inline fix | ~51 |
+| 21:32 | Session end: 33 writes across 15 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 13 reads | ~38239 tok |
+| 21:33 | Edited app/admin/(protected)/products/page.tsx | 2→2 lines | ~69 |
+| 21:33 | Session end: 34 writes across 15 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 13 reads | ~38308 tok |
+| 21:34 | Edited components/product/ProductAddToCart.tsx | inline fix | ~15 |
+| 21:35 | Session end: 35 writes across 15 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 14 reads | ~39525 tok |
+| 21:51 | Session end: 35 writes across 15 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 14 reads | ~39525 tok |
+| 21:52 | Edited app/[locale]/(public)/page.tsx | 14→9 lines | ~115 |
+| 21:52 | Edited components/home/HeroSection.tsx | "relative min-h-[75vh] fle" → "relative min-h-[85vh] fle" | ~45 |
+| 21:52 | Created app/admin/actions/gallery.ts | — | ~511 |
+| 21:53 | Session end: 38 writes across 17 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 15 reads | ~40816 tok |
+| 21:53 | Created components/admin/GalleryItemForm.tsx | — | ~2096 |
+| 21:53 | Created app/admin/(protected)/gallery/page.tsx | — | ~1059 |
+| 21:53 | Created components/admin/DeleteGalleryItemButton.tsx | — | ~259 |
+| 21:54 | Created app/admin/(protected)/gallery/new/page.tsx | — | ~168 |
+| 21:54 | Created app/admin/(protected)/gallery/[id]/page.tsx | — | ~315 |
+| 21:54 | Created app/admin/(protected)/production/page.tsx | — | ~1357 |
+| 21:54 | Session end: 44 writes across 19 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 15 reads | ~46070 tok |
+| 21:54 | Created components/admin/ProductionStatusButton.tsx | — | ~306 |
+| 21:55 | Created app/admin/actions/create-order.ts | — | ~465 |
+| 21:55 | Created app/admin/(protected)/create-order/page.tsx | — | ~213 |
+| 21:55 | Edited app/[locale]/(public)/page.tsx | — | ~0 |
+| 21:55 | Edited app/[locale]/(public)/page.tsx | 3→2 lines | ~30 |
+| 21:55 | Created components/admin/CreateOrderForm.tsx | — | ~3014 |
+| 21:55 | Edited app/[locale]/(public)/page.tsx | 3→2 lines | ~22 |
+| 21:56 | Session end: 51 writes across 22 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 15 reads | ~50120 tok |
+| 21:56 | Created app/admin/actions/bundles.ts | — | ~699 |
+| 21:56 | Edited messages/he.json | inline fix | ~6 |
+| 21:56 | Edited messages/en.json | inline fix | ~6 |
+| 21:56 | Session end: 54 writes across 25 files (ExpandingEventCards.tsx, layout.tsx, middleware.ts, ProductImageGallery.tsx, page.tsx) | 15 reads | ~50831 tok |
+| 21:57 | Created components/admin/BundleForm.tsx | — | ~3944 |
+| 21:57 | Created app/admin/(protected)/bundles/page.tsx | — | ~1713 |
+| 21:57 | Created app/admin/(protected)/bundles/new/page.tsx | — | ~264 |
+| 21:58 | Created app/admin/(protected)/bundles/[id]/page.tsx | — | ~586 |
+| 21:58 | Created components/admin/ArchiveBundleButton.tsx | — | ~269 |
