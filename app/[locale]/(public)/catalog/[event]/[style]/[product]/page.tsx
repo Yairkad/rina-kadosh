@@ -80,7 +80,7 @@ export default async function ProductPage({ params }: Props) {
   const images: string[] = productData.images ?? [];
 
   // Fetch related products
-  let relatedProducts: { id: string; name_he: string; name_en: string; price_per_unit: number; images: string[]; min_type: string; min_value: number }[] = [];
+  let relatedProducts: { id: string; name_he: string; name_en: string; price_per_unit: number; images: string[]; min_type: "units" | "amount" | null; min_value: number }[] = [];
   if (productData.related_products?.length > 0) {
     const { data } = await supabase
       .from("products")
