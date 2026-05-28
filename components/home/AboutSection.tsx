@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 
 const STATS = [
   { value: "10+", label_he: "שנות ניסיון", label_en: "Years Experience" },
