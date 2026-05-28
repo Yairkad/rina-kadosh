@@ -38,7 +38,7 @@ export default function ProductAddToCart({
   const handleAdd = () => {
     const validation = validateItem({ price_per_unit: pricePerUnit, min_type: minType, min_value: minValue }, qty);
     if (!validation.valid) {
-      setError(validation.message ?? "כמות לא תקינה");
+      setError(validation.error ?? "כמות לא תקינה");
       return;
     }
     addItem({ id: productId, name, price_per_unit: pricePerUnit, quantity: qty, image, is_bundle: false, min_type: minType, min_value: minValue, event_slug: eventSlug, style_slug: styleSlug });
