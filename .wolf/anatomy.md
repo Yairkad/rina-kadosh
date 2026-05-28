@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-28T18:58:17.521Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-28T19:13:37.840Z
 > Files: 85 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
@@ -40,7 +40,7 @@
 ## app/[locale]/(public)/
 
 - `layout.tsx` — PublicLayout (~150 tok)
-- `page.tsx` — HomePage (~432 tok)
+- `page.tsx` — revalidate (~463 tok)
 
 ## app/[locale]/(public)/cart/
 
@@ -48,19 +48,19 @@
 
 ## app/[locale]/(public)/catalog/
 
-- `page.tsx` — CatalogPage (~456 tok)
+- `page.tsx` — revalidate (~465 tok)
 
 ## app/[locale]/(public)/catalog/[event]/
 
-- `page.tsx` — EventPage (~999 tok)
+- `page.tsx` — revalidate (~1008 tok)
 
 ## app/[locale]/(public)/catalog/[event]/[style]/
 
-- `page.tsx` — StylePage (~1777 tok)
+- `page.tsx` — revalidate (~1786 tok)
 
 ## app/[locale]/(public)/catalog/[event]/[style]/[product]/
 
-- `page.tsx` — SITE_URL (~2073 tok)
+- `page.tsx` — revalidate (~2082 tok)
 
 ## app/[locale]/(public)/contact/
 
@@ -158,14 +158,14 @@
 
 ## app/api/og/
 
-- `route.tsx` — runtime (~1593 tok)
+- `route.tsx` — runtime (~1606 tok)
 
 ## components/admin/
 
 - `AdminSidebar.tsx` — AdminSidebar — sidebar nav 8 items + sign-out button (~789 tok)
 - `ArchiveBundleButton.tsx` — ArchiveBundleButton (~269 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
-- `BundleForm.tsx` — Field (~3944 tok)
+- `BundleForm.tsx` — Field (~3940 tok)
 - `CatalogManager.tsx` — EMPTY_FORM — renders form (~4249 tok)
 - `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~259 tok)
 - `GalleryItemForm.tsx` — GalleryItemForm (~2096 tok)

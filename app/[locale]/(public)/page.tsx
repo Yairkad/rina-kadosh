@@ -1,3 +1,5 @@
+export const revalidate = 300; // cache 5 min
+
 import { createClient } from "@/lib/supabase/server";
 import { getLocale, getTranslations } from "next-intl/server";
 import HeroSection from "@/components/home/HeroSection";

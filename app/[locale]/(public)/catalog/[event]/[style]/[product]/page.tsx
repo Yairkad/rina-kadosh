@@ -7,6 +7,8 @@ import ProductImageGallery from "@/components/product/ProductImageGallery";
 import ProductAddToCart from "@/components/product/ProductAddToCart";
 import ProductCard from "@/components/catalog/ProductCard";
 
+export const revalidate = 300;
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rina-kadosh.vercel.app";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

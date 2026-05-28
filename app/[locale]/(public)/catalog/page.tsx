@@ -1,3 +1,5 @@
+export const revalidate = 300;
+
 import { createClient } from "@/lib/supabase/server";
 import ExpandingEventCards from "@/components/catalog/ExpandingEventCards";
 import type { EventTypeItem } from "@/components/catalog/ExpandingEventCards";

@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og";
 import type { NextRequest } from "next/server";
 
 export const runtime = "edge";
+export const revalidate = 86400; // cache 24h
 
 async function loadFont(): Promise<ArrayBuffer | null> {
   try {
