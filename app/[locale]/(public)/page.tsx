@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import HeroSection from "@/components/home/HeroSection";
 import WhySection from "@/components/home/WhySection";
 import ExpandingEventCards from "@/components/catalog/ExpandingEventCards";
@@ -7,6 +7,7 @@ import type { EventTypeItem } from "@/components/catalog/ExpandingEventCards";
 
 export default async function HomePage() {
   const locale = await getLocale();
+  const t = await getTranslations("HomePage");
   const supabase = await createClient();
 
   const { data: eventTypes } = await supabase
