@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getLocale, getTranslations } from "next-intl/server";
 import HeroSection from "@/components/home/HeroSection";
 import WhySection from "@/components/home/WhySection";
+import AboutSection from "@/components/home/AboutSection";
 import ExpandingEventCards from "@/components/catalog/ExpandingEventCards";
 import type { EventTypeItem } from "@/components/catalog/ExpandingEventCards";
 
@@ -45,6 +46,7 @@ export default async function HomePage() {
       )}
 
       <WhySection />
+      <AboutSection locale={locale} />
 
     </>
   );
