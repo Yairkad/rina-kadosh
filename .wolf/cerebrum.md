@@ -35,7 +35,21 @@
 - **[2026-05-27] אל תוסיף טבלת product_variants** — המשתמש ביטל את הרעיון. כל מוצר קיים בסוג אחד מוגדר בלבד, אין גרסאות שונות.
 - **[2026-05-27] חבילות אינן דף נפרד** — חבילות הן סקשן בתוך `/catalog/[event]/[style]`, לא `/bundles` עצמאי.
 - **[2026-05-27] אל תציע Full RBAC / role system** — מנהל יחיד (רינה), is_admin boolean מספיק.
-- **[2026-05-27] אל תשתמש ב-Get-ChildItem בכלי Bash** — PowerShell cmdlets לא עובדים ב-Bash tool. להשתמש ב-`find` או בכלי Glob.
+- **[2026-05-28] Supabase: RLS + GRANT שניהם נדרשים** — RLS policy לבד לא מספיק. חובה גם `GRANT SELECT ON table TO anon, authenticated` אחרת מקבלים `permission denied`. זה חל על כל טבלה חדשה שנוצרת.
+- **[2026-05-28] ExpandingCards שייך לדף הבית** — המשתמש הבהיר שבחירת סוג אירוע עם הקומפוננטה צריכה להיות ישירות בדף הבית מתחת להירו, לא רק ב-/catalog.
+- **[2026-05-28] Remove-Item עם סוגריים מרובעים** — PowerShell מפרש `[locale]` כ-wildcard. תמיד להשתמש ב-`-LiteralPath` כשהנתיב מכיל סוגריים מרובעים.
+- **[2026-05-28] gallery_items סכמה שונה** — הטבלה כוללת `images` (ARRAY), `title_he`, `title_en`, `active` — לא `image_url`/`alt_he`/`alt_en`/`is_featured`.
+- **[2026-05-28] אל תשתמש ב-Get-ChildItem בכלי Bash** — PowerShell cmdlets לא עובדים ב-Bash tool. להשתמש ב-`find` או בכלי Glob.
+
+## Key Learnings (עדכון 2026-05-28)
+
+- **מבנה app/**: `app/[locale]/(public)/` לדפים ציבוריים, `app/[locale]/layout.tsx` מחזיק CartProvider+CartDrawer+CartRecoveryPopup.
+- **ExpandingCards**: משמש בדף הבית ישירות מתחת להירו (לא רק ב-/catalog). בחירת סגנון = גריד פשוט.
+- **ProductCard**: aspect-ratio 4/5, rounded-xl, QuickAddOverlay בdesktop hover, QuickAddMobileButton בmobile.
+- **CartContext**: localStorage key `rina-kadosh-cart`, פג תוקף 7 ימים, ולידציית min_type/min_value.
+- **Supabase MCP**: HTTP transport, צריך אימות מחדש בכל reload של IDE. auth זמני לסשן בלבד.
+- **WhatsApp**: `972533721938` (NEXT_PUBLIC_WHATSAPP_NUMBER).
+- **design-references/**: מוחרג מ-tsconfig כדי שלא ייכלל ב-build.
 
 ## Decision Log
 

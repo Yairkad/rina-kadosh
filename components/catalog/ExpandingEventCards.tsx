@@ -17,7 +17,7 @@ interface ExpandingEventCardsProps {
 }
 
 export default function ExpandingEventCards({ items }: ExpandingEventCardsProps) {
-  const [activeIndex, setActiveIndex] = React.useState<number>(0);
+  const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
   const [isDesktop, setIsDesktop] = React.useState(false);
   const locale = useLocale();
   const router = useRouter();
@@ -38,7 +38,7 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
     }
     return {
       gridTemplateColumns: "1fr",
-      gridTemplateRows: items.map((_, i) => i === activeIndex ? "5fr" : "1fr").join(" "),
+      gridTemplateRows: items.map((_, i) => i === activeIndex ? "4fr" : "1fr").join(" "),
     };
   }, [activeIndex, items.length, isDesktop]);
 
@@ -68,6 +68,7 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
             key={item.id}
             className="group relative cursor-pointer overflow-hidden rounded-2xl shadow-sm md:min-w-[72px] min-h-0"
             onMouseEnter={() => setActiveIndex(index)}
+            onMouseLeave={() => setActiveIndex(null)}
             onClick={() => handleClick(index, item.slug)}
             tabIndex={0}
             onFocus={() => setActiveIndex(index)}
@@ -90,15 +91,21 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
 
-            {/* Collapsed label (rotated, desktop only) */}
+            {/* Collapsed label — large vertical watermark, desktop only */}
             <h3
               className={cn(
-                "absolute bottom-6 start-1/2 -translate-x-1/2 text-xs font-medium uppercase tracking-widest text-white/70 whitespace-nowrap",
-                "transition-opacity duration-300",
-                "hidden md:block origin-center",
+                "absolute bottom-4 right-3 font-bold text-white/25 whitespace-nowrap select-none pointer-events-none",
+                "transition-opacity duration-500",
+                "hidden md:block",
                 active ? "opacity-0" : "opacity-100",
-                "rotate-90"
               )}
+              style={{
+                writingMode: "vertical-rl",
+                transform: "rotate(180deg)",
+                fontSize: "clamp(1.6rem, 3vw, 2.8rem)",
+                letterSpacing: "0.05em",
+                fontFeatureSettings: '"liga" 1, "dlig" 1, "calt" 1, "kern" 1',
+              }}
             >
               {item.name}
             </h3>

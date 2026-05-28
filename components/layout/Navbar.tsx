@@ -31,8 +31,9 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { href: `/${locale}`, label: locale === "he" ? "בית" : "Home" },
+    { href: `/${locale}/about`, label: locale === "he" ? "אודות" : "About" },
     { href: `/${locale}/catalog`, label: t("catalog") },
-    { href: `/${locale}/gallery`, label: t("gallery") },
     { href: `/${locale}/contact`, label: t("contact") },
   ];
 
@@ -41,9 +42,9 @@ export default function Navbar() {
       <motion.header
         className="fixed top-0 inset-x-0 z-50 transition-colors duration-300"
         animate={{
-          backgroundColor: scrolled ? "rgba(250,248,245,0.95)" : "transparent",
+          backgroundColor: scrolled ? "rgba(250,248,245,0.95)" : "rgba(250,248,245,0.0)",
           backdropFilter: scrolled ? "blur(12px)" : "blur(0px)",
-          boxShadow: scrolled ? "0 1px 20px rgba(0,0,0,0.06)" : "none",
+          boxShadow: scrolled ? "0 1px 20px rgba(0,0,0,0.06)" : "0 0 0 rgba(0,0,0,0)",
         }}
         transition={{ duration: 0.3 }}
       >

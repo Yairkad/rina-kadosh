@@ -32,8 +32,17 @@ export default async function EventPage({ params }: Props) {
   const eventName = locale === "he" ? eventType.name_he : eventType.name_en;
 
   return (
-    <section className="min-h-screen px-4 py-16 sm:px-6 lg:px-8">
+    <section className="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
+        {/* Back button */}
+        <Link
+          href={`/${locale}`}
+          className="inline-flex items-center gap-1.5 text-sm text-[var(--muted)] hover:text-[var(--gold)] transition-colors mb-10"
+        >
+          <span>{locale === "he" ? "→" : "←"}</span>
+          {locale === "he" ? "חזרה לדף הבית" : "Back to Home"}
+        </Link>
+
         <div className="mb-12 text-center">
           <p className="text-xs uppercase tracking-widest text-[var(--gold)] mb-2">
             {locale === "he" ? "סגנונות עיצוב" : "Design Styles"}

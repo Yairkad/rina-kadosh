@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { getLocale } from "next-intl/server";
+import Link from "next/link";
 import ProductCard from "@/components/catalog/ProductCard";
 
 interface Props {
@@ -46,11 +47,23 @@ export default async function StylePage({ params }: Props) {
 
   const styleName = locale === "he" ? designStyle.name_he : designStyle.name_en;
 
+  const eventName = locale === "he" ? eventType.name_he : eventType.name_en;
+
   return (
     <section className="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
+        {/* Back button */}
+        <Link
+          href={`/${locale}/catalog/${event}`}
+          className="inline-flex items-center gap-1.5 text-sm text-[var(--muted)] hover:text-[var(--gold)] transition-colors mb-10"
+        >
+          <span>{locale === "he" ? "→" : "←"}</span>
+          {locale === "he" ? `חזרה לסגנונות ${eventName}` : `Back to ${eventName} styles`}
+        </Link>
+
         {/* Header */}
         <div className="mb-10 text-center">
+          <p className="text-xs uppercase tracking-widest text-[var(--gold)] mb-2">{eventName}</p>
           <h1 className="text-3xl sm:text-4xl font-bold text-[var(--charcoal)]">
             {styleName}
           </h1>

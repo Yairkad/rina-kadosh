@@ -8,7 +8,20 @@
   "home": {
     "title": "Rina Kadosh",
     "subtitle": "Branded printed products for memorable events",
-    "cta": "Browse Catalog"
+    "cta": "Browse Catalog",
+    "tagline": "Because every detail matters",
+    "events_title": "Every event, its own style",
+    "events_subtitle": "Weddings, bar mitzvahs, Shabbat, corporate — personalized design for every occasion",
+    "why_title": "Why choose Rina Kadosh?",
+    "why_1_title": "Personal Design",
+    "why_1_desc": "Every product is tailored to your event's style and color palette",
+    "why_2_title": "Premium Quality",
+    "why_2_desc": "Printed on premium materials with stunning results that leave a lasting impression",
+    "why_3_title": "Personal Service",
+    "why_3_desc": "Dedicated support from order to delivery",
+    "gallery_title": "Selected Works",
+    "gallery_cta": "View Full Gallery",
+    "contact_cta": "Contact Us"
   },
   "catalog": {
     "title": "Product Catalog",
@@ -21,8 +34,8 @@
     "addToCart": "Add to Cart",
     "quantity": "Quantity",
     "minOrder": "Minimum Order",
-    "minUnits": "{{value}} units",
-    "minAmount": "₪{{value}}",
+    "minUnits": "{value} units",
+    "minAmount": "₪{value}",
     "related": "Complementary Products",
     "similar": "Similar Products"
   },
@@ -54,15 +67,33 @@
     "in_production": "In Production",
     "ready": "Ready for Pickup",
     "delivered": "Delivered",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "page_title": "Order Tracking",
+    "subtitle": "Enter your order number and email to check the status",
+    "order_number_label": "Order Number",
+    "order_number_placeholder": "RK-20240101-001",
+    "email_label": "Email",
+    "search": "Check Status",
+    "not_found": "No order found with these details",
+    "order_summary": "Order Details"
   },
   "gallery": {
-    "title": "Gallery"
+    "title": "Gallery",
+    "subtitle": "Inspiration and works we're proud of",
+    "filter_all": "All",
+    "empty": "Gallery is coming soon!"
   },
   "contact": {
     "title": "Contact Us",
+    "subtitle": "We'd love to hear from you — we'll be in touch soon",
+    "whatsapp_cta": "Send a WhatsApp message",
+    "name": "Full Name",
+    "phone": "Phone",
+    "email": "Email",
     "message": "Message",
-    "send": "Send"
+    "send": "Send",
+    "sent": "Message sent! We'll get back to you soon.",
+    "hours": "Available Sun–Fri, 9:00–19:00"
   },
   "common": {
     "loading": "Loading...",

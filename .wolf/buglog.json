@@ -1,4 +1,133 @@
 {
   "version": 1,
-  "bugs": []
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-05-28T16:02:53.124Z",
+      "error_message": "Significant refactor of ",
+      "file": "components/layout/Navbar.tsx",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 9→13 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T16:02:53.124Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-05-28T17:07:38.998Z",
+      "error_message": "Missing guard clause",
+      "file": "app/[locale]/(public)/page.tsx",
+      "root_cause": "No early return/throw for edge case: previewImgs.length >= 6",
+      "fix": "Added guard clause: if (previewImgs.length >= 6)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T17:07:38.998Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-05-28T17:33:46.106Z",
+      "error_message": "CSS fix: backgroundColor, boxShadow",
+      "file": "components/layout/Navbar.tsx",
+      "root_cause": "backgroundColor: scrolled ? \"rgba(250,248,245,0.95)\" : \"transparent\", → scrolled ? \"rgba(250,248,245,0.95)\" : \"rgba(250,248,245,0.0)\",; boxShadow: scrolled ? \"0 1px 20px rgba(0,0,0,0.06)\" : \"none\", → scrolled ? \"0 1px 20px rgba(0,0,0,0.06)\" : \"0 0 0 rgba(0,0,0,0)\",",
+      "fix": "Changed backgroundColor: scrolled ? \"rgba(250,248,245,0.95)\" : \"transparent\", → scrolled ? \"rgba(250,248,245,0.95)\" : \"rgba(250,248,245,0.0)\",; boxShadow: scrolled ? \"0 1px 20px rgba(0,0,0,0.06)\" : \"none\", → scrolled ? \"0 1px 20px rgba(0,0,0,0.06)\" : \"0 0 0 rgba(0,0,0,0)\",",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T17:33:46.106Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-05-28T17:33:54.225Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/home/HeroSection.tsx",
+      "root_cause": "Had \"relative min-h-[92vh] flex items-center justify-c",
+      "fix": "Changed to \"relative min-h-[75vh] flex items-center justify-c",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T17:33:54.225Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-05-28T17:39:05.328Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/[locale]/(public)/catalog/page.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T17:39:05.328Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-05-28T17:39:17.066Z",
+      "error_message": "CSS fix: data",
+      "file": "app/[locale]/(public)/page.tsx",
+      "root_cause": "data: galleryItems → eventTypes",
+      "fix": "Changed data: galleryItems → eventTypes",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-28T17:42:16.626Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-05-28T17:51:36.019Z",
+      "error_message": "CSS fix: hover",
+      "file": "components/layout/Footer.tsx",
+      "root_cause": "hover: text-[var(--gold)] transition-colors\">מעקב הזמנה</Link></li> → text-[var(--gold)] transition-colors\">{t(\"contact\")",
+      "fix": "Changed hover: text-[var(--gold)] transition-colors\">מעקב הזמנה</Link></li> → text-[var(--gold)] transition-colors\">{t(\"contact\")",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T17:51:36.019Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-05-28T17:53:05.827Z",
+      "error_message": "CSS fix: gridTemplateRows",
+      "file": "components/catalog/ExpandingEventCards.tsx",
+      "root_cause": "gridTemplateRows: items.map((_, i) => i === activeIndex ? \"5fr\" : \"1fr\").join(\" \"), → items.map((_, i) => i === activeIndex ? \"4fr\" : \"1fr\").join(\" \"),",
+      "fix": "Changed gridTemplateRows: items.map((_, i) => i === activeIndex ? \"5fr\" : \"1fr\").join(\" \"), → items.map((_, i) => i === activeIndex ? \"4fr\" : \"1fr\").join(\" \"),",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-05-28T17:58:53.505Z"
+    }
+  ]
 }
