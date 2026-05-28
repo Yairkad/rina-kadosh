@@ -95,3 +95,11 @@
 | 18:25 | DB migration 001: 8 טבלאות + RLS + triggers + indexes | supabase/migrations/001_initial_schema.sql | done | ~2500 |
 | 18:30 | Storage buckets (products/logos/gallery) + policies migration 002 | Supabase Storage | done | ~400 |
 | 18:22 | Created .gitignore | — | ~104 |
+| 18:23 | Session end: 1 writes across 1 files (.gitignore) | 6 reads | ~635 tok |
+| 18:24 | Session end: 1 writes across 1 files (.gitignore) | 6 reads | ~635 tok |
+| 18:25 | Session end: 1 writes across 1 files (.gitignore) | 6 reads | ~635 tok |
+| 18:27 | Edited .gitignore | 2→7 lines | ~18 |
+| 18:28 | Session end: 2 writes across 1 files (.gitignore) | 7 reads | ~759 tok |
+| 18:29 | Session end: 2 writes across 1 files (.gitignore) | 7 reads | ~759 tok |
+| 18:32 | Session end: 2 writes across 1 files (.gitignore) | 7 reads | ~759 tok |
+| 18:33 | Edited tsconfig.json | inline fix | ~15 |

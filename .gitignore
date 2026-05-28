@@ -12,6 +12,11 @@
 # Supabase temp files
 supabase/.temp/
 
+# Next.js
+/.next/
+/out/
+next-env.d.ts
+
 # Node modules
 node_modules/
 

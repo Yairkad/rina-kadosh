@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-28T15:22:45.527Z
-> Files: 12 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-28T15:33:51.335Z
+> Files: 13 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -11,10 +11,11 @@
 
 ## ./
 
-- `.gitignore` — Git ignore rules (~104 tok)
+- `.gitignore` — Git ignore rules (~115 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `OVERVIEW.html` — רינה קדוש — סיכום האתר (~7732 tok)
 - `SPEC.md` — רינה קדוש / Rina Kadosh — מפרט פרויקט מלא (~3397 tok)
+- `tsconfig.json` — TypeScript configuration (~170 tok)
 
 ## .claude/
 
