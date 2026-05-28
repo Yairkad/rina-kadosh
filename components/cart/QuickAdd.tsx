@@ -71,17 +71,17 @@ export function QuickAddOverlay(props: QuickAddProps) {
       ) : (
         <>
           <div className="flex items-center gap-2 bg-white/10 rounded-full px-2 py-1">
-            <button onClick={() => changeQty(-1)} className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors">
+            <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); changeQty(-1); }} className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors">
               <Minus size={12} />
             </button>
             <span className="text-white font-semibold w-8 text-center tabular-nums">{qty}</span>
-            <button onClick={() => changeQty(1)} className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors">
+            <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); changeQty(1); }} className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors">
               <Plus size={12} />
             </button>
           </div>
           {error && <p className="text-red-300 text-xs px-3 text-center">{error}</p>}
           <button
-            onClick={handleAdd}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleAdd(); }}
             className="flex items-center gap-1.5 bg-white text-[var(--charcoal)] text-xs font-semibold px-4 py-2 rounded-full hover:bg-[var(--gold)] hover:text-white transition-colors"
           >
             <ShoppingBag size={13} />

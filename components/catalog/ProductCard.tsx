@@ -50,28 +50,26 @@ export default function ProductCard({
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      <div className="group block">
+      <Link href={href} className="group block">
         {/* Image container */}
         <div
           className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-gray-100 cursor-pointer"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          <Link href={href} className="absolute inset-0">
-            {image ? (
-              <Image
-                src={image}
-                alt={name}
-                fill
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
-                <span className="text-4xl text-gray-200">✦</span>
-              </div>
-            )}
-          </Link>
+          {image ? (
+            <Image
+              src={image}
+              alt={name}
+              fill
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+              <span className="text-4xl text-gray-200">✦</span>
+            </div>
+          )}
 
           {/* Desktop: hover overlay */}
           <div className="hidden md:block">
@@ -87,24 +85,22 @@ export default function ProductCard({
         </div>
 
         {/* Text */}
-        <Link href={href}>
-          <div className="mt-3 px-1">
-            <h3 className="text-sm font-medium text-[var(--charcoal)] leading-snug line-clamp-2">
-              {name}
-            </h3>
-            <div className="mt-1 flex items-baseline gap-2">
-              <span className="text-sm font-semibold text-[var(--charcoal)]">
-                ₪{price.toLocaleString("he-IL")}
+        <div className="mt-3 px-1">
+          <h3 className="text-sm font-medium text-[var(--charcoal)] leading-snug line-clamp-2">
+            {name}
+          </h3>
+          <div className="mt-1 flex items-baseline gap-2">
+            <span className="text-sm font-semibold text-[var(--charcoal)]">
+              ₪{price.toLocaleString("he-IL")}
+            </span>
+            {minType && minValue && (
+              <span className="text-xs text-[var(--muted)]">
+                {minType === "units" ? `מינ׳ ${minValue} יח׳` : `מינ׳ ₪${minValue}`}
               </span>
-              {minType && minValue && (
-                <span className="text-xs text-[var(--muted)]">
-                  {minType === "units" ? `מינ׳ ${minValue} יח׳` : `מינ׳ ₪${minValue}`}
-                </span>
-              )}
-            </div>
+            )}
           </div>
-        </Link>
-      </div>
+        </div>
+      </Link>
     </motion.div>
   );
 }
