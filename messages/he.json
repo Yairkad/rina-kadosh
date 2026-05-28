@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "catalog": "קטלוג",
+    "gallery": "גלריה",
+    "contact": "צור קשר",
+    "cart": "עגלה"
+  },
+  "home": {
+    "title": "רינה קדוש",
+    "subtitle": "מוצרים מודפסים למיתוג ושדרוג אווירה באירועים",
+    "cta": "לקטלוג המוצרים"
+  },
+  "catalog": {
+    "title": "קטלוג מוצרים",
+    "chooseEvent": "בחרי סוג אירוע",
+    "chooseStyle": "בחרי סגנון עיצוב",
+    "bundles": "חבילות מומלצות",
+    "allProducts": "כל המוצרים"
+  },
+  "product": {
+    "addToCart": "הוסף לסל",
+    "quantity": "כמות",
+    "minOrder": "מינימום הזמנה",
+    "minUnits": "{{value}} יחידות",
+    "minAmount": "₪{{value}}",
+    "related": "מוצרים משלימים",
+    "similar": "מוצרים דומים"
+  },
+  "cart": {
+    "title": "העגלה שלך",
+    "empty": "העגלה ריקה",
+    "total": "סה\"כ",
+    "checkout": "המשך להזמנה",
+    "crossSell": "לקוחות שהזמינו אלו הזמינו גם",
+    "savedCart": "יש לך עגלה שמורה, רוצה להמשיך?"
+  },
+  "order": {
+    "name": "שם מלא",
+    "phone": "טלפון",
+    "email": "אימייל",
+    "pickup": "איסוף עצמי",
+    "delivery": "משלוח",
+    "address": "כתובת למשלוח",
+    "deliveryNotes": "הערות משלוח / זמן איסוף",
+    "logo": "העלאת לוגו (אופציונלי)",
+    "notes": "בקשות מיוחדות (אופציונלי)",
+    "submit": "שלח הזמנה",
+    "success": "ההזמנה נשלחה בהצלחה!",
+    "orderNumber": "מספר הזמנה"
+  },
+  "status": {
+    "pending": "ממתין לאישור",
+    "confirmed": "אושר",
+    "in_production": "בייצור",
+    "ready": "מוכן למסירה",
+    "delivered": "נמסר",
+    "cancelled": "בוטל"
+  },
+  "gallery": {
+    "title": "גלריה"
+  },
+  "contact": {
+    "title": "צור קשר",
+    "message": "הודעה",
+    "send": "שלח"
+  },
+  "common": {
+    "loading": "טוען...",
+    "error": "שגיאה",
+    "save": "שמור",
+    "cancel": "ביטול",
+    "delete": "מחק",
+    "edit": "עריכה",
+    "back": "חזור",
+    "currency": "₪"
+  }
+}

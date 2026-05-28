@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "catalog": "Catalog",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "cart": "Cart"
+  },
+  "home": {
+    "title": "Rina Kadosh",
+    "subtitle": "Branded printed products for memorable events",
+    "cta": "Browse Catalog"
+  },
+  "catalog": {
+    "title": "Product Catalog",
+    "chooseEvent": "Choose Event Type",
+    "chooseStyle": "Choose Design Style",
+    "bundles": "Recommended Bundles",
+    "allProducts": "All Products"
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "quantity": "Quantity",
+    "minOrder": "Minimum Order",
+    "minUnits": "{{value}} units",
+    "minAmount": "₪{{value}}",
+    "related": "Complementary Products",
+    "similar": "Similar Products"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "total": "Total",
+    "checkout": "Proceed to Order",
+    "crossSell": "Customers who ordered these also ordered",
+    "savedCart": "You have a saved cart, want to continue?"
+  },
+  "order": {
+    "name": "Full Name",
+    "phone": "Phone",
+    "email": "Email",
+    "pickup": "Pickup",
+    "delivery": "Delivery",
+    "address": "Delivery Address",
+    "deliveryNotes": "Delivery notes / Pickup time",
+    "logo": "Upload Logo (optional)",
+    "notes": "Special Requests (optional)",
+    "submit": "Place Order",
+    "success": "Order placed successfully!",
+    "orderNumber": "Order Number"
+  },
+  "status": {
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "in_production": "In Production",
+    "ready": "Ready for Pickup",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled"
+  },
+  "gallery": {
+    "title": "Gallery"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "message": "Message",
+    "send": "Send"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "currency": "₪"
+  }
+}
