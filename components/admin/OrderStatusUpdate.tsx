@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { updateOrderStatus, updateOrderNotes } from "@/app/admin/actions/orders";
+import { updateOrderStatus } from "@/app/admin/actions/orders";
 import { Check, Loader2 } from "lucide-react";
 
 type OrderStatus =

@@ -131,8 +131,8 @@ export default async function ProductsPage({
               <tbody className="divide-y divide-stone-50">
                 {products.map((product) => {
                   const thumbnail = product.images?.[0];
-                  const eventType = (product as any).event_types as { name_he: string } | null;
-                  const designStyle = (product as any).design_styles as { name_he: string } | null;
+                  const eventType = (product as { event_types: { name_he: string } | null }).event_types;
+                  const designStyle = (product as { design_styles: { name_he: string } | null }).design_styles;
 
                   return (
                     <tr key={product.id} className="hover:bg-stone-50/80 transition-colors group">
