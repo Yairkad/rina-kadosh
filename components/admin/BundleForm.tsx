@@ -207,7 +207,7 @@ export default function BundleForm({ products, eventTypes, styles, initial, mode
             </Field>
             <Field label="מחיר מקורי (לפני הנחה)">
               <Input type="number" min={0} step={0.01}
-                value={form.original_price ?? calculatedOriginal || ""}
+                value={(form.original_price ?? calculatedOriginal) || ""}
                 onChange={(e) => set("original_price", e.target.value ? parseFloat(e.target.value) : null)}
                 placeholder={String(calculatedOriginal || "")} />
             </Field>
