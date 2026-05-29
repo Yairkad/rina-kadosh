@@ -235,7 +235,7 @@ export default function MaterialsManager({ materials, bom, openOrders }: {
                   {editing === m.id ? (
                     <div className="p-4">
                       <MaterialForm
-                        initial={{ name_he: m.name_he, unit: m.unit, stock_quantity: m.stock_quantity, low_stock_threshold: m.low_stock_threshold, cost_per_unit: m.cost_per_unit, supplier_notes: m.supplier_notes }}
+                        initial={{ name_he: m.name_he, unit: m.unit, stock_quantity: m.stock_quantity, low_stock_threshold: m.low_stock_threshold, cost_per_unit: m.cost_per_unit, supplier_notes: m.supplier_notes, order_url: m.order_url }}
                         loading={isPending} error={formError}
                         onCancel={() => { setEditing(null); setFormError(""); }}
                         onSave={(d) => act(() => updateMaterial(m.id, d))} />
