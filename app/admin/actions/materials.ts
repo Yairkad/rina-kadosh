@@ -14,7 +14,7 @@ async function getAdminClient() {
 
 export async function createMaterial(data: {
   name_he: string; unit: string; stock_quantity: number;
-  low_stock_threshold: number; cost_per_unit: number; supplier_notes?: string | null;
+  low_stock_threshold: number; cost_per_unit: number; supplier_notes?: string | null; order_url?: string | null;
 }) {
   const supabase = await getAdminClient();
   if (!supabase) return { error: "Unauthorized" };
@@ -26,7 +26,7 @@ export async function createMaterial(data: {
 
 export async function updateMaterial(id: string, data: {
   name_he?: string; unit?: string; stock_quantity?: number;
-  low_stock_threshold?: number; cost_per_unit?: number; supplier_notes?: string | null;
+  low_stock_threshold?: number; cost_per_unit?: number; supplier_notes?: string | null; order_url?: string | null;
 }) {
   const supabase = await getAdminClient();
   if (!supabase) return { error: "Unauthorized" };

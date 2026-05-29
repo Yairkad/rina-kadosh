@@ -470,3 +470,33 @@
 | 12:48 | Edited app/admin/actions/orders.ts | added 1 import(s) | ~49 |
 | 12:48 | Edited app/admin/actions/orders.ts | added optional chaining | ~93 |
 | 12:49 | Edited components/admin/AdminSidebar.tsx | 23→25 lines | ~209 |
+| 13:46 | Edited app/admin/(protected)/materials/page.tsx | 5→4 lines | ~66 |
+| 13:46 | Edited app/admin/(protected)/materials/page.tsx | 6→5 lines | ~38 |
+| 13:46 | Edited components/admin/MaterialsManager.tsx | 2→1 lines | ~25 |
+| 13:46 | Edited components/admin/MaterialsManager.tsx | modified MaterialsManager() | ~42 |
+| 13:48 | Edited app/admin/actions/materials.ts | 2→2 lines | ~24 |
+| 13:48 | Edited components/admin/MaterialsManager.tsx | inline fix | ~20 |
+| 13:52 | Edited app/admin/actions/materials.ts | modified createMaterial() | ~55 |
+| 13:52 | Edited app/admin/actions/materials.ts | modified updateMaterial() | ~60 |
+| 13:57 | Session end: 61 writes across 12 files (layout.tsx, AdminSidebar.tsx, CreateOrderForm.tsx, phone.ts, page.tsx) | 21 reads | ~54560 tok |
+| 15:39 | Session end: 61 writes across 12 files (layout.tsx, AdminSidebar.tsx, CreateOrderForm.tsx, phone.ts, page.tsx) | 21 reads | ~54560 tok |
+| 15:43 | Edited components/admin/ProductForm.tsx | added 1 condition(s) | ~300 |
+| 15:43 | Edited components/admin/ProductForm.tsx | inline fix | ~21 |
+| 15:43 | Edited components/admin/ProductForm.tsx | 4→4 lines | ~62 |
+| 15:44 | Edited components/admin/ProductForm.tsx | expanded (+35 lines) | ~1145 |
+| 15:44 | Edited components/admin/ProductForm.tsx | modified Input() | ~169 |
+| 15:44 | Edited components/admin/ProductForm.tsx | "flex items-center gap-2 t" → "flex items-center gap-2 t" | ~52 |
+| 15:44 | Edited components/admin/ProductForm.tsx | "text-sm px-6 py-3 border " → "text-sm px-6 py-3 border " | ~40 |
+| 15:44 | Edited components/admin/MaterialsManager.tsx | CSS: val | ~52 |
+| 15:44 | Edited components/admin/MaterialsManager.tsx | 2→3 lines | ~62 |
+| 15:45 | Edited components/admin/MaterialsManager.tsx | 2→3 lines | ~65 |
+| 15:45 | Edited components/admin/MaterialsManager.tsx | 2→3 lines | ~62 |
+| 15:45 | Edited components/admin/MaterialsManager.tsx | 2→3 lines | ~68 |
+| 15:45 | Edited components/admin/MaterialsManager.tsx | CSS: active | ~85 |
+| 15:46 | Edited components/admin/MaterialsManager.tsx | CSS: order_url | ~52 |
+| 15:46 | Edited components/admin/MaterialsManager.tsx | CSS: order_url | ~50 |
+| 15:47 | Edited components/admin/MaterialsManager.tsx | CSS: https | ~244 |
+| 15:47 | Edited components/admin/MaterialsManager.tsx | inline fix | ~33 |
+| 15:47 | Edited components/admin/MaterialsManager.tsx | CSS: active, active | ~258 |
+| 15:47 | Edited app/admin/actions/materials.ts | modified createMaterial() | ~62 |
+| 15:47 | Edited app/admin/actions/materials.ts | modified updateMaterial() | ~67 |

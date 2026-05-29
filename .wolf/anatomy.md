@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-29T09:49:18.974Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-29T12:47:46.120Z
 > Files: 98 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
@@ -133,7 +133,7 @@
 
 ## app/admin/(protected)/materials/
 
-- `page.tsx` — MaterialsPage (~365 tok)
+- `page.tsx` — MaterialsPage (~316 tok)
 
 ## app/admin/(protected)/orders/
 
@@ -165,7 +165,7 @@
 - `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1207 tok)
 - `create-order.ts` — Exports ManualOrderItem, ManualOrderData, createManualOrder (~465 tok)
 - `gallery.ts` — Exports GalleryFormData, createGalleryItem, updateGalleryItem, deleteGalleryItem (~511 tok)
-- `materials.ts` — Exports createMaterial, updateMaterial, deleteMaterial, addStockQuantity + 2 more (~1397 tok)
+- `materials.ts` — Exports createMaterial, updateMaterial, deleteMaterial, addStockQuantity + 2 more (~1420 tok)
 - `orders.ts` — Exports updateOrderStatus, updateOrderNotes (~687 tok)
 - `products.ts` — Exports ProductFormData, createProduct, updateProduct, archiveProduct (~773 tok)
 
@@ -187,10 +187,10 @@
 - `CreateOrderForm.tsx` — Input (~3824 tok)
 - `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~281 tok)
 - `GalleryItemForm.tsx` — GalleryItemForm (~2096 tok)
-- `MaterialsManager.tsx` — UNIT_LABELS (~4412 tok)
+- `MaterialsManager.tsx` — stripLeadingZero (~4795 tok)
 - `OrderStatusUpdate.tsx` — STATUS_OPTIONS (~1171 tok)
 - `ProductFilters.tsx` — ProductFilters (~1559 tok)
-- `ProductForm.tsx` — STATUS_OPTIONS (~4650 tok)
+- `ProductForm.tsx` — initBOMEntries (~5441 tok)
 - `ProductionStatusButton.tsx` — ProductionStatusButton (~328 tok)
 
 ## components/cart/

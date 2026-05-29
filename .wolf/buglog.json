@@ -720,6 +720,118 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-29T09:48:59.997Z"
+    },
+    {
+      "id": "bug-046",
+      "timestamp": "2026-05-29T10:46:35.073Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/admin/(protected)/materials/page.tsx",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→4 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T10:46:35.073Z"
+    },
+    {
+      "id": "bug-047",
+      "timestamp": "2026-05-29T10:48:26.866Z",
+      "error_message": "Wrong reference: deductions should be Array",
+      "file": "app/admin/actions/materials.ts",
+      "root_cause": "Used \"deductions\" instead of \"Array\"",
+      "fix": "Changed deductions → Array",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T10:48:26.866Z"
+    },
+    {
+      "id": "bug-048",
+      "timestamp": "2026-05-29T12:43:05.339Z",
+      "error_message": "CSS fix: material_id, quantity_per_unit",
+      "file": "components/admin/ProductForm.tsx",
+      "root_cause": "material_id: string → e.material_id,; quantity_per_unit: number → e.mode === \"yields\" ? 1 / Number(e.value) : Number(e.value),",
+      "fix": "Changed material_id: string → e.material_id,; quantity_per_unit: number → e.mode === \"yields\" ? 1 / Number(e.value) : Number(e.value),",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-29T12:44:00.096Z"
+    },
+    {
+      "id": "bug-049",
+      "timestamp": "2026-05-29T12:44:20.938Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/admin/ProductForm.tsx",
+      "root_cause": "Had \"flex items-center gap-2 text-sm px-6 py-3 bg-ston",
+      "fix": "Changed to \"flex items-center gap-2 text-sm px-6 py-3 bg-ston",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-29T12:44:29.071Z"
+    },
+    {
+      "id": "bug-050",
+      "timestamp": "2026-05-29T12:44:37.771Z",
+      "error_message": "Type error",
+      "file": "components/admin/MaterialsManager.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T12:44:37.771Z"
+    },
+    {
+      "id": "bug-051",
+      "timestamp": "2026-05-29T12:45:26.504Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/admin/MaterialsManager.tsx",
+      "root_cause": "Had \"flex items-center gap-1.5 text-sm px-4 py-2 bg-st",
+      "fix": "Changed to \"flex items-center gap-1.5 text-sm px-4 py-2 bg-st",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T12:45:26.504Z"
+    },
+    {
+      "id": "bug-052",
+      "timestamp": "2026-05-29T12:46:54.019Z",
+      "error_message": "CSS fix: low_stock_threshold",
+      "file": "components/admin/MaterialsManager.tsx",
+      "root_cause": "low_stock_threshold: 0, cost_per_unit: 0, supplier_notes: null, → 0, cost_per_unit: 0, supplier_notes: null, order_url: null,",
+      "fix": "Changed low_stock_threshold: 0, cost_per_unit: 0, supplier_notes: null, → 0, cost_per_unit: 0, supplier_notes: null, order_url: null,",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-05-29T12:47:29.621Z"
     }
   ]
 }

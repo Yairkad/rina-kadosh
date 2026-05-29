@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Plus, Pencil, Trash2, Check, X, Loader2, PackagePlus, AlertTriangle } from "lucide-react";
+import { Plus, Pencil, Trash2, Check, X, Loader2, PackagePlus, AlertTriangle, ShoppingCart } from "lucide-react";
 
 function stripLeadingZero(val: string) { return val.replace(/^0+(\d)/, "$1"); }
 import {
@@ -13,7 +13,7 @@ type Unit = "sheet" | "meter" | "piece" | "gram" | "roll";
 type Material = {
   id: string; name_he: string; unit: Unit;
   stock_quantity: number; low_stock_threshold: number;
-  cost_per_unit: number; supplier_notes: string | null;
+  cost_per_unit: number; supplier_notes: string | null; order_url: string | null;
 };
 type BOMRow = { product_id: string; material_id: string; quantity_per_unit: number };
 type OpenOrder = { items: { product_id?: string; quantity: number; is_bundle: boolean }[] };
@@ -24,7 +24,7 @@ const UNIT_LABELS: Record<Unit, string> = {
 
 const EMPTY: Omit<Material, "id"> = {
   name_he: "", unit: "piece", stock_quantity: 0,
-  low_stock_threshold: 0, cost_per_unit: 0, supplier_notes: null,
+  low_stock_threshold: 0, cost_per_unit: 0, supplier_notes: null, order_url: null,
 };
 
 function stockStatus(m: Material) {
@@ -88,10 +88,17 @@ function MaterialForm({ initial, onSave, onCancel, loading, error }: {
             className="w-full text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400" />
         </div>
       </div>
-      <div>
-        <label className="block text-xs text-stone-500 mb-1">הערות ספק</label>
-        <input value={f.supplier_notes ?? ""} onChange={(e) => set("supplier_notes", e.target.value || null)}
-          className="w-full text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400" placeholder="שם ספק, קוד מוצר..." />
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="block text-xs text-stone-500 mb-1">הערות ספק</label>
+          <input value={f.supplier_notes ?? ""} onChange={(e) => set("supplier_notes", e.target.value || null)}
+            className="w-full text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400" placeholder="שם ספק, קוד מוצר..." />
+        </div>
+        <div>
+          <label className="block text-xs text-stone-500 mb-1">קישור להזמנה (URL)</label>
+          <input type="url" value={f.order_url ?? ""} onChange={(e) => set("order_url", e.target.value || null)}
+            className="w-full text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400" placeholder="https://..." />
+        </div>
       </div>
       {error && <p className="text-red-600 text-xs bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
       <div className="flex gap-2">
@@ -268,8 +275,14 @@ export default function MaterialsManager({ materials, bom, openOrders }: {
                           {toOrder > 0 && <span className="text-red-500 font-medium">להזמין: {toOrder.toFixed(2)}</span>}
                         </div>
                       </div>
+                      {m.order_url && (
+                        <a href={m.order_url} target="_blank" rel="noopener noreferrer"
+                          className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 border border-blue-200 rounded-lg px-2.5 py-1.5 hover:bg-blue-50 transition-colors opacity-0 group-hover:opacity-100 active:scale-95">
+                          <ShoppingCart size={13} /> הזמן
+                        </a>
+                      )}
                       <button onClick={() => { setRestocking(m.id); setRestockAmt(""); }}
-                        className="flex items-center gap-1 text-xs text-stone-500 hover:text-stone-800 border border-stone-200 rounded-lg px-2.5 py-1.5 hover:bg-stone-100 transition-colors opacity-0 group-hover:opacity-100">
+                        className="flex items-center gap-1 text-xs text-stone-500 hover:text-stone-800 border border-stone-200 rounded-lg px-2.5 py-1.5 hover:bg-stone-100 transition-colors opacity-0 group-hover:opacity-100 active:scale-95">
                         <PackagePlus size={13} /> קבלת סחורה
                       </button>
                       <button onClick={() => setEditing(m.id)}
