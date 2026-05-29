@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, ArrowRight } from "lucide-react";
+import { Loader2, ArrowRight, Plus, X } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
 import { createBundle, updateBundle, type BundleFormData } from "@/app/admin/actions/bundles";
 
