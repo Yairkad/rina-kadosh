@@ -91,8 +91,7 @@ function ItemForm({ initial, onSave, onCancel, loading, error, label }: {
   );
 }
 
-function QuickProductForm({ eventTypeId, styleId, styleCount, onSave, onCancel, loading, error }: {
-  eventTypeId: string; styleId: string; styleCount: number;
+function QuickProductForm({ onSave, onCancel, loading, error }: {
   onSave: (d: { name_he: string; name_en: string; price_per_unit: number }) => void;
   onCancel: () => void; loading: boolean; error: string;
 }) {
@@ -305,7 +304,6 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
 
                               {addingProductFor === style.id ? (
                                 <QuickProductForm
-                                  eventTypeId={et.id} styleId={style.id} styleCount={styleProducts.length}
                                   loading={isPending} error={formError}
                                   onCancel={() => { setAddingProductFor(null); setFormError(""); }}
                                   onSave={(data) => handleAction(() => quickCreateProduct({
