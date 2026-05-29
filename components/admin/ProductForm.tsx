@@ -384,62 +384,70 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
 
             {bom.map((row, i) => {
               const mat = materials.find((m) => m.id === row.material_id);
-              const unitLabel = mat ? (UNIT_LABELS[mat.unit] ?? mat.unit) : "יחידה";
+              const unitLabel = mat ? (UNIT_LABELS[mat.unit] ?? mat.unit) : "יחידת חומר";
+              const numVal = Number(row.value);
+
               return (
-                <div key={i} className="flex flex-wrap items-center gap-2 bg-stone-50 rounded-xl p-3">
-                  {/* Material */}
-                  <select
-                    value={row.material_id}
-                    onChange={(e) => setBom((b) => b.map((r, idx) => idx === i ? { ...r, material_id: e.target.value } : r))}
-                    className="flex-1 min-w-[140px] text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 bg-white"
-                  >
-                    <option value="">— בחר חומר —</option>
-                    {materials.map((m) => <option key={m.id} value={m.id}>{m.name_he}</option>)}
-                  </select>
+                <div key={i} className="bg-stone-50 rounded-xl border border-stone-200 p-4 space-y-3">
+                  {/* Row 1: material + delete */}
+                  <div className="flex items-center gap-2">
+                    <select
+                      value={row.material_id}
+                      onChange={(e) => setBom((b) => b.map((r, idx) => idx === i ? { ...r, material_id: e.target.value } : r))}
+                      className="flex-1 text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 bg-white font-medium"
+                    >
+                      <option value="">— בחר חומר —</option>
+                      {materials.map((m) => <option key={m.id} value={m.id}>{m.name_he}</option>)}
+                    </select>
+                    <button type="button" onClick={() => setBom((b) => b.filter((_, idx) => idx !== i))}
+                      className="p-1.5 rounded-lg text-stone-400 hover:text-red-500 hover:bg-red-50 active:scale-95 transition-all">
+                      <X size={14} />
+                    </button>
+                  </div>
 
-                  {/* Mode toggle */}
-                  <button
-                    type="button"
-                    onClick={() => setBom((b) => b.map((r, idx) => idx === i
-                      ? { ...r, mode: r.mode === "yields" ? "needs" : "yields" }
-                      : r))}
-                    className="text-xs px-2.5 py-1.5 rounded-lg border border-stone-300 bg-white text-stone-600 hover:bg-stone-100 active:scale-95 transition-all whitespace-nowrap"
-                    title="לחץ להחלפת מצב חישוב"
-                  >
-                    {row.mode === "yields" ? `יחידות מ-1 ${unitLabel}` : `${unitLabel} לכל יחידה`}
-                  </button>
+                  {/* Row 2: sentence-style mode selector */}
+                  {row.material_id && (
+                    <div className="space-y-2">
+                      {/* Option A: yields */}
+                      <label className={`flex items-center gap-3 p-2.5 rounded-lg border cursor-pointer transition-colors ${row.mode === "yields" ? "border-stone-400 bg-white" : "border-stone-200 hover:bg-white/60"}`}>
+                        <input type="radio" checked={row.mode === "yields"} onChange={() => setBom((b) => b.map((r, idx) => idx === i ? { ...r, mode: "yields" } : r))} className="accent-stone-700" />
+                        <span className="text-sm text-stone-700 flex items-center gap-1.5 flex-wrap">
+                          מ-1 {unitLabel} יוצאות
+                          <input
+                            type="number" min={1} step={1}
+                            value={row.mode === "yields" ? row.value : ""}
+                            onFocus={(e) => e.target.select()}
+                            onChange={(e) => setBom((b) => b.map((r, idx) => idx === i ? { ...r, mode: "yields", value: stripLeadingZero(e.target.value) } : r))}
+                            onClick={(e) => e.stopPropagation()}
+                            placeholder="?"
+                            className="w-16 text-center text-sm px-2 py-1 rounded border border-stone-300 focus:outline-none focus:ring-2 focus:ring-stone-400 bg-white"
+                          />
+                          יחידות מוצר
+                          {row.mode === "yields" && numVal > 0 && (
+                            <span className="text-xs text-stone-400">(= {(1 / numVal).toFixed(3)} {unitLabel} לכל יחידה)</span>
+                          )}
+                        </span>
+                      </label>
 
-                  {/* Number input */}
-                  <input
-                    type="number"
-                    min={0.001}
-                    step={row.mode === "yields" ? 1 : 0.001}
-                    value={row.value}
-                    onFocus={(e) => e.target.select()}
-                    onChange={(e) => {
-                      const v = stripLeadingZero(e.target.value);
-                      setBom((b) => b.map((r, idx) => idx === i ? { ...r, value: v } : r));
-                    }}
-                    className="w-20 text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 text-center bg-white"
-                    placeholder="0"
-                  />
-
-                  {/* Explanation */}
-                  {row.value && Number(row.value) > 0 && mat && (
-                    <span className="text-xs text-stone-400 italic">
-                      {row.mode === "yields"
-                        ? `= ${(1 / Number(row.value)).toFixed(4)} ${unitLabel} ליחידה`
-                        : `= ${Number(row.value)} ${unitLabel} ליחידה`}
-                    </span>
+                      {/* Option B: needs */}
+                      <label className={`flex items-center gap-3 p-2.5 rounded-lg border cursor-pointer transition-colors ${row.mode === "needs" ? "border-stone-400 bg-white" : "border-stone-200 hover:bg-white/60"}`}>
+                        <input type="radio" checked={row.mode === "needs"} onChange={() => setBom((b) => b.map((r, idx) => idx === i ? { ...r, mode: "needs" } : r))} className="accent-stone-700" />
+                        <span className="text-sm text-stone-700 flex items-center gap-1.5 flex-wrap">
+                          כל יחידת מוצר דורשת
+                          <input
+                            type="number" min={0.001} step={0.001}
+                            value={row.mode === "needs" ? row.value : ""}
+                            onFocus={(e) => e.target.select()}
+                            onChange={(e) => setBom((b) => b.map((r, idx) => idx === i ? { ...r, mode: "needs", value: stripLeadingZero(e.target.value) } : r))}
+                            onClick={(e) => e.stopPropagation()}
+                            placeholder="?"
+                            className="w-16 text-center text-sm px-2 py-1 rounded border border-stone-300 focus:outline-none focus:ring-2 focus:ring-stone-400 bg-white"
+                          />
+                          {unitLabel}
+                        </span>
+                      </label>
+                    </div>
                   )}
-
-                  <button
-                    type="button"
-                    onClick={() => setBom((b) => b.filter((_, idx) => idx !== i))}
-                    className="p-1.5 rounded-lg text-stone-400 hover:text-red-500 hover:bg-red-50 active:scale-95 transition-all"
-                  >
-                    <X size={14} />
-                  </button>
                 </div>
               );
             })}
