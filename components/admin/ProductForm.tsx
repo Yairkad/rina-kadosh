@@ -2,7 +2,8 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Plus, X, ArrowRight } from "lucide-react";
+import { Loader2, ArrowRight } from "lucide-react";
+import ImageUpload from "@/components/admin/ImageUpload";
 import { createProduct, updateProduct, type ProductFormData } from "@/app/admin/actions/products";
 import { saveBOM } from "@/app/admin/actions/materials";
 
@@ -107,7 +108,6 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
-  const [newImageUrl, setNewImageUrl] = useState("");
   const [bom, setBom] = useState<BOMEntry[]>(initBOMEntries(initialBOM));
 
   const [form, setForm] = useState<ProductFormData>({
@@ -132,17 +132,6 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
   const filteredStyles = styles.filter(
     (s) => !form.event_type_id || s.event_type_id === form.event_type_id
   );
-
-  function addImage() {
-    const url = newImageUrl.trim();
-    if (!url) return;
-    set("images", [...(form.images ?? []), url]);
-    setNewImageUrl("");
-  }
-
-  function removeImage(i: number) {
-    set("images", (form.images ?? []).filter((_, idx) => idx !== i));
-  }
 
   function handleSubmit() {
     setError("");
@@ -322,56 +311,13 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
         {/* Section: Images */}
         <section className="bg-white rounded-2xl border border-stone-200 p-6 space-y-4">
           <h2 className="font-semibold text-stone-800 text-sm">תמונות</h2>
-          <p className="text-xs text-stone-400">
-            הוסף כתובות URL לתמונות. התמונה הראשונה = thumbnail.
-          </p>
-
-          {(form.images ?? []).length > 0 && (
-            <div className="space-y-2">
-              {(form.images ?? []).map((url, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-2 text-sm bg-stone-50 rounded-lg px-3 py-2"
-                >
-                  <span className="text-xs text-stone-400 font-mono w-4 shrink-0">
-                    {i + 1}
-                  </span>
-                  <span className="flex-1 truncate text-stone-600 text-xs font-mono">
-                    {url}
-                  </span>
-                  {i === 0 && (
-                    <span className="text-xs bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded-full">
-                      ראשי
-                    </span>
-                  )}
-                  <button
-                    onClick={() => removeImage(i)}
-                    className="text-stone-400 hover:text-red-500 transition-colors"
-                  >
-                    <X size={13} />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div className="flex gap-2">
-            <Input
-              value={newImageUrl}
-              onChange={(e) => setNewImageUrl(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && addImage()}
-              placeholder="https://example.com/image.jpg"
-              className="flex-1"
-            />
-            <button
-              onClick={addImage}
-              disabled={!newImageUrl.trim()}
-              className="flex items-center gap-1.5 text-sm px-4 py-2 border border-stone-200 rounded-lg text-stone-600 hover:bg-stone-50 disabled:opacity-40 transition-colors whitespace-nowrap"
-            >
-              <Plus size={14} />
-              הוסף
-            </button>
-          </div>
+          <p className="text-xs text-stone-400">התמונה הראשונה = thumbnail ראשי</p>
+          <ImageUpload
+            bucket="products"
+            folder="products"
+            images={form.images ?? []}
+            onImagesChange={(urls) => set("images", urls)}
+          />
         </section>
 
         {/* Section: BOM */}

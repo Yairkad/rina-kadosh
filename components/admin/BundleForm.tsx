@@ -2,7 +2,8 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, X, Loader2, ArrowRight } from "lucide-react";
+import { Loader2, ArrowRight } from "lucide-react";
+import ImageUpload from "@/components/admin/ImageUpload";
 import { createBundle, updateBundle, type BundleFormData } from "@/app/admin/actions/bundles";
 
 type Product = { id: string; name_he: string; price_per_unit: number };
@@ -36,7 +37,6 @@ export default function BundleForm({ products, eventTypes, styles, initial, mode
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
-  const [newImageUrl, setNewImageUrl] = useState("");
   const [selectedProductId, setSelectedProductId] = useState("");
 
   const [form, setForm] = useState<BundleFormData>({
@@ -92,12 +92,6 @@ export default function BundleForm({ products, eventTypes, styles, initial, mode
     }
   }
 
-  function addImage() {
-    const url = newImageUrl.trim();
-    if (!url) return;
-    set("images", [...(form.images ?? []), url]);
-    setNewImageUrl("");
-  }
 
   function handleSubmit() {
     setError("");
@@ -244,21 +238,13 @@ export default function BundleForm({ products, eventTypes, styles, initial, mode
         {/* Images */}
         <section className="bg-white rounded-2xl border border-stone-200 p-6 space-y-3">
           <h2 className="font-semibold text-stone-800 text-sm">תמונות</h2>
-          {(form.images ?? []).map((url, i) => (
-            <div key={i} className="flex items-center gap-2 text-xs bg-stone-50 rounded-lg px-3 py-2">
-              <span className="text-stone-400 w-4">{i + 1}</span>
-              <span className="flex-1 truncate text-stone-600 font-mono">{url}</span>
-              <button onClick={() => set("images", (form.images ?? []).filter((_, idx) => idx !== i))} className="text-stone-300 hover:text-red-500 transition-colors"><X size={12} /></button>
-            </div>
-          ))}
-          <div className="flex gap-2">
-            <Input value={newImageUrl} onChange={(e) => setNewImageUrl(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && addImage()} placeholder="https://..." className="flex-1" />
-            <button onClick={addImage} disabled={!newImageUrl.trim()}
-              className="flex items-center gap-1.5 text-sm px-4 py-2 border border-stone-200 rounded-lg text-stone-600 hover:bg-stone-50 disabled:opacity-40 transition-colors">
-              <Plus size={14} />הוסף
-            </button>
-          </div>
+          <p className="text-xs text-stone-400">התמונה הראשונה = thumbnail ראשי</p>
+          <ImageUpload
+            bucket="products"
+            folder="bundles"
+            images={form.images ?? []}
+            onImagesChange={(urls) => set("images", urls)}
+          />
         </section>
 
         {/* Status */}

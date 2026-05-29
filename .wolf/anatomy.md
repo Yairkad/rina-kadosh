@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-29T12:47:46.120Z
-> Files: 98 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-29T13:20:17.140Z
+> Files: 99 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -162,7 +162,7 @@
 ## app/admin/actions/
 
 - `bundles.ts` — Exports BundleItem, BundleFormData, createBundle, updateBundle, archiveBundle (~773 tok)
-- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1207 tok)
+- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1213 tok)
 - `create-order.ts` — Exports ManualOrderItem, ManualOrderData, createManualOrder (~465 tok)
 - `gallery.ts` — Exports GalleryFormData, createGalleryItem, updateGalleryItem, deleteGalleryItem (~511 tok)
 - `materials.ts` — Exports createMaterial, updateMaterial, deleteMaterial, addStockQuantity + 2 more (~1420 tok)
@@ -182,15 +182,16 @@
 - `AdminSidebar.tsx` — NAV_ITEMS (~1326 tok)
 - `ArchiveBundleButton.tsx` — ArchiveBundleButton (~284 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
-- `BundleForm.tsx` — Field (~3940 tok)
-- `CatalogManager.tsx` — EMPTY_FORM — renders form (~5961 tok)
+- `BundleForm.tsx` — Field (~3660 tok)
+- `CatalogManager.tsx` — EMPTY_FORM (~6125 tok)
 - `CreateOrderForm.tsx` — Input (~3824 tok)
 - `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~281 tok)
 - `GalleryItemForm.tsx` — GalleryItemForm (~2096 tok)
-- `MaterialsManager.tsx` — stripLeadingZero (~4795 tok)
+- `ImageUpload.tsx` — Single image mode (~1428 tok)
+- `MaterialsManager.tsx` — stripLeadingZero (~4802 tok)
 - `OrderStatusUpdate.tsx` — STATUS_OPTIONS (~1171 tok)
 - `ProductFilters.tsx` — ProductFilters (~1559 tok)
-- `ProductForm.tsx` — initBOMEntries (~5441 tok)
+- `ProductForm.tsx` — initBOMEntries (~5328 tok)
 - `ProductionStatusButton.tsx` — ProductionStatusButton (~328 tok)
 
 ## components/cart/

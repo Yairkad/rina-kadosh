@@ -6,6 +6,7 @@ import {
   Plus, ChevronDown, ChevronUp, Pencil, Trash2,
   Loader2, Check, X, Package, ExternalLink,
 } from "lucide-react";
+import ImageUpload from "@/components/admin/ImageUpload";
 import {
   createEventType, updateEventType, deleteEventType,
   createDesignStyle, updateDesignStyle, deleteDesignStyle,
@@ -14,7 +15,7 @@ import {
 
 type ItemStatus = "draft" | "published" | "archived";
 
-type EventType = { id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus };
+type EventType = { id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; image?: string | null };
 type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus };
 type Product = { id: string; name_he: string; status: string; design_style_id: string | null; event_type_id: string | null };
 type FormData = { name_he: string; name_en: string; display_order: number; status: ItemStatus; event_type_id?: string };
@@ -32,12 +33,13 @@ function toSlug(text: string) {
   return text.toLowerCase().trim().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 }
 
-function ItemForm({ initial, onSave, onCancel, loading, error, label }: {
-  initial: FormData; onSave: (d: FormData) => void; onCancel: () => void;
-  loading: boolean; error: string; label: string;
+function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage }: {
+  initial: FormData & { image?: string | null };
+  onSave: (d: FormData & { image?: string | null }) => void;
+  onCancel: () => void; loading: boolean; error: string; label: string; showImage?: boolean;
 }) {
-  const [form, setForm] = useState<FormData>(initial);
-  const set = (k: keyof FormData, v: string | number) => setForm((f) => ({ ...f, [k]: v }));
+  const [form, setForm] = useState(initial);
+  const set = (k: keyof typeof form, v: string | number | null) => setForm((f) => ({ ...f, [k]: v }));
 
   return (
     <div className="bg-stone-50 rounded-xl border border-stone-200 p-4 space-y-3">
@@ -77,6 +79,19 @@ function ItemForm({ initial, onSave, onCancel, loading, error, label }: {
           ))}
         </div>
       </div>
+      {showImage && (
+        <div>
+          <label className="block text-xs text-stone-500 mb-1.5">תמונה</label>
+          <ImageUpload
+            bucket="catalog"
+            folder="events"
+            value={form.image}
+            onUpload={(url) => set("image", url)}
+            onRemove={() => set("image", null)}
+          />
+        </div>
+      )}
+
       {error && <p className="text-red-600 text-xs bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
       <div className="flex gap-2">
         <button onClick={() => onSave(form)} disabled={loading || !form.name_he || !form.name_en}
@@ -192,14 +207,14 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
             {/* ── Event Type Header ── */}
             {editingEventType === et.id ? (
               <div className="p-4 bg-white">
-                <ItemForm label="עריכת סוג אירוע"
-                  initial={{ name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status }}
+                <ItemForm label="עריכת סוג אירוע" showImage
+                  initial={{ name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image }}
                   loading={isPending} error={formError}
                   onCancel={() => { setEditingEventType(null); setFormError(""); }}
                   onSave={(data) => handleAction(() => updateEventType(et.id, data))} />
               </div>
             ) : (
-              <div className={`flex items-center gap-3 px-5 py-4 border-r-4 border-stone-700 ${isExpanded ? "bg-stone-800 text-white" : "bg-white hover:bg-stone-50"} transition-colors`}>
+              <div className={`flex items-center gap-3 px-5 py-4 border-r-4 border-stone-700 ${isExpanded ? "bg-stone-800 text-white" : "bg-white hover:bg-stone-50"} transition-colors group/header`}>
                 <button onClick={() => setExpanded(isExpanded ? null : et.id)}
                   className="flex-1 flex items-center gap-3 text-right min-w-0">
                   <div className="min-w-0 flex-1">

@@ -830,8 +830,88 @@
         "tsx"
       ],
       "related_bugs": [],
-      "occurrences": 3,
-      "last_seen": "2026-05-29T12:47:29.621Z"
+      "occurrences": 4,
+      "last_seen": "2026-05-29T12:51:01.176Z"
+    },
+    {
+      "id": "bug-053",
+      "timestamp": "2026-05-29T13:08:33.540Z",
+      "error_message": "Significant refactor of ",
+      "file": "components/admin/ProductForm.tsx",
+      "root_cause": "34 lines replaced/restructured",
+      "fix": "Rewrote 61→69 lines (34 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T13:08:33.540Z"
+    },
+    {
+      "id": "bug-054",
+      "timestamp": "2026-05-29T13:16:57.665Z",
+      "error_message": "Significant refactor of ",
+      "file": "components/admin/ProductForm.tsx",
+      "root_cause": "47 lines replaced/restructured",
+      "fix": "Rewrote 54→11 lines (47 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T13:16:57.665Z"
+    },
+    {
+      "id": "bug-055",
+      "timestamp": "2026-05-29T13:17:56.989Z",
+      "error_message": "Significant refactor of ",
+      "file": "components/admin/BundleForm.tsx",
+      "root_cause": "15 lines replaced/restructured",
+      "fix": "Rewrote 19→11 lines (15 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T13:17:56.989Z"
+    },
+    {
+      "id": "bug-056",
+      "timestamp": "2026-05-29T13:18:57.681Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/admin/CatalogManager.tsx",
+      "root_cause": "Had \"} transition-colors`",
+      "fix": "Changed to \"} transition-colors group/header`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T13:18:57.681Z"
+    },
+    {
+      "id": "bug-057",
+      "timestamp": "2026-05-29T13:19:27.225Z",
+      "error_message": "CSS fix: initial, onSave, k",
+      "file": "components/admin/CatalogManager.tsx",
+      "root_cause": "initial: FormData → FormData & { image?: string | null; onSave: (d: FormData) => void → (d: FormData & { image?: string | null; k: keyof FormData, v: string | number) => setForm((f) => ({ ...f, [k]: v → keyof typeof form, v: string | number | null) => setForm((f) => ({ ...f, [k]: v",
+      "fix": "Changed initial: FormData → FormData & { image?: string | null; onSave: (d: FormData) => void → (d: FormData & { image?: string | null; k: keyof FormData, v: string | number) => setForm((f) => ({ ...f, [k]: v → keyof typeof form, v: string | number | null) => setForm((f) => ({ ...f, [k]: v",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-29T13:20:17.230Z"
     }
   ]
 }
