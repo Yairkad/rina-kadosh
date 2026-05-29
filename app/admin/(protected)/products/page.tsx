@@ -37,7 +37,7 @@ export default async function ProductsPage({
 
   const [{ data: eventTypes }, { data: designStyles }] = await Promise.all([
     supabase.from("event_types").select("id, name_he").order("name_he"),
-    supabase.from("design_styles").select("id, name_he").order("name_he"),
+    supabase.from("design_styles").select("id, name_he, event_type_id").order("name_he"),
   ]);
 
   let query = supabase
