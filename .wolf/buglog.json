@@ -448,6 +448,214 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-28T19:47:42.525Z"
+    },
+    {
+      "id": "bug-029",
+      "timestamp": "2026-05-28T21:49:19.320Z",
+      "error_message": "Type error",
+      "file": "components/admin/CreateOrderForm.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T21:49:19.320Z"
+    },
+    {
+      "id": "bug-030",
+      "timestamp": "2026-05-28T21:49:27.670Z",
+      "error_message": "Significant refactor of ",
+      "file": "components/admin/CreateOrderForm.tsx",
+      "root_cause": "12 lines replaced/restructured",
+      "fix": "Rewrote 20→13 lines (12 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T21:49:27.670Z"
+    },
+    {
+      "id": "bug-031",
+      "timestamp": "2026-05-28T21:52:24.494Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/admin/CreateOrderForm.tsx",
+      "root_cause": "Had \"050-1234567\"",
+      "fix": "Changed to \"0501234567\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T21:52:24.494Z"
+    },
+    {
+      "id": "bug-032",
+      "timestamp": "2026-05-28T21:52:53.225Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/(public)/cart/page.tsx",
+      "root_cause": "Had \"phone\"",
+      "fix": "Changed to \"numeric\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T21:52:53.225Z"
+    },
+    {
+      "id": "bug-033",
+      "timestamp": "2026-05-28T21:53:24.049Z",
+      "error_message": "CSS fix: placeholder",
+      "file": "app/[locale]/(public)/contact/page.tsx",
+      "root_cause": "placeholder: text-gray-400 focus:outline-none focus:border-[var(--gold)] transition-colors text-sm\" → text-gray-400 focus:outline-none focus:border-[var(--gold)] transition-colors text-sm ${key === \"phone\" && phoneError ? \"border-red-400\" : \"border-gray-200\"",
+      "fix": "Changed placeholder: text-gray-400 focus:outline-none focus:border-[var(--gold)] transition-colors text-sm\" → text-gray-400 focus:outline-none focus:border-[var(--gold)] transition-colors text-sm ${key === \"phone\" && phoneError ? \"border-red-400\" : \"border-gray-200\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T21:53:24.049Z"
+    },
+    {
+      "id": "bug-034",
+      "timestamp": "2026-05-28T22:01:52.362Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/admin/CreateOrderForm.tsx",
+      "root_cause": "Had \"flex items-center gap-2 text-sm px-3 py-2.5 round",
+      "fix": "Changed to \"flex items-center gap-2 w-full text-sm px-3 py-2.",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T22:01:52.362Z"
+    },
+    {
+      "id": "bug-035",
+      "timestamp": "2026-05-28T22:02:04.450Z",
+      "error_message": "Significant refactor of ",
+      "file": "components/admin/CreateOrderForm.tsx",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 7→7 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T22:02:04.450Z"
+    },
+    {
+      "id": "bug-036",
+      "timestamp": "2026-05-29T06:59:14.193Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/admin/(protected)/products/page.tsx",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 25→30 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T06:59:14.193Z"
+    },
+    {
+      "id": "bug-037",
+      "timestamp": "2026-05-29T06:59:21.440Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/admin/(protected)/products/page.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T06:59:21.440Z"
+    },
+    {
+      "id": "bug-038",
+      "timestamp": "2026-05-29T07:03:15.844Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/admin/(protected)/products/page.tsx",
+      "root_cause": "Had \"id, name_he\"",
+      "fix": "Changed to \"id, name_he, event_type_id\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T07:03:15.844Z"
+    },
+    {
+      "id": "bug-039",
+      "timestamp": "2026-05-29T07:07:19.550Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/admin/(protected)/layout.tsx",
+      "root_cause": "Had \"min-h-screen bg-stone-50 flex\"",
+      "fix": "Changed to \"h-screen bg-stone-50 flex\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T07:07:19.550Z"
+    },
+    {
+      "id": "bug-040",
+      "timestamp": "2026-05-29T07:13:00.988Z",
+      "error_message": "Missing guard clause",
+      "file": "app/admin/actions/catalog.ts",
+      "root_cause": "No early return/throw for edge case: !supabase",
+      "fix": "Added guard clause: if (!supabase)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T07:13:00.988Z"
+    },
+    {
+      "id": "bug-041",
+      "timestamp": "2026-05-29T07:16:23.351Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/admin/AdminSidebar.tsx",
+      "root_cause": "Had \"/admin/customers\"",
+      "fix": "Changed to \"/admin/products\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-29T07:16:23.351Z"
     }
   ]
 }

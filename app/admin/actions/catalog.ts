@@ -123,6 +123,29 @@ export async function updateDesignStyle(
   return { success: true };
 }
 
+export async function quickCreateProduct(data: {
+  name_he: string;
+  name_en: string;
+  price_per_unit: number;
+  event_type_id: string;
+  design_style_id: string;
+}) {
+  const supabase = await getAdminClient();
+  if (!supabase) return { error: "Unauthorized" };
+
+  const { error } = await supabase.from("products").insert({
+    ...data,
+    status: "draft",
+    min_type: "units",
+    min_value: 1,
+  });
+  if (error) return { error: error.message };
+
+  revalidatePath("/admin/catalog");
+  revalidatePath("/admin/products");
+  return { success: true };
+}
+
 export async function deleteDesignStyle(id: string) {
   const supabase = await getAdminClient();
   if (!supabase) return { error: "Unauthorized" };

@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-28T21:46:56.434Z
-> Files: 92 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-29T07:16:29.631Z
+> Files: 95 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -47,7 +47,7 @@
 
 ## app/[locale]/(public)/cart/
 
-- `page.tsx` — ALLOWED_MIME — renders form (~3334 tok)
+- `page.tsx` — ALLOWED_MIME — renders form (~3426 tok)
 
 ## app/[locale]/(public)/catalog/
 
@@ -67,7 +67,7 @@
 
 ## app/[locale]/(public)/contact/
 
-- `page.tsx` — WHATSAPP_NUMBER — renders form (~1368 tok)
+- `page.tsx` — WHATSAPP_NUMBER — renders form (~1608 tok)
 
 ## app/[locale]/(public)/gallery/
 
@@ -88,7 +88,7 @@
 
 ## app/admin/(protected)/
 
-- `layout.tsx` — AdminProtectedLayout — auth check (server), renders AdminSidebar (~240 tok)
+- `layout.tsx` — AdminProtectedLayout (~242 tok)
 - `page.tsx` — redirect → /admin/dashboard (~35 tok)
 
 ## app/admin/(protected)/bundles/
@@ -105,11 +105,15 @@
 
 ## app/admin/(protected)/catalog/
 
-- `page.tsx` — CatalogPage (~299 tok)
+- `page.tsx` — CatalogPage (~357 tok)
 
 ## app/admin/(protected)/create-order/
 
 - `page.tsx` — CreateOrderPage (~213 tok)
+
+## app/admin/(protected)/customers/
+
+- `page.tsx` — PAYMENT_LABELS — renders table (~2327 tok)
 
 ## app/admin/(protected)/dashboard/
 
@@ -141,7 +145,7 @@
 
 ## app/admin/(protected)/products/
 
-- `page.tsx` — STATUS_LABELS — renders table (~2189 tok)
+- `page.tsx` — STATUS_LABELS — renders table (~2436 tok)
 
 ## app/admin/(protected)/products/[id]/
 
@@ -154,7 +158,7 @@
 ## app/admin/actions/
 
 - `bundles.ts` — Exports BundleItem, BundleFormData, createBundle, updateBundle, archiveBundle (~773 tok)
-- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 2 more (~1047 tok)
+- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1207 tok)
 - `create-order.ts` — Exports ManualOrderItem, ManualOrderData, createManualOrder (~465 tok)
 - `gallery.ts` — Exports GalleryFormData, createGalleryItem, updateGalleryItem, deleteGalleryItem (~511 tok)
 - `orders.ts` — Exports updateOrderStatus, updateOrderNotes (~616 tok)
@@ -170,15 +174,16 @@
 
 ## components/admin/
 
-- `AdminSidebar.tsx` — NAV_ITEMS (~767 tok)
+- `AdminSidebar.tsx` — NAV_ITEMS (~1299 tok)
 - `ArchiveBundleButton.tsx` — ArchiveBundleButton (~284 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
 - `BundleForm.tsx` — Field (~3940 tok)
-- `CatalogManager.tsx` — EMPTY_FORM — renders form (~4249 tok)
-- `CreateOrderForm.tsx` — Input (~3026 tok)
+- `CatalogManager.tsx` — EMPTY_FORM — renders form (~6019 tok)
+- `CreateOrderForm.tsx` — Input (~3824 tok)
 - `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~281 tok)
 - `GalleryItemForm.tsx` — GalleryItemForm (~2096 tok)
 - `OrderStatusUpdate.tsx` — STATUS_OPTIONS (~1171 tok)
+- `ProductFilters.tsx` — ProductFilters (~1559 tok)
 - `ProductForm.tsx` — STATUS_OPTIONS (~3769 tok)
 - `ProductionStatusButton.tsx` — ProductionStatusButton (~328 tok)
 
@@ -226,6 +231,7 @@
 
 ## lib/
 
+- `phone.ts` — Exports sanitizePhone, isValidPhone, PHONE_ERROR_HE, PHONE_ERROR_EN (~102 tok)
 - `utils.ts` — Exports cn (~49 tok)
 
 ## lib/supabase/
