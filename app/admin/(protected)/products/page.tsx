@@ -28,9 +28,9 @@ const TABS = [
 export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; event?: string; style?: string }>;
+  searchParams: Promise<{ status?: string; event?: string; style?: string; search?: string }>;
 }) {
-  const { status, event, style } = await searchParams;
+  const { status, event, style, search } = await searchParams;
   const activeStatus = status && status !== "all" ? status : null;
 
   const supabase = await createClient();
@@ -53,6 +53,7 @@ export default async function ProductsPage({
   if (activeStatus) query = query.eq("status", activeStatus);
   if (event)        query = query.eq("event_type_id", event);
   if (style)        query = query.eq("design_style_id", style);
+  if (search)       query = query.ilike("name_he", `%${search}%`);
 
   const { data: products } = await query;
 
@@ -102,6 +103,7 @@ export default async function ProductsPage({
         <ProductFilters
           eventTypes={eventTypes ?? []}
           designStyles={designStyles ?? []}
+          productNames={(products ?? []).map((p) => ({ id: p.id, name_he: p.name_he }))}
         />
       </Suspense>
 
