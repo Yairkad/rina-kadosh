@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Plus, Pencil } from "lucide-react";
+import { Suspense } from "react";
+import ProductFilters from "@/components/admin/ProductFilters";
 
 type ProductStatus = "draft" | "published" | "archived";
 
@@ -26,12 +28,17 @@ const TABS = [
 export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string }>;
+  searchParams: Promise<{ status?: string; event?: string; style?: string }>;
 }) {
-  const { status } = await searchParams;
+  const { status, event, style } = await searchParams;
   const activeStatus = status && status !== "all" ? status : null;
 
   const supabase = await createClient();
+
+  const [{ data: eventTypes }, { data: designStyles }] = await Promise.all([
+    supabase.from("event_types").select("id, name_he").order("name_he"),
+    supabase.from("design_styles").select("id, name_he").order("name_he"),
+  ]);
 
   let query = supabase
     .from("products")
@@ -43,9 +50,9 @@ export default async function ProductsPage({
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
 
-  if (activeStatus) {
-    query = query.eq("status", activeStatus);
-  }
+  if (activeStatus) query = query.eq("status", activeStatus);
+  if (event)        query = query.eq("event_type_id", event);
+  if (style)        query = query.eq("design_style_id", style);
 
   const { data: products } = await query;
 
@@ -89,6 +96,14 @@ export default async function ProductsPage({
           );
         })}
       </div>
+
+      {/* Filters */}
+      <Suspense>
+        <ProductFilters
+          eventTypes={eventTypes ?? []}
+          designStyles={designStyles ?? []}
+        />
+      </Suspense>
 
       {/* Table */}
       <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
