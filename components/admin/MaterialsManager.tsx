@@ -2,6 +2,8 @@
 
 import { useState, useTransition } from "react";
 import { Plus, Pencil, Trash2, Check, X, Loader2, PackagePlus, AlertTriangle } from "lucide-react";
+
+function stripLeadingZero(val: string) { return val.replace(/^0+(\d)/, "$1"); }
 import {
   createMaterial, updateMaterial, deleteMaterial,
   addStockQuantity,
@@ -67,19 +69,22 @@ function MaterialForm({ initial, onSave, onCancel, loading, error }: {
         <div>
           <label className="block text-xs text-stone-500 mb-1">כמות במלאי</label>
           <input type="number" min={0} step={0.001} value={f.stock_quantity}
-            onChange={(e) => set("stock_quantity", Number(e.target.value))}
+            onFocus={(e) => e.target.select()}
+            onChange={(e) => set("stock_quantity", Number(stripLeadingZero(e.target.value)))}
             className="w-full text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400" />
         </div>
         <div>
           <label className="block text-xs text-stone-500 mb-1">סף התראה</label>
           <input type="number" min={0} step={0.001} value={f.low_stock_threshold}
-            onChange={(e) => set("low_stock_threshold", Number(e.target.value))}
+            onFocus={(e) => e.target.select()}
+            onChange={(e) => set("low_stock_threshold", Number(stripLeadingZero(e.target.value)))}
             className="w-full text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400" />
         </div>
         <div>
           <label className="block text-xs text-stone-500 mb-1">עלות ליחידה (₪)</label>
           <input type="number" min={0} step={0.01} value={f.cost_per_unit}
-            onChange={(e) => set("cost_per_unit", Number(e.target.value))}
+            onFocus={(e) => e.target.select()}
+            onChange={(e) => set("cost_per_unit", Number(stripLeadingZero(e.target.value)))}
             className="w-full text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400" />
         </div>
       </div>
@@ -91,7 +96,7 @@ function MaterialForm({ initial, onSave, onCancel, loading, error }: {
       {error && <p className="text-red-600 text-xs bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
       <div className="flex gap-2">
         <button onClick={() => onSave(f)} disabled={loading || !f.name_he}
-          className="flex items-center gap-1.5 text-sm px-4 py-2 bg-stone-800 text-white rounded-lg hover:bg-stone-700 disabled:bg-stone-300 transition-colors">
+          className="flex items-center gap-1.5 text-sm px-4 py-2 bg-stone-800 text-white rounded-lg hover:bg-stone-700 disabled:bg-stone-300 disabled:cursor-not-allowed transition-all active:scale-95">
           {loading ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />} שמור
         </button>
         <button onClick={onCancel} className="flex items-center gap-1.5 text-sm px-4 py-2 border border-stone-200 text-stone-600 rounded-lg hover:bg-stone-50 transition-colors">
@@ -232,7 +237,8 @@ export default function MaterialsManager({ materials, bom, openOrders }: {
                     <div className="flex items-center gap-3 px-5 py-3 bg-stone-50">
                       <span className="text-sm font-medium text-stone-700">{m.name_he} — הוסף למלאי</span>
                       <input type="number" min={0.001} step={0.001} value={restockAmt}
-                        onChange={(e) => setRestockAmt(e.target.value)}
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => setRestockAmt(stripLeadingZero(e.target.value))}
                         placeholder="כמות להוספה"
                         className="text-sm px-3 py-1.5 rounded-lg border border-stone-200 w-36 focus:outline-none focus:ring-2 focus:ring-stone-400" />
                       <span className="text-sm text-stone-500">{UNIT_LABELS[m.unit]}</span>

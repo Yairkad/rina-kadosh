@@ -9,7 +9,33 @@ import { saveBOM } from "@/app/admin/actions/materials";
 type EventType = { id: string; name_he: string; name_en: string };
 type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string };
 type RawMaterial = { id: string; name_he: string; unit: string };
-type BOMItem = { material_id: string; quantity_per_unit: number };
+type BOMItem  = { material_id: string; quantity_per_unit: number };
+type BOMEntry = { material_id: string; mode: "yields" | "needs"; value: string };
+// yields = "X יחידות מ-1 גיליון"   → qty = 1/X
+// needs  = "כל יחידה דורשת X גיליונות" → qty = X
+
+function initBOMEntries(items: BOMItem[]): BOMEntry[] {
+  return items.map((item) => {
+    const q = item.quantity_per_unit;
+    if (q > 0 && q < 1) {
+      return { material_id: item.material_id, mode: "yields", value: String(Math.round((1 / q) * 1000) / 1000) };
+    }
+    return { material_id: item.material_id, mode: "needs", value: String(q) };
+  });
+}
+
+function bomEntriesToItems(entries: BOMEntry[]): BOMItem[] {
+  return entries
+    .filter((e) => e.material_id && Number(e.value) > 0)
+    .map((e) => ({
+      material_id: e.material_id,
+      quantity_per_unit: e.mode === "yields" ? 1 / Number(e.value) : Number(e.value),
+    }));
+}
+
+function stripLeadingZero(val: string): string {
+  return val.replace(/^0+(\d)/, "$1");
+}
 
 type Props = {
   eventTypes: EventType[];
@@ -41,10 +67,15 @@ function Field({ label, children, hint }: { label: string; children: React.React
   );
 }
 
-function Input({ className = "", ...props }: React.InputHTMLAttributes<HTMLInputElement>) {
+function Input({ className = "", onChange, type, ...props }: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
+      type={type}
       {...props}
+      onFocus={type === "number" ? (e) => e.target.select() : props.onFocus}
+      onChange={type === "number" && onChange
+        ? (e) => { e.target.value = stripLeadingZero(e.target.value); onChange(e); }
+        : onChange}
       className={`w-full text-sm px-3 py-2.5 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:border-transparent transition ${className}`}
     />
   );
@@ -77,7 +108,7 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
   const [newImageUrl, setNewImageUrl] = useState("");
-  const [bom, setBom] = useState<BOMItem[]>(initialBOM);
+  const [bom, setBom] = useState<BOMEntry[]>(initBOMEntries(initialBOM));
 
   const [form, setForm] = useState<ProductFormData>({
     name_he: "",
@@ -128,10 +159,10 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
       let res;
       if (mode === "edit" && initial?.id) {
         res = await updateProduct(initial.id, form);
-        if (!res?.error) await saveBOM(initial.id, bom);
+        if (!res?.error) await saveBOM(initial.id, bomEntriesToItems(bom));
       } else {
         res = await createProduct(form);
-        if (!res?.error && res?.id) await saveBOM(res.id, bom);
+        if (!res?.error && res?.id) await saveBOM(res.id, bomEntriesToItems(bom));
       }
 
       if (res?.error) {
@@ -348,31 +379,65 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
           <section className="bg-white rounded-2xl border border-stone-200 p-6 space-y-4">
             <div>
               <h2 className="font-semibold text-stone-800 text-sm">חומרי גלם (BOM)</h2>
-              <p className="text-xs text-stone-400 mt-0.5">כמה מכל חומר נדרש לייצור יחידה אחת</p>
+              <p className="text-xs text-stone-400 mt-0.5">הגדר כמה מכל חומר נדרש לייצור יחידה אחת</p>
             </div>
 
             {bom.map((row, i) => {
               const mat = materials.find((m) => m.id === row.material_id);
+              const unitLabel = mat ? (UNIT_LABELS[mat.unit] ?? mat.unit) : "יחידה";
               return (
-                <div key={i} className="flex items-center gap-3">
+                <div key={i} className="flex flex-wrap items-center gap-2 bg-stone-50 rounded-xl p-3">
+                  {/* Material */}
                   <select
                     value={row.material_id}
                     onChange={(e) => setBom((b) => b.map((r, idx) => idx === i ? { ...r, material_id: e.target.value } : r))}
-                    className="flex-1 text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 bg-white"
+                    className="flex-1 min-w-[140px] text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 bg-white"
                   >
                     <option value="">— בחר חומר —</option>
                     {materials.map((m) => <option key={m.id} value={m.id}>{m.name_he}</option>)}
                   </select>
+
+                  {/* Mode toggle */}
+                  <button
+                    type="button"
+                    onClick={() => setBom((b) => b.map((r, idx) => idx === i
+                      ? { ...r, mode: r.mode === "yields" ? "needs" : "yields" }
+                      : r))}
+                    className="text-xs px-2.5 py-1.5 rounded-lg border border-stone-300 bg-white text-stone-600 hover:bg-stone-100 active:scale-95 transition-all whitespace-nowrap"
+                    title="לחץ להחלפת מצב חישוב"
+                  >
+                    {row.mode === "yields" ? `יחידות מ-1 ${unitLabel}` : `${unitLabel} לכל יחידה`}
+                  </button>
+
+                  {/* Number input */}
                   <input
-                    type="number" min={0.0001} step={0.0001}
-                    value={row.quantity_per_unit}
-                    onChange={(e) => setBom((b) => b.map((r, idx) => idx === i ? { ...r, quantity_per_unit: Number(e.target.value) } : r))}
-                    className="w-24 text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 text-center"
-                    placeholder="כמות"
+                    type="number"
+                    min={0.001}
+                    step={row.mode === "yields" ? 1 : 0.001}
+                    value={row.value}
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => {
+                      const v = stripLeadingZero(e.target.value);
+                      setBom((b) => b.map((r, idx) => idx === i ? { ...r, value: v } : r));
+                    }}
+                    className="w-20 text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 text-center bg-white"
+                    placeholder="0"
                   />
-                  {mat && <span className="text-xs text-stone-400 w-12 shrink-0">{UNIT_LABELS[mat.unit] ?? mat.unit}</span>}
-                  <button onClick={() => setBom((b) => b.filter((_, idx) => idx !== i))}
-                    className="p-1.5 rounded-lg text-stone-400 hover:text-red-500 hover:bg-red-50 transition-colors">
+
+                  {/* Explanation */}
+                  {row.value && Number(row.value) > 0 && mat && (
+                    <span className="text-xs text-stone-400 italic">
+                      {row.mode === "yields"
+                        ? `= ${(1 / Number(row.value)).toFixed(4)} ${unitLabel} ליחידה`
+                        : `= ${Number(row.value)} ${unitLabel} ליחידה`}
+                    </span>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => setBom((b) => b.filter((_, idx) => idx !== i))}
+                    className="p-1.5 rounded-lg text-stone-400 hover:text-red-500 hover:bg-red-50 active:scale-95 transition-all"
+                  >
                     <X size={14} />
                   </button>
                 </div>
@@ -380,8 +445,9 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
             })}
 
             <button
-              onClick={() => setBom((b) => [...b, { material_id: "", quantity_per_unit: 1 }])}
-              className="flex items-center gap-2 text-sm text-stone-500 hover:text-stone-800 border border-dashed border-stone-200 rounded-lg px-4 py-2 w-full hover:bg-stone-50 transition-colors"
+              type="button"
+              onClick={() => setBom((b) => [...b, { material_id: "", mode: "yields", value: "" }])}
+              className="flex items-center gap-2 text-sm text-stone-500 hover:text-stone-800 border border-dashed border-stone-200 rounded-lg px-4 py-2 w-full hover:bg-stone-50 active:scale-95 transition-all"
             >
               <Plus size={14} /> הוסף חומר
             </button>
@@ -417,14 +483,14 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
           <button
             onClick={handleSubmit}
             disabled={isPending}
-            className="flex items-center gap-2 text-sm px-6 py-3 bg-stone-800 hover:bg-stone-700 disabled:bg-stone-400 text-white rounded-xl font-medium transition-colors"
+            className="flex items-center gap-2 text-sm px-6 py-3 bg-stone-800 hover:bg-stone-700 disabled:bg-stone-400 text-white rounded-xl font-medium transition-all active:scale-95"
           >
             {isPending && <Loader2 size={15} className="animate-spin" />}
             {mode === "new" ? "צור מוצר" : "שמור שינויים"}
           </button>
           <button
             onClick={() => router.push("/admin/products")}
-            className="text-sm px-6 py-3 border border-stone-200 text-stone-600 rounded-xl hover:bg-stone-50 transition-colors"
+            className="text-sm px-6 py-3 border border-stone-200 text-stone-600 rounded-xl hover:bg-stone-50 transition-all active:scale-95"
           >
             ביטול
           </button>
