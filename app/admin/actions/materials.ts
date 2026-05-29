@@ -113,7 +113,7 @@ export async function deductMaterialsForOrder(orderId: string) {
   }
 
   // Apply deductions
-  for (const [materialId, amount] of deductions) {
+  for (const [materialId, amount] of Array.from(deductions)) {
     const { data: mat } = await supabase.from("raw_materials").select("stock_quantity").eq("id", materialId).single();
     if (!mat) continue;
     await supabase.from("raw_materials")

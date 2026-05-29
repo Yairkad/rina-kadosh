@@ -171,7 +171,7 @@ export default function MaterialsManager({ materials, bom, openOrders }: {
             <span className="text-xs text-stone-400">{openOrders.length} הזמנות</span>
           </div>
           <div className="divide-y divide-stone-50">
-            {[...forecast.entries()].map(([matId, needed]) => {
+            {Array.from(forecast.entries()).map(([matId, needed]) => {
               const mat = materials.find((m) => m.id === matId);
               if (!mat) return null;
               const toOrder = Math.max(0, needed - Number(mat.stock_quantity));
