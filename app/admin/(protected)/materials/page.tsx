@@ -4,9 +4,8 @@ import MaterialsManager from "@/components/admin/MaterialsManager";
 export default async function MaterialsPage() {
   const supabase = await createClient();
 
-  const [{ data: materials }, { data: products }, { data: bom }] = await Promise.all([
+  const [{ data: materials }, { data: bom }] = await Promise.all([
     supabase.from("raw_materials").select("*").order("name_he"),
-    supabase.from("products").select("id, name_he").eq("status", "published").is("deleted_at", null).order("name_he"),
     supabase.from("product_materials").select("product_id, material_id, quantity_per_unit"),
   ]);
 
@@ -25,7 +24,6 @@ export default async function MaterialsPage() {
       </div>
       <MaterialsManager
         materials={materials ?? []}
-        products={products ?? []}
         bom={bom ?? []}
         openOrders={openOrders ?? []}
       />

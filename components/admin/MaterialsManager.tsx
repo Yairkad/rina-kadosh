@@ -13,7 +13,6 @@ type Material = {
   stock_quantity: number; low_stock_threshold: number;
   cost_per_unit: number; supplier_notes: string | null;
 };
-type Product = { id: string; name_he: string };
 type BOMRow = { product_id: string; material_id: string; quantity_per_unit: number };
 type OpenOrder = { items: { product_id?: string; quantity: number; is_bundle: boolean }[] };
 
@@ -103,8 +102,8 @@ function MaterialForm({ initial, onSave, onCancel, loading, error }: {
   );
 }
 
-export default function MaterialsManager({ materials, products, bom, openOrders }: {
-  materials: Material[]; products: Product[]; bom: BOMRow[];
+export default function MaterialsManager({ materials, bom, openOrders }: {
+  materials: Material[]; bom: BOMRow[];
   openOrders: OpenOrder[];
 }) {
   const [adding, setAdding]       = useState(false);
