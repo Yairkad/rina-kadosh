@@ -4,17 +4,10 @@ import ProductForm from "@/components/admin/ProductForm";
 export default async function NewProductPage() {
   const supabase = await createClient();
 
-  const [{ data: eventTypes }, { data: styles }] = await Promise.all([
-    supabase
-      .from("event_types")
-      .select("id, name_he, name_en")
-      .eq("status", "published")
-      .order("display_order"),
-    supabase
-      .from("design_styles")
-      .select("id, event_type_id, name_he, name_en")
-      .eq("status", "published")
-      .order("display_order"),
+  const [{ data: eventTypes }, { data: styles }, { data: materials }] = await Promise.all([
+    supabase.from("event_types").select("id, name_he, name_en").eq("status", "published").order("display_order"),
+    supabase.from("design_styles").select("id, event_type_id, name_he, name_en").eq("status", "published").order("display_order"),
+    supabase.from("raw_materials").select("id, name_he, unit").order("name_he"),
   ]);
 
   return (
@@ -23,6 +16,7 @@ export default async function NewProductPage() {
       <ProductForm
         eventTypes={eventTypes ?? []}
         styles={styles ?? []}
+        materials={materials ?? []}
         mode="new"
       />
     </div>

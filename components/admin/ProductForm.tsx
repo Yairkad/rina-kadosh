@@ -4,13 +4,18 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Plus, X, ArrowRight } from "lucide-react";
 import { createProduct, updateProduct, type ProductFormData } from "@/app/admin/actions/products";
+import { saveBOM } from "@/app/admin/actions/materials";
 
 type EventType = { id: string; name_he: string; name_en: string };
 type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string };
+type RawMaterial = { id: string; name_he: string; unit: string };
+type BOMItem = { material_id: string; quantity_per_unit: number };
 
 type Props = {
   eventTypes: EventType[];
   styles: DesignStyle[];
+  materials?: RawMaterial[];
+  initialBOM?: BOMItem[];
   initial?: Partial<ProductFormData> & { id?: string };
   mode: "new" | "edit";
 };
@@ -63,11 +68,16 @@ function Select({ className = "", ...props }: React.SelectHTMLAttributes<HTMLSel
   );
 }
 
-export default function ProductForm({ eventTypes, styles, initial, mode }: Props) {
+const UNIT_LABELS: Record<string, string> = {
+  sheet: "גיליון", meter: "מטר", piece: "יחידה", gram: "גרם", roll: "גליל",
+};
+
+export default function ProductForm({ eventTypes, styles, materials = [], initialBOM = [], initial, mode }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
   const [newImageUrl, setNewImageUrl] = useState("");
+  const [bom, setBom] = useState<BOMItem[]>(initialBOM);
 
   const [form, setForm] = useState<ProductFormData>({
     name_he: "",
@@ -118,8 +128,10 @@ export default function ProductForm({ eventTypes, styles, initial, mode }: Props
       let res;
       if (mode === "edit" && initial?.id) {
         res = await updateProduct(initial.id, form);
+        if (!res?.error) await saveBOM(initial.id, bom);
       } else {
         res = await createProduct(form);
+        if (!res?.error && res?.id) await saveBOM(res.id, bom);
       }
 
       if (res?.error) {
@@ -330,6 +342,51 @@ export default function ProductForm({ eventTypes, styles, initial, mode }: Props
             </button>
           </div>
         </section>
+
+        {/* Section: BOM */}
+        {materials.length > 0 && (
+          <section className="bg-white rounded-2xl border border-stone-200 p-6 space-y-4">
+            <div>
+              <h2 className="font-semibold text-stone-800 text-sm">חומרי גלם (BOM)</h2>
+              <p className="text-xs text-stone-400 mt-0.5">כמה מכל חומר נדרש לייצור יחידה אחת</p>
+            </div>
+
+            {bom.map((row, i) => {
+              const mat = materials.find((m) => m.id === row.material_id);
+              return (
+                <div key={i} className="flex items-center gap-3">
+                  <select
+                    value={row.material_id}
+                    onChange={(e) => setBom((b) => b.map((r, idx) => idx === i ? { ...r, material_id: e.target.value } : r))}
+                    className="flex-1 text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 bg-white"
+                  >
+                    <option value="">— בחר חומר —</option>
+                    {materials.map((m) => <option key={m.id} value={m.id}>{m.name_he}</option>)}
+                  </select>
+                  <input
+                    type="number" min={0.0001} step={0.0001}
+                    value={row.quantity_per_unit}
+                    onChange={(e) => setBom((b) => b.map((r, idx) => idx === i ? { ...r, quantity_per_unit: Number(e.target.value) } : r))}
+                    className="w-24 text-sm px-3 py-2 rounded-lg border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-400 text-center"
+                    placeholder="כמות"
+                  />
+                  {mat && <span className="text-xs text-stone-400 w-12 shrink-0">{UNIT_LABELS[mat.unit] ?? mat.unit}</span>}
+                  <button onClick={() => setBom((b) => b.filter((_, idx) => idx !== i))}
+                    className="p-1.5 rounded-lg text-stone-400 hover:text-red-500 hover:bg-red-50 transition-colors">
+                    <X size={14} />
+                  </button>
+                </div>
+              );
+            })}
+
+            <button
+              onClick={() => setBom((b) => [...b, { material_id: "", quantity_per_unit: 1 }])}
+              className="flex items-center gap-2 text-sm text-stone-500 hover:text-stone-800 border border-dashed border-stone-200 rounded-lg px-4 py-2 w-full hover:bg-stone-50 transition-colors"
+            >
+              <Plus size={14} /> הוסף חומר
+            </button>
+          </section>
+        )}
 
         {/* Section: Status */}
         <section className="bg-white rounded-2xl border border-stone-200 p-6">

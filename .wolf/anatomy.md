@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-29T07:16:29.631Z
-> Files: 95 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-29T09:49:18.974Z
+> Files: 98 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -131,6 +131,10 @@
 
 - `page.tsx` — NewGalleryItemPage (~168 tok)
 
+## app/admin/(protected)/materials/
+
+- `page.tsx` — MaterialsPage (~365 tok)
+
 ## app/admin/(protected)/orders/
 
 - `page.tsx` — OrdersPage — list with status filter tabs + CSV export link (~280 tok)
@@ -149,11 +153,11 @@
 
 ## app/admin/(protected)/products/[id]/
 
-- `page.tsx` — EditProductPage (~586 tok)
+- `page.tsx` — EditProductPage (~637 tok)
 
 ## app/admin/(protected)/products/new/
 
-- `page.tsx` — NewProductPage (~240 tok)
+- `page.tsx` — NewProductPage (~263 tok)
 
 ## app/admin/actions/
 
@@ -161,7 +165,8 @@
 - `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1207 tok)
 - `create-order.ts` — Exports ManualOrderItem, ManualOrderData, createManualOrder (~465 tok)
 - `gallery.ts` — Exports GalleryFormData, createGalleryItem, updateGalleryItem, deleteGalleryItem (~511 tok)
-- `orders.ts` — Exports updateOrderStatus, updateOrderNotes (~616 tok)
+- `materials.ts` — Exports createMaterial, updateMaterial, deleteMaterial, addStockQuantity + 2 more (~1397 tok)
+- `orders.ts` — Exports updateOrderStatus, updateOrderNotes (~687 tok)
 - `products.ts` — Exports ProductFormData, createProduct, updateProduct, archiveProduct (~773 tok)
 
 ## app/admin/login/
@@ -174,17 +179,18 @@
 
 ## components/admin/
 
-- `AdminSidebar.tsx` — NAV_ITEMS (~1299 tok)
+- `AdminSidebar.tsx` — NAV_ITEMS (~1326 tok)
 - `ArchiveBundleButton.tsx` — ArchiveBundleButton (~284 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
 - `BundleForm.tsx` — Field (~3940 tok)
-- `CatalogManager.tsx` — EMPTY_FORM — renders form (~6019 tok)
+- `CatalogManager.tsx` — EMPTY_FORM — renders form (~5961 tok)
 - `CreateOrderForm.tsx` — Input (~3824 tok)
 - `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~281 tok)
 - `GalleryItemForm.tsx` — GalleryItemForm (~2096 tok)
+- `MaterialsManager.tsx` — UNIT_LABELS (~4412 tok)
 - `OrderStatusUpdate.tsx` — STATUS_OPTIONS (~1171 tok)
 - `ProductFilters.tsx` — ProductFilters (~1559 tok)
-- `ProductForm.tsx` — STATUS_OPTIONS (~3769 tok)
+- `ProductForm.tsx` — STATUS_OPTIONS (~4650 tok)
 - `ProductionStatusButton.tsx` — ProductionStatusButton (~328 tok)
 
 ## components/cart/

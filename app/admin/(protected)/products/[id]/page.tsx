@@ -11,24 +11,13 @@ export default async function EditProductPage({
   const { id } = await params;
   const supabase = await createClient();
 
-  const [{ data: product }, { data: eventTypes }, { data: styles }] =
+  const [{ data: product }, { data: eventTypes }, { data: styles }, { data: materials }, { data: bomRows }] =
     await Promise.all([
-      supabase
-        .from("products")
-        .select("*")
-        .eq("id", id)
-        .is("deleted_at", null)
-        .single(),
-      supabase
-        .from("event_types")
-        .select("id, name_he, name_en")
-        .neq("status", "archived")
-        .order("display_order"),
-      supabase
-        .from("design_styles")
-        .select("id, event_type_id, name_he, name_en")
-        .neq("status", "archived")
-        .order("display_order"),
+      supabase.from("products").select("*").eq("id", id).is("deleted_at", null).single(),
+      supabase.from("event_types").select("id, name_he, name_en").neq("status", "archived").order("display_order"),
+      supabase.from("design_styles").select("id, event_type_id, name_he, name_en").neq("status", "archived").order("display_order"),
+      supabase.from("raw_materials").select("id, name_he, unit").order("name_he"),
+      supabase.from("product_materials").select("material_id, quantity_per_unit").eq("product_id", id),
     ]);
 
   if (!product) notFound();
@@ -44,6 +33,8 @@ export default async function EditProductPage({
       <ProductForm
         eventTypes={eventTypes ?? []}
         styles={styles ?? []}
+        materials={materials ?? []}
+        initialBOM={bomRows ?? []}
         mode="edit"
         initial={{
           id: product.id,

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { deductMaterialsForOrder } from "@/app/admin/actions/materials";
 
 type OrderStatus =
   | "pending"
@@ -53,6 +54,11 @@ export async function updateOrderStatus(
     new_data: { status: newStatus },
     created_by: profile.id,
   });
+
+  // Deduct raw materials when entering production
+  if (newStatus === "in_production" && current?.status !== "in_production") {
+    await deductMaterialsForOrder(orderId);
+  }
 
   revalidatePath(`/admin/orders/${orderId}`);
   revalidatePath("/admin/orders");
