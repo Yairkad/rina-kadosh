@@ -91,7 +91,7 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
 
-            {/* Collapsed label — large vertical watermark, desktop only */}
+            {/* Collapsed label — vertical watermark on desktop */}
             <h3
               className={cn(
                 "absolute bottom-4 right-3 font-bold text-white/25 whitespace-nowrap select-none pointer-events-none",
@@ -106,6 +106,18 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
                 letterSpacing: "0.05em",
                 fontFeatureSettings: '"liga" 1, "dlig" 1, "calt" 1, "kern" 1',
               }}
+            >
+              {item.name}
+            </h3>
+
+            {/* Collapsed label — horizontal, bottom-right on mobile */}
+            <h3
+              className={cn(
+                "absolute bottom-2 right-3 font-bold text-white/40 whitespace-nowrap select-none pointer-events-none",
+                "text-lg tracking-wide transition-opacity duration-500",
+                "block md:hidden",
+                active ? "opacity-0" : "opacity-100",
+              )}
             >
               {item.name}
             </h3>
