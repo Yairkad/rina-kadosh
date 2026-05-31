@@ -81,6 +81,23 @@ export async function updateProduct(id: string, data: Partial<ProductFormData>) 
   return { success: true };
 }
 
+export async function deleteProduct(id: string) {
+  const supabase = await getAdminClient();
+  if (!supabase) return { error: "Unauthorized" };
+
+  const { error } = await supabase
+    .from("products")
+    .update({ deleted_at: new Date().toISOString() })
+    .eq("id", id);
+
+  if (error) return { error: error.message };
+
+  revalidatePath("/admin/products");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
+  return { success: true };
+}
+
 export async function archiveProduct(id: string) {
   const supabase = await getAdminClient();
   if (!supabase) return { error: "Unauthorized" };

@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Plus, Pencil } from "lucide-react";
 import { Suspense } from "react";
 import ProductFilters from "@/components/admin/ProductFilters";
+import DeleteProductButton from "@/components/admin/DeleteProductButton";
 
 type ProductStatus = "draft" | "published" | "archived";
 
@@ -193,12 +194,15 @@ export default async function ProductsPage({
                         </span>
                       </td>
                       <td className="px-5 py-3">
-                        <Link
-                          href={`/admin/products/${product.id}`}
-                          className="p-1.5 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-200 opacity-0 group-hover:opacity-100 transition-all inline-flex"
-                        >
-                          <Pencil size={14} />
-                        </Link>
+                        <div className="flex items-center gap-1">
+                          <Link
+                            href={`/admin/products/${product.id}`}
+                            className="p-1.5 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-200 opacity-0 group-hover:opacity-100 transition-all inline-flex"
+                          >
+                            <Pencil size={14} />
+                          </Link>
+                          <DeleteProductButton productId={product.id} productName={product.name_he} />
+                        </div>
                       </td>
                     </tr>
                   );
