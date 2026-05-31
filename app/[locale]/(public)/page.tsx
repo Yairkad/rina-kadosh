@@ -10,7 +10,7 @@ import type { EventTypeItem } from "@/components/catalog/ExpandingEventCards";
 
 export default async function HomePage() {
   const locale = await getLocale();
-  const t = await getTranslations("HomePage");
+  const t = await getTranslations("home");
   const supabase = await createClient();
 
   const { data: eventTypes } = await supabase
