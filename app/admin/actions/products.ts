@@ -87,7 +87,7 @@ export async function deleteProduct(id: string) {
 
   const { error } = await supabase
     .from("products")
-    .update({ deleted_at: new Date().toISOString() })
+    .delete()
     .eq("id", id);
 
   if (error) return { error: error.message };
