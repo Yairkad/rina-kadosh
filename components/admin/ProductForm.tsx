@@ -450,13 +450,17 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
         <section className="bg-white rounded-2xl border border-stone-200 p-6">
           <h2 className="font-semibold text-stone-800 text-sm mb-1">התאמה אישית</h2>
           <p className="text-xs text-stone-400 mb-4">אפשר ללקוחות להוסיף טקסט ותמונה אישית בעמוד המוצר</p>
-          <label className="flex items-center gap-3 cursor-pointer select-none">
+          <label className="flex items-center gap-3 cursor-pointer select-none" dir="rtl">
+            <span className="text-sm text-stone-700">
+              {form.allow_customization ? "התאמה אישית מופעלת" : "התאמה אישית מושבתת"}
+            </span>
             <button
               type="button"
               role="switch"
+              dir="ltr"
               aria-checked={form.allow_customization ?? false}
               onClick={() => set("allow_customization", !(form.allow_customization ?? false))}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none shrink-0 ${
                 form.allow_customization ? "bg-amber-500" : "bg-stone-200"
               }`}
             >
@@ -466,9 +470,6 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
                 }`}
               />
             </button>
-            <span className="text-sm text-stone-700">
-              {form.allow_customization ? "התאמה אישית מופעלת" : "התאמה אישית מושבתת"}
-            </span>
           </label>
         </section>
 
