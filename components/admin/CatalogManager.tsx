@@ -245,7 +245,7 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
                   className={`p-1.5 rounded-lg transition-colors ${isExpanded ? "text-stone-300 hover:text-white hover:bg-white/20" : "text-stone-400 hover:text-stone-700 hover:bg-stone-100"}`}>
                   <Pencil size={14} />
                 </button>
-                <button onClick={() => handleAction(() => deleteEventType(et.id))} disabled={isPending}
+                <button onClick={() => { if (window.confirm(`למחוק את "${et.name_he}"? לא ניתן לשחזר.`)) handleAction(() => deleteEventType(et.id)); }} disabled={isPending}
                   className={`p-1.5 rounded-lg transition-colors ${isExpanded ? "text-stone-300 hover:text-red-300 hover:bg-white/20" : "text-stone-400 hover:text-red-600 hover:bg-red-50"}`}>
                   <Trash2 size={14} />
                 </button>
@@ -300,7 +300,7 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
                               className="p-1 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors">
                               <Pencil size={13} />
                             </button>
-                            <button onClick={() => handleAction(() => deleteDesignStyle(style.id))} disabled={isPending}
+                            <button onClick={() => { if (window.confirm(`למחוק את "${style.name_he}"? לא ניתן לשחזר.`)) handleAction(() => deleteDesignStyle(style.id)); }} disabled={isPending}
                               className="p-1 rounded-lg text-stone-400 hover:text-red-600 hover:bg-red-50 transition-colors">
                               <Trash2 size={13} />
                             </button>
