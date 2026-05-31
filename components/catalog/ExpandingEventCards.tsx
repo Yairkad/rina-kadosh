@@ -18,6 +18,7 @@ interface ExpandingEventCardsProps {
 
 export default function ExpandingEventCards({ items }: ExpandingEventCardsProps) {
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
+  const [clickedIndex, setClickedIndex] = React.useState<number | null>(null);
   const [isDesktop, setIsDesktop] = React.useState(false);
   const locale = useLocale();
   const router = useRouter();
@@ -43,10 +44,17 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
   }, [activeIndex, items.length, isDesktop]);
 
   const handleClick = (index: number, slug: string) => {
-    if (activeIndex === index) {
+    if (isDesktop) {
+      // Desktop: hover already expands — click always navigates
       router.push(`/${locale}/catalog/${slug}`);
     } else {
-      setActiveIndex(index);
+      // Mobile: first tap expands, second tap navigates
+      if (clickedIndex === index) {
+        router.push(`/${locale}/catalog/${slug}`);
+      } else {
+        setClickedIndex(index);
+        setActiveIndex(index);
+      }
     }
   };
 
