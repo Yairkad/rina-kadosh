@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { Home, BookOpen, Info, ShoppingBag, Phone } from "lucide-react";
+import { Home, BookOpen, ShoppingBag, Phone } from "lucide-react";
 
 export default function BottomNav() {
   const locale = useLocale();
@@ -13,7 +13,6 @@ export default function BottomNav() {
   const links = [
     { href: `/${locale}`, icon: Home, label: "בית" },
     { href: `/${locale}/catalog`, icon: BookOpen, label: t("catalog") },
-    { href: `/${locale}/about`, icon: Info, label: "אודות" },
     { href: `/${locale}/cart`, icon: ShoppingBag, label: t("cart") },
     { href: `/${locale}/contact`, icon: Phone, label: t("contact") },
   ];

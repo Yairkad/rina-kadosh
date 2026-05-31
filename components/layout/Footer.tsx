@@ -27,8 +27,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-gray-300">
               <li><Link href={`/${locale}`} className="hover:text-[var(--gold)] transition-colors">בית</Link></li>
               <li><Link href={`/${locale}/catalog`} className="hover:text-[var(--gold)] transition-colors">{t("catalog")}</Link></li>
-              <li><Link href={`/${locale}/about`} className="hover:text-[var(--gold)] transition-colors">אודות</Link></li>
-              <li><Link href={`/${locale}/contact`} className="hover:text-[var(--gold)] transition-colors">{t("contact")}</Link></li>
+<li><Link href={`/${locale}/contact`} className="hover:text-[var(--gold)] transition-colors">{t("contact")}</Link></li>
             </ul>
           </div>
 

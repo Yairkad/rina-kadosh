@@ -32,7 +32,6 @@ export default function Navbar() {
 
   const navLinks = [
     { href: `/${locale}`, label: locale === "he" ? "בית" : "Home" },
-    { href: `/${locale}/about`, label: locale === "he" ? "אודות" : "About" },
     { href: `/${locale}/catalog`, label: t("catalog") },
     { href: `/${locale}/contact`, label: t("contact") },
   ];
