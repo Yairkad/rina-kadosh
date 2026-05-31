@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
+import { useAutoTranslate } from "@/hooks/useAutoTranslate";
 import Link from "next/link";
 import {
   Plus, ChevronDown, ChevronUp, Pencil, Trash2,
@@ -40,6 +41,15 @@ function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage 
 }) {
   const [form, setForm] = useState(initial);
   const set = (k: keyof typeof form, v: string | number | null) => setForm((f) => ({ ...f, [k]: v }));
+
+  const { scheduleTranslate } = useAutoTranslate();
+
+  useEffect(() => {
+    scheduleTranslate("name", form.name_he, form.name_en, (t) =>
+      setForm((f) => (f.name_en.trim() ? f : { ...f, name_en: t }))
+    );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.name_he]);
 
   return (
     <div className="bg-stone-50 rounded-xl border border-stone-200 p-4 space-y-3">

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ProductImageGallery from "@/components/product/ProductImageGallery";
-import ProductAddToCart from "@/components/product/ProductAddToCart";
+import ProductCustomizeAndAdd from "@/components/product/ProductCustomizeAndAdd";
 import ProductCard from "@/components/catalog/ProductCard";
 
 export const revalidate = 300;
@@ -152,9 +152,9 @@ export default async function ProductPage({ params }: Props) {
             </p>
           )}
 
-          {/* Add to Cart */}
+          {/* Add to Cart + Custom Design */}
           <div className="pt-2">
-            <ProductAddToCart
+            <ProductCustomizeAndAdd
               productId={productData.id}
               name={name}
               pricePerUnit={productData.price_per_unit}

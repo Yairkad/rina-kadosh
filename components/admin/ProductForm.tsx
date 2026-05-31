@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, ArrowRight, Plus, X } from "lucide-react";
+import { useAutoTranslate } from "@/hooks/useAutoTranslate";
 import ImageUpload from "@/components/admin/ImageUpload";
 import { createProduct, updateProduct, type ProductFormData } from "@/app/admin/actions/products";
 import { saveBOM } from "@/app/admin/actions/materials";
@@ -128,6 +129,22 @@ export default function ProductForm({ eventTypes, styles, materials = [], initia
 
   const set = <K extends keyof ProductFormData>(key: K, val: ProductFormData[K]) =>
     setForm((f) => ({ ...f, [key]: val }));
+
+  const { scheduleTranslate } = useAutoTranslate();
+
+  useEffect(() => {
+    scheduleTranslate("name", form.name_he, form.name_en, (t) =>
+      setForm((f) => (f.name_en.trim() ? f : { ...f, name_en: t }))
+    );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.name_he]);
+
+  useEffect(() => {
+    scheduleTranslate("desc", form.description_he ?? "", form.description_en ?? "", (t) =>
+      setForm((f) => ((f.description_en ?? "").trim() ? f : { ...f, description_en: t }))
+    );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.description_he]);
 
   const filteredStyles = styles.filter(
     (s) => !form.event_type_id || s.event_type_id === form.event_type_id

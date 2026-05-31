@@ -522,3 +522,44 @@
 | 16:19 | Edited app/admin/actions/catalog.ts | modified createEventType() | ~43 |
 | 16:19 | Edited app/admin/actions/catalog.ts | modified updateEventType() | ~49 |
 | 16:20 | Edited components/admin/CatalogManager.tsx | CSS: image | ~123 |
+| 16:22 | Edited components/admin/ProductForm.tsx | inline fix | ~18 |
+| 16:23 | Edited components/admin/BundleForm.tsx | inline fix | ~18 |
+| 16:24 | Session end: 102 writes across 14 files (layout.tsx, AdminSidebar.tsx, CreateOrderForm.tsx, phone.ts, page.tsx) | 24 reads | ~71036 tok |
+
+## Session: 2026-05-31 21:09
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 21:14 | Edited components/catalog/ExpandingEventCards.tsx | expanded (+12 lines) | ~351 |
+| 21:15 | Session end: 1 writes across 1 files (ExpandingEventCards.tsx) | 1 reads | ~1647 tok |
+| 21:23 | Edited app/[locale]/(public)/page.tsx | "HomePage" → "home" | ~12 |
+
+## Session: 2026-05-31 21:25
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 21:33 | Edited contexts/CartContext.tsx | 13→15 lines | ~111 |
+| 21:34 | Created components/product/ProductCustomizeAndAdd.tsx | — | ~3290 |
+| 21:34 | Edited app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx | 3→3 lines | ~62 |
+| 21:34 | Edited app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx | 13→13 lines | ~133 |
+| 21:34 | Edited components/cart/CartDrawer.tsx | 8→13 lines | ~224 |
+| 21:35 | Edited app/[locale]/(public)/page.tsx | 4→4 lines | ~74 |
+| 21:35 | Edited app/[locale]/(public)/page.tsx | 2→2 lines | ~14 |
+| 21:35 | Created components/home/InspirationSection.tsx | — | ~590 |
+| 21:35 | Created components/home/WhySection.tsx | — | ~815 |
+| 21:35 | Edited components/home/WhySection.tsx | 4→1 lines | ~21 |
+| 21:36 | Created app/api/translate/route.ts | — | ~183 |
+| 21:36 | Created hooks/useAutoTranslate.ts | — | ~350 |
+| 21:36 | Edited components/admin/ProductForm.tsx | added 1 import(s) | ~65 |
+| 21:36 | Edited components/admin/ProductForm.tsx | added nullish coalescing | ~217 |
+| 21:36 | Edited components/admin/BundleForm.tsx | added 1 import(s) | ~48 |
+| 21:37 | Edited components/admin/BundleForm.tsx | added nullish coalescing | ~216 |
+| 21:37 | Edited components/admin/CatalogManager.tsx | added 1 import(s) | ~35 |
+| 21:37 | Edited components/admin/CatalogManager.tsx | CSS: f, name_en | ~210 |
+| 21:37 | Created components/layout/WhatsAppButton.tsx | — | ~870 |
+
+| 21:38 | Added ProductCustomizeAndAdd (text+image personalization), deleted AboutSection, added InspirationSection, redesigned WhySection (white cards), created /api/translate + useAutoTranslate hook, wired auto-translate in ProductForm/BundleForm/CatalogManager | multiple | success |
+| 21:38 | Edited components/catalog/ExpandingEventCards.tsx | 2→3 lines | ~62 |
+| 21:38 | Edited components/catalog/ExpandingEventCards.tsx | CSS: Desktop, Mobile | ~128 |
+| 21:38 | Session end: 21 writes across 13 files (CartContext.tsx, ProductCustomizeAndAdd.tsx, page.tsx, CartDrawer.tsx, InspirationSection.tsx) | 16 reads | ~34653 tok |
+| 21:41 | Session end: 21 writes across 13 files (CartContext.tsx, ProductCustomizeAndAdd.tsx, page.tsx, CartDrawer.tsx, InspirationSection.tsx) | 16 reads | ~34653 tok |

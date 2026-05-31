@@ -114,6 +114,11 @@ export default function CartDrawer() {
                               חבילה
                             </span>
                           )}
+                          {(item.custom_text || item.custom_image) && (
+                            <span className="ms-1 text-[10px] font-medium px-1.5 py-0.5 bg-purple-100 text-purple-600 rounded-full">
+                              {isRTL ? "מותאם" : "Custom"}
+                            </span>
+                          )}
                         </p>
                         <button
                           onClick={() => removeItem(item.id)}

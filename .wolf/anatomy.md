@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-29T13:20:17.140Z
-> Files: 99 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-31T18:38:16.856Z
+> Files: 103 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -63,7 +63,7 @@
 
 ## app/[locale]/(public)/catalog/[event]/[style]/[product]/
 
-- `page.tsx` — revalidate (~2082 tok)
+- `page.tsx` — revalidate (~2092 tok)
 
 ## app/[locale]/(public)/contact/
 
@@ -177,13 +177,17 @@
 
 - `route.tsx` — runtime (~1720 tok)
 
+## app/api/translate/
+
+- `route.ts` — Next.js API route: POST (~183 tok)
+
 ## components/admin/
 
 - `AdminSidebar.tsx` — NAV_ITEMS (~1326 tok)
 - `ArchiveBundleButton.tsx` — ArchiveBundleButton (~284 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
-- `BundleForm.tsx` — Field (~3660 tok)
-- `CatalogManager.tsx` — EMPTY_FORM (~6125 tok)
+- `BundleForm.tsx` — Field (~3851 tok)
+- `CatalogManager.tsx` — EMPTY_FORM (~6230 tok)
 - `CreateOrderForm.tsx` — Input (~3824 tok)
 - `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~281 tok)
 - `GalleryItemForm.tsx` — GalleryItemForm (~2096 tok)
@@ -191,45 +195,51 @@
 - `MaterialsManager.tsx` — stripLeadingZero (~4802 tok)
 - `OrderStatusUpdate.tsx` — STATUS_OPTIONS (~1171 tok)
 - `ProductFilters.tsx` — ProductFilters (~1559 tok)
-- `ProductForm.tsx` — initBOMEntries (~5328 tok)
+- `ProductForm.tsx` — initBOMEntries (~5520 tok)
 - `ProductionStatusButton.tsx` — ProductionStatusButton (~328 tok)
 
 ## components/cart/
 
-- `CartDrawer.tsx` — CartDrawer (~2316 tok)
+- `CartDrawer.tsx` — CartDrawer (~2410 tok)
 - `CartRecoveryPopup.tsx` — CartRecoveryPopup (~675 tok)
 - `QuickAdd.tsx` — QuickAddOverlay (~2027 tok)
 
 ## components/catalog/
 
-- `ExpandingEventCards.tsx` — ExpandingEventCards (~1296 tok)
+- `ExpandingEventCards.tsx` — ExpandingEventCards (~1525 tok)
 - `ProductCard.tsx` — ProductCard (~888 tok)
 
 ## components/home/
 
 - `AboutSection.tsx` — STATS (~749 tok)
 - `HeroSection.tsx` — HeroSection (~1334 tok)
-- `WhySection.tsx` — WhySection (~523 tok)
+- `InspirationSection.tsx` — QUOTE_HE (~590 tok)
+- `WhySection.tsx` — WhySection (~771 tok)
 
 ## components/layout/
 
 - `BottomNav.tsx` — BottomNav (~453 tok)
 - `Footer.tsx` — Footer (~675 tok)
 - `Navbar.tsx` — Navbar (~1642 tok)
-- `WhatsAppButton.tsx` — WHATSAPP_NUMBER (~528 tok)
+- `WhatsAppButton.tsx` — WHATSAPP_NUMBER (~870 tok)
 
 ## components/product/
 
 - `ProductAddToCart.tsx` — ProductAddToCart (~1201 tok)
+- `ProductCustomizeAndAdd.tsx` — ALLOWED_MIME (~3290 tok)
 - `ProductImageGallery.tsx` — ProductImageGallery (~576 tok)
 
 ## contexts/
 
-- `CartContext.tsx` — STORAGE_KEY (~2051 tok)
+- `CartContext.tsx` — STORAGE_KEY (~2070 tok)
 
 ## design-references/
 
 - `ExpandingCards.tsx` — ExpandingCards (~1159 tok)
+
+## hooks/
+
+- `useAutoTranslate.ts` — Schedule a he→en translation. (~350 tok)
 
 ## i18n/
 

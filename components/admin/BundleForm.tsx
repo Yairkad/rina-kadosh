@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAutoTranslate } from "@/hooks/useAutoTranslate";
 import { Loader2, ArrowRight, Plus, X } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
 import { createBundle, updateBundle, type BundleFormData } from "@/app/admin/actions/bundles";
@@ -56,6 +57,22 @@ export default function BundleForm({ products, eventTypes, styles, initial, mode
 
   const set = <K extends keyof BundleFormData>(key: K, val: BundleFormData[K]) =>
     setForm((f) => ({ ...f, [key]: val }));
+
+  const { scheduleTranslate } = useAutoTranslate();
+
+  useEffect(() => {
+    scheduleTranslate("name", form.name_he, form.name_en, (t) =>
+      setForm((f) => (f.name_en.trim() ? f : { ...f, name_en: t }))
+    );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.name_he]);
+
+  useEffect(() => {
+    scheduleTranslate("desc", form.description_he ?? "", form.description_en ?? "", (t) =>
+      setForm((f) => ((f.description_en ?? "").trim() ? f : { ...f, description_en: t }))
+    );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.description_he]);
 
   const filteredStyles = styles.filter(
     (s) => !form.event_type_id || s.event_type_id === form.event_type_id

@@ -27,6 +27,8 @@ export interface CartItem {
   min_value: number | null;
   event_slug: string;
   style_slug: string;
+  custom_text?: string;
+  custom_image?: string; // base64 data URL
 }
 
 interface CartState {

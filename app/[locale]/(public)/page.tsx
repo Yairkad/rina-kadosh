@@ -3,8 +3,8 @@ export const revalidate = 300; // cache 5 min
 import { createClient } from "@/lib/supabase/server";
 import { getLocale, getTranslations } from "next-intl/server";
 import HeroSection from "@/components/home/HeroSection";
+import InspirationSection from "@/components/home/InspirationSection";
 import WhySection from "@/components/home/WhySection";
-import AboutSection from "@/components/home/AboutSection";
 import ExpandingEventCards from "@/components/catalog/ExpandingEventCards";
 import type { EventTypeItem } from "@/components/catalog/ExpandingEventCards";
 
@@ -45,8 +45,8 @@ export default async function HomePage() {
         </section>
       )}
 
+      <InspirationSection />
       <WhySection />
-      <AboutSection locale={locale} />
 
     </>
   );
