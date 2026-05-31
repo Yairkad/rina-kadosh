@@ -70,10 +70,11 @@ export default function CartPage() {
       return;
     }
 
+    const supabase = createClient();
+
     // Upload logo client-side (binary) then pass URL to server action
     let logoUrl: string | undefined;
     if (logoFile) {
-      const supabase = createClient();
       const ext = logoFile.name.split(".").pop()?.toLowerCase();
       const path = `orders/${Date.now()}.${ext}`;
       const { data: uploadData, error: uploadError } = await supabase.storage.from("logos").upload(path, logoFile);
@@ -85,6 +86,32 @@ export default function CartPage() {
       logoUrl = supabase.storage.from("logos").getPublicUrl(path).data.publicUrl;
     }
 
+    // Upload any per-item custom images (base64 → Supabase Storage)
+    const itemsWithCustomization = await Promise.all(
+      items.map(async (item) => {
+        let custom_image_url: string | undefined;
+        if (item.custom_image) {
+          try {
+            const res = await fetch(item.custom_image);
+            const blob = await res.blob();
+            const ext = blob.type.includes("pdf") ? "pdf" : blob.type.split("/")[1] || "png";
+            const path = `personalizations/${Date.now()}-${item.id}.${ext}`;
+            const { data: up } = await supabase.storage.from("logos").upload(path, blob);
+            if (up) custom_image_url = supabase.storage.from("logos").getPublicUrl(path).data.publicUrl;
+          } catch {
+            // non-fatal — proceed without image URL
+          }
+        }
+        return {
+          id:               item.id,
+          is_bundle:        item.is_bundle,
+          quantity:         item.quantity,
+          custom_text:      item.custom_text      || undefined,
+          custom_image_url: custom_image_url      || undefined,
+        };
+      })
+    );
+
     // Server action validates prices, computes total, inserts order
     const result = await submitOrder({
       customer_name:    form.name,
@@ -95,11 +122,7 @@ export default function CartPage() {
       delivery_notes:   form.delivery_notes || undefined,
       logo_url:         logoUrl,
       special_requests: form.notes || undefined,
-      items: items.map((item) => ({
-        id:        item.id,
-        is_bundle: item.is_bundle,
-        quantity:  item.quantity,
-      })),
+      items:            itemsWithCustomization,
     });
 
     setLoading(false);

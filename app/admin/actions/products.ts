@@ -31,6 +31,7 @@ export type ProductFormData = {
   design_style_id?: string | null;
   images?: string[];
   status: ProductStatus;
+  allow_customization?: boolean;
 };
 
 export async function createProduct(data: ProductFormData) {

@@ -15,13 +15,14 @@ interface Props {
   minValue: number | null;
   eventSlug: string;
   styleSlug: string;
+  allowCustomization?: boolean;
 }
 
 const ALLOWED_MIME = ["image/png", "image/jpeg", "image/jpg", "image/svg+xml", "application/pdf"];
 const MAX_SIZE = 500 * 1024;
 
 export default function ProductCustomizeAndAdd({
-  productId, name, pricePerUnit, image, minType, minValue, eventSlug, styleSlug,
+  productId, name, pricePerUnit, image, minType, minValue, eventSlug, styleSlug, allowCustomization = false,
 }: Props) {
   const t = useTranslations("product");
   const locale = useLocale();
@@ -103,8 +104,8 @@ export default function ProductCustomizeAndAdd({
         </p>
       )}
 
-      {/* Personalization section */}
-      <div className="border border-[var(--gold)]/30 rounded-2xl overflow-hidden">
+      {/* Personalization section — only shown when enabled for this product */}
+      {allowCustomization && <div className="border border-[var(--gold)]/30 rounded-2xl overflow-hidden">
         <button
           type="button"
           onClick={() => setShowCustomize(!showCustomize)}
@@ -224,7 +225,7 @@ export default function ProductCustomizeAndAdd({
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </div>}
 
       {/* Qty + subtotal */}
       <div className="flex items-center justify-between">

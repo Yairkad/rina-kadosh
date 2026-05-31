@@ -45,6 +45,8 @@ type CartItem = {
   quantity: number;
   price_per_unit: number;
   is_bundle?: boolean;
+  custom_text?: string;
+  custom_image_url?: string;
 };
 
 export default async function OrderDetailPage({
@@ -218,7 +220,7 @@ export default async function OrderDetailPage({
               ) : (
                 items.map((item, i) => (
                   <div key={i} className="px-5 py-3.5 flex items-center justify-between">
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <div className="text-sm font-medium text-stone-800">
                         {item.name_he}
                         {item.is_bundle && (
@@ -226,10 +228,37 @@ export default async function OrderDetailPage({
                             חבילה
                           </span>
                         )}
+                        {(item.custom_text || item.custom_image_url) && (
+                          <span className="mr-2 text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">
+                            מותאם אישית
+                          </span>
+                        )}
                       </div>
                       <div className="text-xs text-stone-400 mt-0.5">
                         {item.quantity} × ₪{Number(item.price_per_unit).toLocaleString("he-IL")}
                       </div>
+                      {item.custom_text && (
+                        <p className="text-xs text-purple-700 mt-1 bg-purple-50 rounded px-2 py-1">
+                          <span className="font-medium">טקסט:</span> {item.custom_text}
+                        </p>
+                      )}
+                      {item.custom_image_url && (
+                        <div className="mt-1.5 flex items-center gap-2">
+                          <img
+                            src={item.custom_image_url}
+                            alt="תמונה מותאמת"
+                            className="h-10 w-10 object-contain rounded border border-purple-100 bg-white"
+                          />
+                          <a
+                            href={item.custom_image_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-blue-600 hover:underline"
+                          >
+                            פתח תמונה
+                          </a>
+                        </div>
+                      )}
                     </div>
                     <div className="font-semibold text-stone-700 text-sm">
                       ₪{(item.quantity * item.price_per_unit).toLocaleString("he-IL")}

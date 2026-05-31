@@ -56,7 +56,7 @@ export default async function ProductPage({ params }: Props) {
   const [{ data: productData }, { data: eventType }, { data: designStyle }] = await Promise.all([
     supabase
       .from("products")
-      .select("id, name_he, name_en, description_he, description_en, price_per_unit, min_type, min_value, images, related_products")
+      .select("id, name_he, name_en, description_he, description_en, price_per_unit, min_type, min_value, images, related_products, allow_customization")
       .eq("id", productId)
       .eq("status", "published")
       .is("deleted_at", null)
@@ -163,6 +163,7 @@ export default async function ProductPage({ params }: Props) {
               minValue={productData.min_value}
               eventSlug={event}
               styleSlug={style}
+              allowCustomization={productData.allow_customization ?? false}
             />
           </div>
         </div>

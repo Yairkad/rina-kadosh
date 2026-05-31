@@ -6,6 +6,8 @@ export type OrderItemInput = {
   id: string;
   is_bundle: boolean;
   quantity: number;
+  custom_text?: string;
+  custom_image_url?: string;
 };
 
 export type SubmitOrderInput = {
@@ -66,6 +68,8 @@ export async function submitOrder(input: SubmitOrderInput): Promise<{ order_numb
       quantity:   item.quantity,
       price_per_unit: server.price,
       is_bundle:  item.is_bundle,
+      ...(item.custom_text      && { custom_text:      item.custom_text }),
+      ...(item.custom_image_url && { custom_image_url: item.custom_image_url }),
     });
   }
 
