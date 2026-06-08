@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-31T18:38:16.856Z
-> Files: 103 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-06-08T09:47:04.340Z
+> Files: 105 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -47,7 +47,7 @@
 
 ## app/[locale]/(public)/cart/
 
-- `page.tsx` — ALLOWED_MIME — renders form (~3426 tok)
+- `page.tsx` — ALLOWED_MIME — renders form (~3716 tok)
 
 ## app/[locale]/(public)/catalog/
 
@@ -55,7 +55,7 @@
 
 ## app/[locale]/(public)/catalog/[event]/
 
-- `page.tsx` — revalidate (~1008 tok)
+- `page.tsx` — revalidate (~1196 tok)
 
 ## app/[locale]/(public)/catalog/[event]/[style]/
 
@@ -63,7 +63,7 @@
 
 ## app/[locale]/(public)/catalog/[event]/[style]/[product]/
 
-- `page.tsx` — revalidate (~2092 tok)
+- `page.tsx` — revalidate (~2120 tok)
 
 ## app/[locale]/(public)/contact/
 
@@ -79,7 +79,7 @@
 
 ## app/actions/
 
-- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1004 tok)
+- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1064 tok)
 
 ## app/admin/
 
@@ -105,7 +105,7 @@
 
 ## app/admin/(protected)/catalog/
 
-- `page.tsx` — CatalogPage (~357 tok)
+- `page.tsx` — CatalogPage (~362 tok)
 
 ## app/admin/(protected)/create-order/
 
@@ -141,7 +141,7 @@
 
 ## app/admin/(protected)/orders/[id]/
 
-- `page.tsx` — STATUS_LABELS (~2941 tok)
+- `page.tsx` — STATUS_LABELS (~3359 tok)
 
 ## app/admin/(protected)/production/
 
@@ -149,7 +149,7 @@
 
 ## app/admin/(protected)/products/
 
-- `page.tsx` — STATUS_LABELS — renders table (~2436 tok)
+- `page.tsx` — STATUS_LABELS — renders table (~2518 tok)
 
 ## app/admin/(protected)/products/[id]/
 
@@ -162,12 +162,12 @@
 ## app/admin/actions/
 
 - `bundles.ts` — Exports BundleItem, BundleFormData, createBundle, updateBundle, archiveBundle (~773 tok)
-- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1213 tok)
+- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1232 tok)
 - `create-order.ts` — Exports ManualOrderItem, ManualOrderData, createManualOrder (~465 tok)
 - `gallery.ts` — Exports GalleryFormData, createGalleryItem, updateGalleryItem, deleteGalleryItem (~511 tok)
 - `materials.ts` — Exports createMaterial, updateMaterial, deleteMaterial, addStockQuantity + 2 more (~1420 tok)
 - `orders.ts` — Exports updateOrderStatus, updateOrderNotes (~687 tok)
-- `products.ts` — Exports ProductFormData, createProduct, updateProduct, archiveProduct (~773 tok)
+- `products.ts` — Exports ProductFormData, createProduct, updateProduct, deleteProduct, archiveProduct (~907 tok)
 
 ## app/admin/login/
 
@@ -187,15 +187,16 @@
 - `ArchiveBundleButton.tsx` — ArchiveBundleButton (~284 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
 - `BundleForm.tsx` — Field (~3851 tok)
-- `CatalogManager.tsx` — EMPTY_FORM (~6230 tok)
+- `CatalogManager.tsx` — EMPTY_FORM (~6489 tok)
 - `CreateOrderForm.tsx` — Input (~3824 tok)
 - `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~281 tok)
+- `DeleteProductButton.tsx` — DeleteProductButton (~263 tok)
 - `GalleryItemForm.tsx` — GalleryItemForm (~2096 tok)
 - `ImageUpload.tsx` — Single image mode (~1428 tok)
 - `MaterialsManager.tsx` — stripLeadingZero (~4802 tok)
 - `OrderStatusUpdate.tsx` — STATUS_OPTIONS (~1171 tok)
 - `ProductFilters.tsx` — ProductFilters (~1559 tok)
-- `ProductForm.tsx` — initBOMEntries (~5520 tok)
+- `ProductForm.tsx` — initBOMEntries (~5927 tok)
 - `ProductionStatusButton.tsx` — ProductionStatusButton (~328 tok)
 
 ## components/cart/
@@ -218,15 +219,15 @@
 
 ## components/layout/
 
-- `BottomNav.tsx` — BottomNav (~453 tok)
-- `Footer.tsx` — Footer (~675 tok)
-- `Navbar.tsx` — Navbar (~1642 tok)
+- `BottomNav.tsx` — BottomNav (~433 tok)
+- `Footer.tsx` — Footer (~636 tok)
+- `Navbar.tsx` — Navbar (~1620 tok)
 - `WhatsAppButton.tsx` — WHATSAPP_NUMBER (~870 tok)
 
 ## components/product/
 
 - `ProductAddToCart.tsx` — ProductAddToCart (~1201 tok)
-- `ProductCustomizeAndAdd.tsx` — ALLOWED_MIME (~3290 tok)
+- `ProductCustomizeAndAdd.tsx` — ALLOWED_MIME (~3327 tok)
 - `ProductImageGallery.tsx` — ProductImageGallery (~576 tok)
 
 ## contexts/
@@ -264,3 +265,4 @@
 ## supabase/migrations/
 
 - `001_initial_schema.sql` — ============================================================ (~3133 tok)
+- `002_atmosphere_image.sql` — Migration 002: Add atmosphere_image to event_types (~34 tok)
