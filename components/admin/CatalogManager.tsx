@@ -16,7 +16,7 @@ import {
 
 type ItemStatus = "draft" | "published" | "archived";
 
-type EventType = { id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; image?: string | null };
+type EventType = { id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; image?: string | null; atmosphere_image?: string | null };
 type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus };
 type Product = { id: string; name_he: string; status: string; design_style_id: string | null; event_type_id: string | null };
 type FormData = { name_he: string; name_en: string; display_order: number; status: ItemStatus; event_type_id?: string };
@@ -34,10 +34,10 @@ function toSlug(text: string) {
   return text.toLowerCase().trim().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 }
 
-function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage }: {
-  initial: FormData & { image?: string | null };
-  onSave: (d: FormData & { image?: string | null }) => void;
-  onCancel: () => void; loading: boolean; error: string; label: string; showImage?: boolean;
+function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage, showAtmosphereImage }: {
+  initial: FormData & { image?: string | null; atmosphere_image?: string | null };
+  onSave: (d: FormData & { image?: string | null; atmosphere_image?: string | null }) => void;
+  onCancel: () => void; loading: boolean; error: string; label: string; showImage?: boolean; showAtmosphereImage?: boolean;
 }) {
   const [form, setForm] = useState(initial);
   const set = (k: keyof typeof form, v: string | number | null) => setForm((f) => ({ ...f, [k]: v }));
@@ -91,13 +91,26 @@ function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage 
       </div>
       {showImage && (
         <div>
-          <label className="block text-xs text-stone-500 mb-1.5">תמונה</label>
+          <label className="block text-xs text-stone-500 mb-1.5">תמונת כרטיס (דף הבית)</label>
           <ImageUpload
             bucket="catalog"
             folder="events"
             value={form.image}
             onUpload={(url) => set("image", url)}
             onRemove={() => set("image", null)}
+          />
+        </div>
+      )}
+      {showAtmosphereImage && (
+        <div>
+          <label className="block text-xs text-stone-500 mb-1.5">תמונת אווירה (ראש עמוד קטגוריה)</label>
+          <p className="text-xs text-stone-400 mb-2">תמונה רחבה / GIF — ממולץ 1920×800px, מתחת ל-3MB</p>
+          <ImageUpload
+            bucket="catalog"
+            folder="atmosphere"
+            value={form.atmosphere_image}
+            onUpload={(url) => set("atmosphere_image", url)}
+            onRemove={() => set("atmosphere_image", null)}
           />
         </div>
       )}
@@ -217,8 +230,8 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
             {/* ── Event Type Header ── */}
             {editingEventType === et.id ? (
               <div className="p-4 bg-white">
-                <ItemForm label="עריכת סוג אירוע" showImage
-                  initial={{ name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image }}
+                <ItemForm label="עריכת סוג אירוע" showImage showAtmosphereImage
+                  initial={{ name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image, atmosphere_image: et.atmosphere_image }}
                   loading={isPending} error={formError}
                   onCancel={() => { setEditingEventType(null); setFormError(""); }}
                   onSave={(data) => handleAction(() => updateEventType(et.id, data))} />

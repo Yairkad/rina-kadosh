@@ -7,7 +7,7 @@ export default async function CatalogPage() {
   const [{ data: eventTypes }, { data: styles }, { data: products }] = await Promise.all([
     supabase
       .from("event_types")
-      .select("id, name_he, name_en, slug, display_order, status")
+      .select("id, name_he, name_en, slug, display_order, status, atmosphere_image")
       .neq("status", "archived")
       .order("display_order"),
     supabase

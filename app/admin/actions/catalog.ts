@@ -29,7 +29,7 @@ function toSlug(text: string) {
 // ─── Event Types ────────────────────────────────────────────────
 
 export async function createEventType(data: {
-  name_he: string; name_en: string; display_order: number; status: ItemStatus; image?: string | null;
+  name_he: string; name_en: string; display_order: number; status: ItemStatus; image?: string | null; atmosphere_image?: string | null;
 }) {
   const supabase = await getAdminClient();
   if (!supabase) return { error: "Unauthorized" };
@@ -44,7 +44,7 @@ export async function createEventType(data: {
 
 export async function updateEventType(
   id: string,
-  data: { name_he?: string; name_en?: string; display_order?: number; status?: ItemStatus; image?: string | null; }
+  data: { name_he?: string; name_en?: string; display_order?: number; status?: ItemStatus; image?: string | null; atmosphere_image?: string | null; }
 ) {
   const supabase = await getAdminClient();
   if (!supabase) return { error: "Unauthorized" };

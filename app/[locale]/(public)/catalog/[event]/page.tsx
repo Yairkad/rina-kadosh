@@ -17,7 +17,7 @@ export default async function EventPage({ params }: Props) {
 
   const { data: eventType } = await supabase
     .from("event_types")
-    .select("id, name_he, name_en")
+    .select("id, name_he, name_en, atmosphere_image")
     .eq("slug", event)
     .eq("status", "published")
     .single();
@@ -33,8 +33,28 @@ export default async function EventPage({ params }: Props) {
 
   const eventName = locale === "he" ? eventType.name_he : eventType.name_en;
 
+  const hasAtmosphere = !!eventType.atmosphere_image;
+
   return (
-    <section className="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen">
+      {/* Atmosphere Hero */}
+      {hasAtmosphere && (
+        <div className="relative w-full h-[65vh] overflow-hidden">
+          <Image
+            src={eventType.atmosphere_image!}
+            alt={eventName}
+            fill
+            className="object-cover"
+            priority
+          />
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(to bottom, transparent 30%, #FAF8F5 80%)" }}
+          />
+        </div>
+      )}
+
+      <section className={`px-4 pb-12 sm:px-6 lg:px-8 ${hasAtmosphere ? "-mt-32 relative z-10" : "pt-12"}`}>
       <div className="max-w-7xl mx-auto">
         {/* Back button */}
         <Link
@@ -93,6 +113,7 @@ export default async function EventPage({ params }: Props) {
           </div>
         )}
       </div>
-    </section>
+      </section>
+    </div>
   );
 }
