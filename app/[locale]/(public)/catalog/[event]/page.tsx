@@ -37,9 +37,10 @@ export default async function EventPage({ params }: Props) {
 
   return (
     <div className="min-h-screen">
-      {/* Atmosphere Hero */}
-      {hasAtmosphere && (
-        <div className="relative w-full h-[65vh] overflow-hidden">
+
+      {/* ── Atmosphere Hero ── */}
+      {hasAtmosphere ? (
+        <div className="relative w-full h-[70vh] overflow-hidden">
           <Image
             src={eventType.atmosphere_image!}
             alt={eventName}
@@ -47,72 +48,115 @@ export default async function EventPage({ params }: Props) {
             className="object-cover"
             priority
           />
+
+          {/* Dark scrim for text readability */}
+          <div className="absolute inset-0 bg-black/40" />
+
+          {/* Cream fade at bottom to blend into page */}
           <div
-            className="absolute inset-0"
-            style={{ background: "linear-gradient(to bottom, transparent 30%, #FAF8F5 80%)" }}
+            className="absolute inset-x-0 bottom-0 h-52"
+            style={{ background: "linear-gradient(to bottom, transparent, #FAF8F5)" }}
           />
+
+          {/* Back button — top overlay */}
+          <Link
+            href={`/${locale}`}
+            className="absolute top-6 start-6 z-10 inline-flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors"
+          >
+            <span>{locale === "he" ? "→" : "←"}</span>
+            {locale === "he" ? "חזרה לדף הבית" : "Back to Home"}
+          </Link>
+
+          {/* Event title — centered on the image */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ paddingBottom: "10%" }}>
+            <p className="text-[11px] uppercase tracking-[0.35em] text-[var(--gold)] mb-5">
+              {locale === "he" ? "סגנונות עיצוב" : "Design Styles"}
+            </p>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white text-center px-6"
+                style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}>
+              {eventName}
+            </h1>
+            <div className="mt-6 w-16 h-px bg-[var(--gold)]" />
+          </div>
+        </div>
+      ) : (
+        /* No atmosphere: standard header */
+        <div className="pt-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <Link
+              href={`/${locale}`}
+              className="inline-flex items-center gap-1.5 text-sm text-[var(--muted)] hover:text-[var(--gold)] transition-colors mb-10"
+            >
+              <span>{locale === "he" ? "→" : "←"}</span>
+              {locale === "he" ? "חזרה לדף הבית" : "Back to Home"}
+            </Link>
+            <div className="mb-12 text-center">
+              <p className="text-xs uppercase tracking-widest text-[var(--gold)] mb-2">
+                {locale === "he" ? "סגנונות עיצוב" : "Design Styles"}
+              </p>
+              <h1 className="text-3xl sm:text-4xl font-bold text-[var(--charcoal)]">{eventName}</h1>
+            </div>
+          </div>
         </div>
       )}
 
-      <section className={`px-4 pb-12 sm:px-6 lg:px-8 ${hasAtmosphere ? "-mt-32 relative z-10" : "pt-12"}`}>
-      <div className="max-w-7xl mx-auto">
-        {/* Back button */}
-        <Link
-          href={`/${locale}`}
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--muted)] hover:text-[var(--gold)] transition-colors mb-10"
-        >
-          <span>{locale === "he" ? "→" : "←"}</span>
-          {locale === "he" ? "חזרה לדף הבית" : "Back to Home"}
-        </Link>
+      {/* ── Style Cards ── */}
+      <section className="relative px-4 pb-16 sm:px-6 lg:px-8 pt-2">
+        {/* Subtle gold radial glow in background */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "radial-gradient(ellipse 90% 55% at 50% 0%, rgba(201,169,110,0.09) 0%, transparent 70%)" }}
+        />
 
-        <div className="mb-12 text-center">
-          <p className="text-xs uppercase tracking-widest text-[var(--gold)] mb-2">
-            {locale === "he" ? "סגנונות עיצוב" : "Design Styles"}
-          </p>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[var(--charcoal)]">
-            {eventName}
-          </h1>
-        </div>
-
-        {(styles ?? []).length > 0 ? (
-          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {(styles ?? []).map((style) => {
-              const name = locale === "he" ? style.name_he : style.name_en;
-              return (
-                <li key={style.id}>
-                  <Link
-                    href={`/${locale}/catalog/${event}/${style.slug}`}
-                    className="group block"
-                  >
-                    <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-gray-100">
-                      {style.og_image ? (
-                        <Image
-                          src={style.og_image}
-                          alt={name}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 bg-gray-50 flex items-center justify-center">
-                          <span className="text-3xl text-gray-200">✦</span>
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <h3 className="absolute bottom-4 start-4 text-white font-semibold text-lg">
-                        {name}
-                      </h3>
-                    </div>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <div className="text-center py-24 text-[var(--muted)]">
-            <p>אין סגנונות זמינים כרגע</p>
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Decorative section divider */}
+          <div className="flex items-center gap-4 mb-10">
+            <div className="flex-1 h-px bg-gradient-to-l from-[var(--gold)] via-[var(--gold-light)] to-transparent opacity-60" />
+            <span className="text-[var(--gold)] text-[10px] tracking-[0.35em] uppercase whitespace-nowrap">
+              {locale === "he" ? "בחר סגנון עיצוב" : "Choose a Style"}
+            </span>
+            <div className="flex-1 h-px bg-gradient-to-r from-[var(--gold)] via-[var(--gold-light)] to-transparent opacity-60" />
           </div>
-        )}
-      </div>
+
+          {(styles ?? []).length > 0 ? (
+            <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+              {(styles ?? []).map((style) => {
+                const name = locale === "he" ? style.name_he : style.name_en;
+                return (
+                  <li key={style.id}>
+                    <Link
+                      href={`/${locale}/catalog/${event}/${style.slug}`}
+                      className="group block"
+                    >
+                      <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-gray-100">
+                        {style.og_image ? (
+                          <Image
+                            src={style.og_image}
+                            alt={name}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 bg-gray-50 flex items-center justify-center">
+                            <span className="text-3xl text-gray-200">✦</span>
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <h3 className="absolute bottom-4 start-4 text-white font-semibold text-lg">
+                          {name}
+                        </h3>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <div className="text-center py-24 text-[var(--muted)]">
+              <p>אין סגנונות זמינים כרגע</p>
+            </div>
+          )}
+        </div>
       </section>
     </div>
   );
