@@ -6,10 +6,20 @@ import DeleteGalleryItemButton from "@/components/admin/DeleteGalleryItemButton"
 export default async function AdminGalleryPage() {
   const supabase = await createClient();
 
+  type GalleryRow = {
+    id: string;
+    title_he: string | null;
+    images: string[] | null;
+    active: boolean | null;
+    event_type_id: string | null;
+    event_types: { name_he: string } | null;
+  };
+
   const { data: items } = await supabase
     .from("gallery_items")
     .select("id, title_he, images, active, event_type_id, event_types(name_he)")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .returns<GalleryRow[]>();
 
   return (
     <div className="p-6 md:p-8" dir="rtl">
@@ -35,7 +45,7 @@ export default async function AdminGalleryPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map((item) => {
-            const eventTypeName = (item as any).event_types?.name_he;
+            const eventTypeName = item.event_types?.name_he;
             return (
               <div key={item.id} className="bg-white rounded-2xl border border-stone-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                 {/* Thumbnail */}

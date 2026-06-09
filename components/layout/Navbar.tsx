@@ -9,7 +9,7 @@ import { ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 
 export default function Navbar() {
-  const { items, totalItems, openDrawer } = useCart();
+  const { items, openDrawer } = useCart();
   const t = useTranslations("nav");
   const locale = useLocale();
   const router = useRouter();
