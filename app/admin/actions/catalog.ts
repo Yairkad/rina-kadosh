@@ -100,6 +100,7 @@ export async function updateDesignStyle(
     name_en?: string;
     display_order?: number;
     status?: ItemStatus;
+    atmosphere_image?: string | null;
   }
 ) {
   const supabase = await getAdminClient();

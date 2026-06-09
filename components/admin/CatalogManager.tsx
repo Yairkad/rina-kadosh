@@ -17,7 +17,7 @@ import {
 type ItemStatus = "draft" | "published" | "archived";
 
 type EventType = { id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; image?: string | null; atmosphere_image?: string | null };
-type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus };
+type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; atmosphere_image?: string | null };
 type Product = { id: string; name_he: string; status: string; design_style_id: string | null; event_type_id: string | null };
 type FormData = { name_he: string; name_en: string; display_order: number; status: ItemStatus; event_type_id?: string };
 
@@ -230,8 +230,8 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
             {/* ── Event Type Header ── */}
             {editingEventType === et.id ? (
               <div className="p-4 bg-white">
-                <ItemForm label="עריכת סוג אירוע" showImage showAtmosphereImage
-                  initial={{ name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image, atmosphere_image: et.atmosphere_image }}
+                <ItemForm label="עריכת סוג אירוע" showImage
+                  initial={{ name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image }}
                   loading={isPending} error={formError}
                   onCancel={() => { setEditingEventType(null); setFormError(""); }}
                   onSave={(data) => handleAction(() => updateEventType(et.id, data))} />
@@ -284,8 +284,8 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
                     <div key={style.id} className="bg-white rounded-xl border border-stone-200 overflow-hidden">
                       {editingStyle === style.id ? (
                         <div className="p-3">
-                          <ItemForm label="עריכת סגנון"
-                            initial={{ name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id }}
+                          <ItemForm label="עריכת סגנון" showAtmosphereImage
+                            initial={{ name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, atmosphere_image: style.atmosphere_image }}
                             loading={isPending} error={formError}
                             onCancel={() => { setEditingStyle(null); setFormError(""); }}
                             onSave={(data) => handleAction(() => updateDesignStyle(style.id, data))} />

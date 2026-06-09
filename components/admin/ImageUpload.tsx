@@ -8,7 +8,7 @@ const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/av
 const MAX_MB = 10;
 
 interface Props {
-  bucket: "products" | "catalog";
+  bucket: "products" | "catalog" | "gallery";
   folder?: string;
   /** Single image mode */
   value?: string | null;

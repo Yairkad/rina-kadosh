@@ -9,7 +9,7 @@ import { ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 
 export default function Navbar() {
-  const { totalItems, openDrawer } = useCart();
+  const { items, totalItems, openDrawer } = useCart();
   const t = useTranslations("nav");
   const locale = useLocale();
   const router = useRouter();
@@ -33,6 +33,7 @@ export default function Navbar() {
   const navLinks = [
     { href: `/${locale}`, label: locale === "he" ? "בית" : "Home" },
     { href: `/${locale}/catalog`, label: t("catalog") },
+    { href: `/${locale}/gallery`, label: t("gallery") },
     { href: `/${locale}/contact`, label: t("contact") },
   ];
 
@@ -88,9 +89,9 @@ export default function Navbar() {
               aria-label={t("cart")}
             >
               <ShoppingBag size={20} />
-              {totalItems > 0 && (
+              {items.length > 0 && (
                 <span className="absolute top-0.5 end-0.5 w-4 h-4 rounded-full bg-[var(--gold)] text-white text-[10px] font-bold flex items-center justify-center">
-                  {totalItems > 9 ? "9+" : totalItems}
+                  {items.length > 9 ? "9+" : items.length}
                 </span>
               )}
             </button>

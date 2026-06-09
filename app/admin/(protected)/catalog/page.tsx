@@ -12,7 +12,7 @@ export default async function CatalogPage() {
       .order("display_order"),
     supabase
       .from("design_styles")
-      .select("id, event_type_id, name_he, name_en, slug, display_order, status")
+      .select("id, event_type_id, name_he, name_en, slug, display_order, status, atmosphere_image")
       .neq("status", "archived")
       .order("display_order"),
     supabase

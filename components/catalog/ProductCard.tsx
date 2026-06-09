@@ -85,12 +85,12 @@ export default function ProductCard({
         </div>
 
         {/* Text */}
-        <div className="mt-3 px-1">
-          <h3 className="text-sm font-medium text-[var(--charcoal)] leading-snug line-clamp-2">
+        <div className="mt-3.5 px-1 text-center">
+          <h3 className="text-[15px] font-medium text-[var(--charcoal)] leading-snug line-clamp-2 tracking-[0.025em]">
             {name}
           </h3>
-          <div className="mt-1 flex items-baseline gap-2">
-            <span className="text-sm font-semibold text-[var(--charcoal)]">
+          <div className="mt-1.5 flex items-baseline justify-center gap-2">
+            <span className="text-[15px] font-semibold text-[var(--charcoal)] tracking-[0.02em]">
               ₪{price.toLocaleString("he-IL")}
             </span>
             {minType && minValue && (

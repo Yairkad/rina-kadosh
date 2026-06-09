@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-06-08T09:47:04.340Z
-> Files: 105 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-06-09T05:40:05.984Z
+> Files: 109 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -55,11 +55,11 @@
 
 ## app/[locale]/(public)/catalog/[event]/
 
-- `page.tsx` — revalidate (~1196 tok)
+- `page.tsx` — revalidate (~1008 tok)
 
 ## app/[locale]/(public)/catalog/[event]/[style]/
 
-- `page.tsx` — revalidate (~1786 tok)
+- `page.tsx` — revalidate (~2604 tok)
 
 ## app/[locale]/(public)/catalog/[event]/[style]/[product]/
 
@@ -71,7 +71,7 @@
 
 ## app/[locale]/(public)/gallery/
 
-- `page.tsx` — GalleryPage (~584 tok)
+- `page.tsx` — revalidate (~409 tok)
 
 ## app/[locale]/(public)/order-status/
 
@@ -105,7 +105,7 @@
 
 ## app/admin/(protected)/catalog/
 
-- `page.tsx` — CatalogPage (~362 tok)
+- `page.tsx` — CatalogPage (~368 tok)
 
 ## app/admin/(protected)/create-order/
 
@@ -121,15 +121,15 @@
 
 ## app/admin/(protected)/gallery/
 
-- `page.tsx` — GalleryPage (~1059 tok)
+- `page.tsx` — AdminGalleryPage (~1078 tok)
 
 ## app/admin/(protected)/gallery/[id]/
 
-- `page.tsx` — EditGalleryItemPage (~315 tok)
+- `page.tsx` — EditGalleryItemPage (~312 tok)
 
 ## app/admin/(protected)/gallery/new/
 
-- `page.tsx` — NewGalleryItemPage (~168 tok)
+- `page.tsx` — NewGalleryItemPage (~170 tok)
 
 ## app/admin/(protected)/materials/
 
@@ -162,9 +162,9 @@
 ## app/admin/actions/
 
 - `bundles.ts` — Exports BundleItem, BundleFormData, createBundle, updateBundle, archiveBundle (~773 tok)
-- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1232 tok)
+- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1243 tok)
 - `create-order.ts` — Exports ManualOrderItem, ManualOrderData, createManualOrder (~465 tok)
-- `gallery.ts` — Exports GalleryFormData, createGalleryItem, updateGalleryItem, deleteGalleryItem (~511 tok)
+- `gallery.ts` — Exports GalleryFormData, createGalleryItem, updateGalleryItem, deleteGalleryItem (~362 tok)
 - `materials.ts` — Exports createMaterial, updateMaterial, deleteMaterial, addStockQuantity + 2 more (~1420 tok)
 - `orders.ts` — Exports updateOrderStatus, updateOrderNotes (~687 tok)
 - `products.ts` — Exports ProductFormData, createProduct, updateProduct, deleteProduct, archiveProduct (~907 tok)
@@ -183,16 +183,16 @@
 
 ## components/admin/
 
-- `AdminSidebar.tsx` — NAV_ITEMS (~1326 tok)
+- `AdminSidebar.tsx` — NAV_ITEMS (~1346 tok)
 - `ArchiveBundleButton.tsx` — ArchiveBundleButton (~284 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
 - `BundleForm.tsx` — Field (~3851 tok)
-- `CatalogManager.tsx` — EMPTY_FORM (~6489 tok)
+- `CatalogManager.tsx` — EMPTY_FORM (~6500 tok)
 - `CreateOrderForm.tsx` — Input (~3824 tok)
-- `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~281 tok)
+- `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~227 tok)
 - `DeleteProductButton.tsx` — DeleteProductButton (~263 tok)
-- `GalleryItemForm.tsx` — GalleryItemForm (~2096 tok)
-- `ImageUpload.tsx` — Single image mode (~1428 tok)
+- `GalleryItemForm.tsx` — GalleryItemForm — renders form (~1443 tok)
+- `ImageUpload.tsx` — Single image mode (~1431 tok)
 - `MaterialsManager.tsx` — stripLeadingZero (~4802 tok)
 - `OrderStatusUpdate.tsx` — STATUS_OPTIONS (~1171 tok)
 - `ProductFilters.tsx` — ProductFilters (~1559 tok)
@@ -207,8 +207,13 @@
 
 ## components/catalog/
 
-- `ExpandingEventCards.tsx` — ExpandingEventCards (~1525 tok)
-- `ProductCard.tsx` — ProductCard (~888 tok)
+- `ExpandingEventCards.tsx` — ExpandingEventCards (~1633 tok)
+- `ProductCard.tsx` — ProductCard (~910 tok)
+
+## components/gallery/
+
+- `GalleryGrid.tsx` — Client component: filter tabs by event_type + masonry grid of gallery_items, opens lightbox on click (~1593 tok)
+- `GalleryLightbox.tsx` — Client component: full-screen image lightbox with prev/next navigation, dot indicators, ESC/keyboard support (~1243 tok)
 
 ## components/home/
 
@@ -220,8 +225,8 @@
 ## components/layout/
 
 - `BottomNav.tsx` — BottomNav (~433 tok)
-- `Footer.tsx` — Footer (~636 tok)
-- `Navbar.tsx` — Navbar (~1620 tok)
+- `Footer.tsx` — Footer (~678 tok)
+- `Navbar.tsx` — Navbar (~1640 tok)
 - `WhatsAppButton.tsx` — WHATSAPP_NUMBER (~870 tok)
 
 ## components/product/
@@ -266,3 +271,5 @@
 
 - `001_initial_schema.sql` — ============================================================ (~3133 tok)
 - `002_atmosphere_image.sql` — Migration 002: Add atmosphere_image to event_types (~34 tok)
+- `003_style_atmosphere_image.sql` — Migration 003: Add atmosphere_image to design_styles (~35 tok)
+- `004_gallery_grant.sql` — Grant table-level SELECT on gallery_items (required alongside RLS policy) (~35 tok)

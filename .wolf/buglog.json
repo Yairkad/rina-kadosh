@@ -1184,6 +1184,182 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-06-08T09:46:32.652Z"
+    },
+    {
+      "id": "bug-075",
+      "timestamp": "2026-06-08T12:29:36.512Z",
+      "error_message": "CSS fix: background",
+      "file": "app/[locale]/(public)/catalog/[event]/page.tsx",
+      "root_cause": "background: \"linear-gradient(to bottom, transparent 30%, #FAF8F5 80%)\" → \"linear-gradient(to bottom, transparent, #FAF8F5)\"",
+      "fix": "Changed background: \"linear-gradient(to bottom, transparent 30%, #FAF8F5 80%)\" → \"linear-gradient(to bottom, transparent, #FAF8F5)\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-08T12:29:36.512Z"
+    },
+    {
+      "id": "bug-076",
+      "timestamp": "2026-06-08T12:30:17.459Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/[locale]/(public)/catalog/[event]/page.tsx",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 43→58 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-08T12:30:17.459Z"
+    },
+    {
+      "id": "bug-077",
+      "timestamp": "2026-06-08T13:11:36.944Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/(public)/catalog/[event]/page.tsx",
+      "root_cause": "Had \"relative px-4 pb-16 sm:px-6 lg:px-8 pt-2\"",
+      "fix": "Changed to \"relative z-10 -mt-28 px-4 pb-16 sm:px-6 lg:px-8 p",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-08T13:11:36.944Z"
+    },
+    {
+      "id": "bug-078",
+      "timestamp": "2026-06-09T04:53:42.263Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/admin/(protected)/catalog/page.tsx",
+      "root_cause": "Had \"id, event_type_id, name_he, name_en, slug, displa",
+      "fix": "Changed to \"id, event_type_id, name_he, name_en, slug, displa",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-09T04:53:42.263Z"
+    },
+    {
+      "id": "bug-079",
+      "timestamp": "2026-06-09T04:54:08.805Z",
+      "error_message": "CSS fix: name_he",
+      "file": "components/admin/CatalogManager.tsx",
+      "root_cause": "name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image, atmosphere_image: et.atmosphere_image → et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image",
+      "fix": "Changed name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image, atmosphere_image: et.atmosphere_image → et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-06-09T04:54:19.517Z"
+    },
+    {
+      "id": "bug-080",
+      "timestamp": "2026-06-09T05:23:02.763Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/page.tsx",
+      "root_cause": "Had \"text-lg font-semibold text-[var(--charcoal)] mb-6",
+      "fix": "Changed to \"mt-8\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-09T05:23:02.763Z"
+    },
+    {
+      "id": "bug-081",
+      "timestamp": "2026-06-09T05:25:46.484Z",
+      "error_message": "CSS fix: sm",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/page.tsx",
+      "root_cause": "sm: text-6xl lg:text-7xl font-bold text-white text-center px-6\" → text-5xl lg:text-6xl font-bold text-white text-center px-6\"",
+      "fix": "Changed sm: text-6xl lg:text-7xl font-bold text-white text-center px-6\" → text-5xl lg:text-6xl font-bold text-white text-center px-6\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-06-09T05:31:33.411Z"
+    },
+    {
+      "id": "bug-082",
+      "timestamp": "2026-06-09T05:31:43.472Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/page.tsx",
+      "root_cause": "Had \"relative z-10 -mt-28 px-4 pb-16 sm:px-6 lg:px-8 p",
+      "fix": "Changed to \"relative z-10 -mt-[22vh] px-4 pb-16 sm:px-6 lg:px",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-09T05:31:43.472Z"
+    },
+    {
+      "id": "bug-083",
+      "timestamp": "2026-06-09T05:37:01.298Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/page.tsx",
+      "root_cause": "Had \"grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 ga",
+      "fix": "Changed to \"grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-09T05:37:01.298Z"
+    },
+    {
+      "id": "bug-084",
+      "timestamp": "2026-06-09T05:37:40.099Z",
+      "error_message": "CSS fix: bucket",
+      "file": "components/admin/ImageUpload.tsx",
+      "root_cause": "bucket: \"products\" | \"catalog\" → \"products\" | \"catalog\" | \"gallery\"",
+      "fix": "Changed bucket: \"products\" | \"catalog\" → \"products\" | \"catalog\" | \"gallery\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-09T05:37:40.099Z"
+    },
+    {
+      "id": "bug-085",
+      "timestamp": "2026-06-09T05:40:06.013Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/layout/Footer.tsx",
+      "root_cause": "Had `/${locale}/contact`",
+      "fix": "Changed to `/${locale}/gallery`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-09T05:40:06.013Z"
     }
   ]
 }

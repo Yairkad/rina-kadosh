@@ -19,6 +19,7 @@ interface ExpandingEventCardsProps {
 export default function ExpandingEventCards({ items }: ExpandingEventCardsProps) {
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
   const [clickedIndex, setClickedIndex] = React.useState<number | null>(null);
+  const [navigating, setNavigating] = React.useState<number | null>(null);
   const [isDesktop, setIsDesktop] = React.useState(false);
   const locale = useLocale();
   const router = useRouter();
@@ -43,14 +44,17 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
     };
   }, [activeIndex, items.length, isDesktop]);
 
+  const navigate = (index: number, slug: string) => {
+    setNavigating(index);
+    router.push(`/${locale}/catalog/${slug}`);
+  };
+
   const handleClick = (index: number, slug: string) => {
     if (isDesktop) {
-      // Desktop: hover already expands — click always navigates
-      router.push(`/${locale}/catalog/${slug}`);
+      navigate(index, slug);
     } else {
-      // Mobile: first tap expands, second tap navigates
       if (clickedIndex === index) {
-        router.push(`/${locale}/catalog/${slug}`);
+        navigate(index, slug);
       } else {
         setClickedIndex(index);
         setActiveIndex(index);
@@ -98,6 +102,13 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
 
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
+
+            {/* Loading indicator */}
+            {navigating === index && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-20">
+                <div className="w-8 h-8 rounded-full border-2 border-[var(--gold)] border-t-transparent animate-spin" />
+              </div>
+            )}
 
             {/* Collapsed label — vertical watermark on desktop */}
             <h3
