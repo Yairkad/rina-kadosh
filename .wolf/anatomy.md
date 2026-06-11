@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-06-09T05:40:05.984Z
-> Files: 109 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-06-11T14:18:53.484Z
+> Files: 110 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -121,7 +121,7 @@
 
 ## app/admin/(protected)/gallery/
 
-- `page.tsx` — AdminGalleryPage (~1078 tok)
+- `page.tsx` — AdminGalleryPage (~1144 tok)
 
 ## app/admin/(protected)/gallery/[id]/
 
@@ -192,7 +192,7 @@
 - `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~227 tok)
 - `DeleteProductButton.tsx` — DeleteProductButton (~263 tok)
 - `GalleryItemForm.tsx` — GalleryItemForm — renders form (~1443 tok)
-- `ImageUpload.tsx` — Single image mode (~1431 tok)
+- `ImageUpload.tsx` — Single + multi image mode. Multi: star button sets primary (index 0), amber border on primary (~1500 tok)
 - `MaterialsManager.tsx` — stripLeadingZero (~4802 tok)
 - `OrderStatusUpdate.tsx` — STATUS_OPTIONS (~1171 tok)
 - `ProductFilters.tsx` — ProductFilters (~1559 tok)
@@ -226,7 +226,7 @@
 
 - `BottomNav.tsx` — BottomNav (~433 tok)
 - `Footer.tsx` — Footer (~678 tok)
-- `Navbar.tsx` — Navbar (~1640 tok)
+- `Navbar.tsx` — Navbar (~1637 tok)
 - `WhatsAppButton.tsx` — WHATSAPP_NUMBER (~870 tok)
 
 ## components/product/
@@ -273,3 +273,4 @@
 - `002_atmosphere_image.sql` — Migration 002: Add atmosphere_image to event_types (~34 tok)
 - `003_style_atmosphere_image.sql` — Migration 003: Add atmosphere_image to design_styles (~35 tok)
 - `004_gallery_grant.sql` — Grant table-level SELECT on gallery_items (required alongside RLS policy) (~35 tok)
+- `005_clear_demo_data.sql` — Migration 005: Clear all demo catalog data (~94 tok)

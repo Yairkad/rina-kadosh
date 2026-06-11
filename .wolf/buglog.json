@@ -1360,6 +1360,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-06-09T05:40:06.013Z"
+    },
+    {
+      "id": "bug-086",
+      "timestamp": "2026-06-11T14:13:05.735Z",
+      "error_message": "Missing guard clause",
+      "file": "components/admin/ImageUpload.tsx",
+      "root_cause": "No early return/throw for edge case: i === 0",
+      "fix": "Added guard clause: if (i === 0)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-11T14:13:05.735Z"
     }
   ]
 }

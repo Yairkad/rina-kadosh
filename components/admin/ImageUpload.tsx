@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Upload, X, Loader2, ImageIcon } from "lucide-react";
+import { Upload, X, Loader2, ImageIcon, Star } from "lucide-react";
 
 const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/avif"];
 const MAX_MB = 10;
@@ -84,14 +84,34 @@ export default function ImageUpload({
       {isMulti && images!.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {images!.map((url, i) => (
-            <div key={i} className="relative w-20 h-20 rounded-lg overflow-hidden border border-stone-200 group bg-stone-100">
+            <div
+              key={i}
+              className={`relative w-20 h-20 rounded-lg overflow-hidden group bg-stone-100 transition-all ${
+                i === 0 ? "border-2 border-amber-400 shadow-sm" : "border border-stone-200"
+              }`}
+            >
               <img src={url} alt="" className="w-full h-full object-cover" />
-              {i === 0 && (
-                <span className="absolute bottom-0 inset-x-0 text-center text-white text-[9px] font-medium bg-black/50 py-0.5">ראשי</span>
-              )}
-              <button type="button"
+              {/* Star: filled gold on primary, outline on hover for others */}
+              <button
+                type="button"
+                title={i === 0 ? "תמונה ראשית" : "הגדר כראשית"}
+                onClick={() => {
+                  if (i === 0) return;
+                  onImagesChange?.([url, ...images!.filter((_, idx) => idx !== i)]);
+                }}
+                className={`absolute bottom-1 left-1 p-0.5 rounded-full transition-all ${
+                  i === 0
+                    ? "text-amber-400 drop-shadow"
+                    : "text-white/70 opacity-0 group-hover:opacity-100 hover:text-amber-300"
+                }`}
+              >
+                <Star size={13} fill={i === 0 ? "currentColor" : "none"} />
+              </button>
+              <button
+                type="button"
                 onClick={() => onImagesChange?.(images!.filter((_, idx) => idx !== i))}
-                className="absolute top-1 right-1 p-0.5 bg-black/60 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity active:scale-95">
+                className="absolute top-1 right-1 p-0.5 bg-black/60 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity active:scale-95"
+              >
                 <X size={11} />
               </button>
             </div>
