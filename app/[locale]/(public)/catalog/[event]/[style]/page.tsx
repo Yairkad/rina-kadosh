@@ -192,7 +192,7 @@ export default async function StylePage({ params }: Props) {
               {locale === "he" ? "כל המוצרים" : "All Products"}
             </h2>
             {(products ?? []).length > 0 ? (
-              <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-10">
+              <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
                 {(products ?? []).map((product) => (
                   <li key={product.id}>
                     <ProductCard
