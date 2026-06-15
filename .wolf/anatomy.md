@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-06-11T14:18:53.484Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-06-15T17:20:04.717Z
 > Files: 110 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/

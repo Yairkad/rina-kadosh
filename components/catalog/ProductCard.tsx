@@ -53,7 +53,7 @@ export default function ProductCard({
       <Link href={href} className="group block">
         {/* Image container */}
         <div
-          className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-gray-100 cursor-pointer"
+          className="relative aspect-square w-full overflow-hidden rounded-xl bg-gray-100 cursor-pointer"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >

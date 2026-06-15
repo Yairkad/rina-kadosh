@@ -1376,6 +1376,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-06-11T14:13:05.735Z"
+    },
+    {
+      "id": "bug-087",
+      "timestamp": "2026-06-15T17:20:04.734Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/catalog/ProductCard.tsx",
+      "root_cause": "Had \"relative aspect-[4/5] w-full overflow-hidden roun",
+      "fix": "Changed to \"relative aspect-square w-full overflow-hidden rou",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-15T17:20:04.734Z"
     }
   ]
 }
