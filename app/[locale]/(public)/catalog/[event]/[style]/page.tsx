@@ -132,7 +132,7 @@ export default async function StylePage({ params }: Props) {
           style={{ background: "radial-gradient(ellipse 90% 55% at 50% 0%, rgba(201,169,110,0.09) 0%, transparent 70%)" }}
         />
 
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="max-w-7xl 2xl:max-w-[1600px] mx-auto relative z-10">
           {/* Bundles */}
           {(bundles ?? []).length > 0 && (
             <div className="mb-14">
