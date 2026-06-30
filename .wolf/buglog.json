@@ -1392,6 +1392,66 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-06-15T17:20:04.734Z"
+    },
+    {
+      "id": "bug-088",
+      "timestamp": "2026-06-15T17:25:47.796Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/page.tsx",
+      "root_cause": "Had \"grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl",
+      "fix": "Changed to \"grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 ga",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-15T17:25:47.796Z"
+    },
+    {
+      "id": "bug-089",
+      "timestamp": "2026-06-30T17:13:29.195Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/page.tsx",
+      "root_cause": "Had \"max-w-7xl mx-auto relative z-10\"",
+      "fix": "Changed to \"max-w-7xl 2xl:max-w-[1600px] mx-auto relative z-1",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-30T17:13:29.195Z"
+    },
+    {
+      "id": "bug-090",
+      "timestamp": "2026-06-30T17:14:30.992Z",
+      "error_message": "Wrong condition in logic",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx",
+      "root_cause": "Condition was: if (!productData || !eventType || !designStyle)",
+      "fix": "Changed to: if (!productData || !designStyle)",
+      "tags": [
+        "auto-detected",
+        "logic-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-30T17:14:30.992Z"
+    },
+    {
+      "id": "bug-091",
+      "timestamp": "2026-06-30T00:00:00.000Z",
+      "error_message": "HierarchyRequestError: Failed to execute 'appendChild' on 'Node': Only one element on document allowed",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx",
+      "root_cause": "design_styles queried by slug alone but uniqueness is (event_type_id, slug). After SQL duplication of products with reused style slugs across event_types, .single() returned PGRST116 (multiple rows), data became null, notFound() was called. Missing not-found.tsx caused Next.js to try rendering 404 at document level, creating HTML structure conflict and hydration mismatch (HierarchyRequestError).",
+      "fix": "1) Changed design_styles query to first fetch event_type, then filter design_styles by .eq('event_type_id', eventType.id). 2) Created app/[locale]/not-found.tsx to handle 404 within the locale layout.",
+      "tags": ["hydration", "supabase", "single()", "not-found", "design_styles", "sql-duplication"],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-30T00:00:00.000Z"
     }
   ]
 }

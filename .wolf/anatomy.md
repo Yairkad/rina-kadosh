@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-06-15T17:20:04.717Z
-> Files: 110 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-06-30T17:14:41.134Z
+> Files: 111 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -39,6 +39,7 @@
 ## app/[locale]/
 
 - `layout.tsx` — metadata (~589 tok)
+- `not-found.tsx` — NotFound (~179 tok)
 
 ## app/[locale]/(public)/
 
@@ -59,11 +60,11 @@
 
 ## app/[locale]/(public)/catalog/[event]/[style]/
 
-- `page.tsx` — revalidate (~2604 tok)
+- `page.tsx` — revalidate (~2605 tok)
 
 ## app/[locale]/(public)/catalog/[event]/[style]/[product]/
 
-- `page.tsx` — revalidate (~2120 tok)
+- `page.tsx` — revalidate (~2181 tok)
 
 ## app/[locale]/(public)/contact/
 

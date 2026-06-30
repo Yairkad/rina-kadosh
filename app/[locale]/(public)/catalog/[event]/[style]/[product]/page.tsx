@@ -53,7 +53,17 @@ export default async function ProductPage({ params }: Props) {
   const locale = await getLocale();
   const supabase = await createClient();
 
-  const [{ data: productData }, { data: eventType }, { data: designStyle }] = await Promise.all([
+  // Get event type first — needed to scope design_style lookup by event_type_id
+  // (design_styles.slug is unique per event_type, not globally unique)
+  const { data: eventType } = await supabase
+    .from("event_types")
+    .select("id, name_he, name_en")
+    .eq("slug", event)
+    .single();
+
+  if (!eventType) notFound();
+
+  const [{ data: productData }, { data: designStyle }] = await Promise.all([
     supabase
       .from("products")
       .select("id, name_he, name_en, description_he, description_en, price_per_unit, min_type, min_value, images, related_products, allow_customization")
@@ -62,18 +72,14 @@ export default async function ProductPage({ params }: Props) {
       .is("deleted_at", null)
       .single(),
     supabase
-      .from("event_types")
-      .select("id, name_he, name_en")
-      .eq("slug", event)
-      .single(),
-    supabase
       .from("design_styles")
       .select("id, name_he, name_en")
       .eq("slug", style)
+      .eq("event_type_id", eventType.id)
       .single(),
   ]);
 
-  if (!productData || !eventType || !designStyle) notFound();
+  if (!productData || !designStyle) notFound();
 
   const name = locale === "he" ? productData.name_he : productData.name_en;
   const description = locale === "he" ? productData.description_he : productData.description_en;

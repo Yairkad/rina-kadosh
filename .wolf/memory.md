@@ -3,6 +3,7 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 | 14:28 | Created design-references/ExpandingCards.tsx | — | ~1159 |
+| session | Fixed HierarchyRequestError on product page — design_styles query scoped by event_type_id + created not-found.tsx | app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx, app/[locale]/not-found.tsx | bug-091 | ~800 |
 | SESSION | Built admin interface foundation: middleware update, login page, protected layout + sidebar, dashboard with KPIs | middleware.ts, app/admin/**, components/admin/AdminSidebar.tsx | completed | ~1200 |
 | 14:29 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
 | 14:29 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
@@ -771,3 +772,35 @@
 | 20:20 | Edited components/catalog/ProductCard.tsx | "relative aspect-[4/5] w-f" → "relative aspect-square w-" | ~30 |
 | 20:20 | ProductCard: aspect-[4/5] → aspect-square | components/catalog/ProductCard.tsx | done | ~50 tok |
 | 20:20 | Session end: 1 writes across 1 files (ProductCard.tsx) | 1 reads | ~940 tok |
+| 20:20 | Session end: 1 writes across 1 files (ProductCard.tsx) | 1 reads | ~940 tok |
+| 20:21 | Session end: 1 writes across 1 files (ProductCard.tsx) | 2 reads | ~940 tok |
+
+## Session: 2026-06-15 20:23
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-06-15 20:23
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 20:25 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | "grid grid-cols-2 sm:grid-" → "grid grid-cols-2 sm:grid-" | ~27 |
+| 20:27 | Session end: 1 writes across 1 files (page.tsx) | 1 reads | ~2631 tok |
+
+## Session: 2026-06-30 19:54
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-06-30 20:04
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 20:13 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | "max-w-7xl mx-auto relativ" → "max-w-7xl 2xl:max-w-[1600" | ~22 |
+| 20:14 | Edited app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx | added 1 condition(s) | ~250 |
+| 20:14 | Edited app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx | inline fix | ~14 |
+| 20:14 | Created app/[locale]/not-found.tsx | — | ~179 |
+| 20:14 | Session end: 4 writes across 2 files (page.tsx, not-found.tsx) | 10 reads | ~16280 tok |
+| 20:15 | Session end: 4 writes across 2 files (page.tsx, not-found.tsx) | 10 reads | ~16280 tok |
+| 20:16 | Session end: 4 writes across 2 files (page.tsx, not-found.tsx) | 10 reads | ~16280 tok |
+| 20:16 | Session end: 4 writes across 2 files (page.tsx, not-found.tsx) | 10 reads | ~16280 tok |

@@ -42,6 +42,8 @@
 - **[2026-05-28] Remove-Item עם סוגריים מרובעים** — PowerShell מפרש `[locale]` כ-wildcard. תמיד להשתמש ב-`-LiteralPath` כשהנתיב מכיל סוגריים מרובעים.
 - **[2026-05-28] gallery_items סכמה שונה** — הטבלה כוללת `images` (ARRAY), `title_he`, `title_en`, `active` — לא `image_url`/`alt_he`/`alt_en`/`is_featured`.
 - **[2026-05-28] אל תשתמש ב-Get-ChildItem בכלי Bash** — PowerShell cmdlets לא עובדים ב-Bash tool. להשתמש ב-`find` או בכלי Glob.
+- **[2026-06-30] design_styles.slug אינו unique גלובלי** — הייחוד הוא `(event_type_id, slug)`. כל query על design_styles לפי slug בלבד חייב להוסיף `.eq("event_type_id", ...)` כדי למנוע PGRST116 כשיש מספר event_types עם אותו style slug.
+- **[2026-06-30] חסר not-found.tsx** — ללא קובץ זה Next.js מנסה להציג 404 ברמת ה-document ומחוץ ל-locale layout, מה שגורם ל-HierarchyRequestError. חייב ליצור `app/[locale]/not-found.tsx`.
 
 ## Key Learnings (עדכון 2026-05-28)
 
