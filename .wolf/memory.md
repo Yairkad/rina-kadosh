@@ -819,3 +819,4 @@
 | 18:57 | Edited app/[locale]/(public)/cart/page.tsx | 3→3 lines | ~44 |
 | 18:57 | Edited app/[locale]/(public)/cart/page.tsx | CSS: width | ~492 |
 | 18:57 | Edited app/[locale]/(public)/cart/page.tsx | 3→3 lines | ~26 |
+| 19:05 | Edited supabase/migrations/006_logos_bucket_anon_policy.sql | 15→18 lines | ~179 |
