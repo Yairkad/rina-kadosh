@@ -18,6 +18,7 @@ import {
   X,
   FlaskConical,
   Images,
+  Tag,
 } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -28,6 +29,7 @@ const NAV_ITEMS = [
   { href: "/admin/catalog", label: "קטלוג", icon: BookOpen },
   { href: "/admin/gallery", label: "גלריה", icon: Images },
   { href: "/admin/materials", label: "מלאי חומרי גלם", icon: FlaskConical },
+  { href: "/admin/coupons", label: "קופונים", icon: Tag },
   { href: "/admin/production", label: "תור ייצור", icon: Wrench },
   { href: "/admin/create-order", label: "הזמנה ידנית", icon: Plus },
 ];

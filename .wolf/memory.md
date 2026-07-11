@@ -832,3 +832,23 @@
 | 19:23 | Created supabase/migrations/008_fix_order_number_trigger.sql | — | ~287 |
 | 19:23 | Edited app/actions/submit-order.ts | 2→3 lines | ~27 |
 | session | User confirmed checkout still failing after migrations 006+007 — found second independent bug: trg_orders_order_number WHEN clause never matched NULL order_number, so public checkout inserts violated NOT NULL (admin manual orders worked because they explicitly send order_number: ""). Fixed trigger + submit-order.ts. Renamed 008_coupons.sql → 009_coupons.sql to keep this more urgent fix as 008. | supabase/migrations/008_fix_order_number_trigger.sql, supabase/migrations/009_coupons.sql, app/actions/submit-order.ts | bug-097 | ~600 |
+| 19:25 | Edited components/admin/AdminSidebar.tsx | 15→17 lines | ~210 |
+| 19:25 | Created app/admin/actions/coupons.ts | — | ~521 |
+| 19:25 | Created app/admin/(protected)/coupons/page.tsx | — | ~193 |
+| 19:26 | Created components/admin/CouponsManager.tsx | — | ~2726 |
+| 19:26 | Created app/actions/apply-coupon.ts | — | ~240 |
+| 19:26 | Edited app/actions/submit-order.ts | 4→5 lines | ~30 |
+| 19:26 | Edited app/actions/submit-order.ts | added 2 condition(s) | ~561 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | added nullish coalescing | ~346 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | 2→6 lines | ~110 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | added 2 condition(s) | ~298 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | 8→10 lines | ~84 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | added optional chaining | ~56 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | added 1 condition(s) | ~126 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | expanded (+41 lines) | ~748 |
+| 19:28 | Edited messages/he.json | 2→5 lines | ~53 |
+| 19:28 | Edited messages/en.json | 2→5 lines | ~54 |
+| 19:28 | Edited app/admin/(protected)/orders/[id]/page.tsx | expanded (+8 lines) | ~260 |
+| 19:30 | Created supabase/migrations/010_order_insert_rpc.sql | — | ~626 |
+| 19:30 | Edited app/actions/submit-order.ts | added optional chaining | ~340 |
+| session | User confirmed checkout still failing after 006+007+008 with NO console error — diagnosed as RLS filtering the RETURNING clause of INSERT through SELECT policies (orders has no anon SELECT policy by design, PII table). .insert().select().single() got 0 rows back, .single() threw a controlled (not console-visible) error. Fixed by moving the insert into a SECURITY DEFINER function create_order() called via rpc(), same pattern as is_admin(). Also completed the full coupon-code feature (migration 009, admin CRUD, checkout apply/remove UI, server-side redemption) per approved plan. | supabase/migrations/009_coupons.sql, supabase/migrations/010_order_insert_rpc.sql, app/actions/submit-order.ts, app/actions/apply-coupon.ts, app/admin/actions/coupons.ts, components/admin/CouponsManager.tsx, app/admin/(protected)/coupons/page.tsx, components/admin/AdminSidebar.tsx, app/[locale]/(public)/cart/page.tsx, app/admin/(protected)/orders/[id]/page.tsx, messages/*.json | bug-103 | ~1200 |
