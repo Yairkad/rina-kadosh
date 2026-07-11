@@ -1692,6 +1692,18 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-11T19:46:35.119Z"
+    },
+    {
+      "id": "bug-105",
+      "timestamp": "2026-07-11T00:00:00.000Z",
+      "error_message": "\"permission denied for table coupons\" when an admin tried to create a coupon in /admin/coupons",
+      "file": "supabase/migrations/009_coupons.sql",
+      "root_cause": "Same bug class as bug-096 (orders) and the earlier gallery_items fix (004) — RLS policy created without the matching table-level GRANT — but this time hitting `authenticated`, disproving the earlier assumption that authenticated already has default privileges in this project (that assumption was only ever confirmed for tables that happened to work, not verified against a GRANT). Hit this exact bug class 3 separate times now, once per table.",
+      "fix": "Added supabase/migrations/011_coupons_authenticated_grant.sql: GRANT SELECT/INSERT/UPDATE/DELETE ON coupons TO authenticated, matching the minimal per-table pattern already used for gallery_items (004) and orders (007). (A schema-wide GRANT ALL TABLES + ALTER DEFAULT PRIVILEGES fix was drafted first but reverted — auto-mode correctly flagged it as a broader permission escalation than the user asked for; scoped back to just the coupons table. The systemic pattern — every new table in this project needs an explicit GRANT alongside its RLS policy — stays documented in cerebrum.md as a recurring Do-Not-Repeat check, not as a standing blanket grant.)",
+      "tags": ["supabase", "rls", "grant", "authenticated", "coupons", "permission-denied"],
+      "related_bugs": ["bug-096", "bug-095"],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T00:00:00.000Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T19:46:42.828Z
-> Files: 121 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T19:50:03.056Z
+> Files: 123 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -291,3 +291,4 @@
 - `008_fix_order_number_trigger.sql` — Migration 008: trg_orders_order_number WHEN clause didn't match NULL, so public checkout inserts (which omit order_number) violated NOT NULL — fixed trigger + submit-order.ts (~287 tok)
 - `009_coupons.sql` — Migration 009: coupons table (admin-only RLS) + validate_coupon/redeem_coupon SECURITY DEFINER functions granted to anon; orders.coupon_code/discount_amount columns (~1145 tok)
 - `010_order_insert_rpc.sql` — Migration 010: create_order() SECURITY DEFINER function — orders insert moved here because RLS filters INSERT's RETURNING through SELECT policies too, and anon has none on orders (fixes checkout still failing after 006/007/008 with no console error) (~626 tok)
+- `011_coupons_authenticated_grant.sql` — Migration 011: GRANT SELECT/INSERT/UPDATE/DELETE ON coupons TO authenticated (RLS policy from 009 wasn't enough — fixes "permission denied for table coupons" when creating a coupon) (~187 tok)
