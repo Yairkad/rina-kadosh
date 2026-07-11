@@ -19,6 +19,7 @@ export type SubmitOrderInput = {
   delivery_notes?: string;
   logo_url?: string;
   special_requests?: string;
+  coupon_code?: string;
   items: OrderItemInput[];
 };
 
@@ -75,25 +76,50 @@ export async function submitOrder(input: SubmitOrderInput): Promise<{ order_numb
 
   totalAmount = Math.round(totalAmount * 100) / 100;
 
-  const { data: created, error } = await supabase
-    .from("orders")
-    .insert({
-      customer_name:    input.customer_name.trim(),
-      customer_phone:   input.customer_phone.trim(),
-      customer_email:   input.customer_email.trim().toLowerCase(),
-      delivery_method:  input.delivery_method,
-      delivery_address: input.delivery_address || null,
-      delivery_notes:   input.delivery_notes   || null,
-      logo_url:         input.logo_url         || null,
-      special_requests: input.special_requests || null,
-      items:            orderItems,
-      total_amount:     totalAmount,
-      status:           "pending",
-    })
-    .select("order_number")
-    .single();
+  // Redeem the coupon (if any) server-side and authoritatively — never
+  // trust a client-sent discount amount. redeem_coupon() re-validates
+  // and atomically increments times_used, so a coupon can't be
+  // over-redeemed by two simultaneous checkouts.
+  let discountAmount = 0;
+  let couponCode: string | undefined;
 
-  if (error) return { error: error.message };
+  if (input.coupon_code) {
+    const { data: redeemed, error: redeemError } = await supabase
+      .rpc("redeem_coupon", { p_code: input.coupon_code })
+      .single<{ success: boolean; discount_type: "percent" | "amount" | null; discount_value: number | null; error: string | null }>();
 
-  return { order_number: created.order_number };
+    if (redeemError || !redeemed || !redeemed.success || !redeemed.discount_type || redeemed.discount_value === null) {
+      return { error: "invalid_coupon" };
+    }
+
+    const rawDiscount = redeemed.discount_type === "percent"
+      ? totalAmount * redeemed.discount_value / 100
+      : redeemed.discount_value;
+    discountAmount = Math.min(Math.round(rawDiscount * 100) / 100, totalAmount);
+    couponCode = input.coupon_code.trim().toUpperCase();
+  }
+
+  // Insert via a SECURITY DEFINER function rather than a plain
+  // .insert().select() — RLS filters the RETURNING clause through
+  // SELECT policies too, and anon has none on `orders` (it holds
+  // customer PII), so a direct insert+select silently returns zero
+  // rows. The function bypasses RLS and returns only the order number.
+  const { data: orderNumber, error } = await supabase.rpc("create_order", {
+    p_customer_name:    input.customer_name.trim(),
+    p_customer_phone:   input.customer_phone.trim(),
+    p_customer_email:   input.customer_email.trim().toLowerCase(),
+    p_delivery_method:  input.delivery_method,
+    p_delivery_address: input.delivery_address || null,
+    p_delivery_notes:   input.delivery_notes   || null,
+    p_logo_url:         input.logo_url         || null,
+    p_special_requests: input.special_requests || null,
+    p_items:            orderItems,
+    p_total_amount:     Math.round((totalAmount - discountAmount) * 100) / 100,
+    p_coupon_code:      couponCode || null,
+    p_discount_amount:  discountAmount,
+  });
+
+  if (error || !orderNumber) return { error: error?.message || "insert_failed" };
+
+  return { order_number: orderNumber };
 }

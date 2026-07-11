@@ -13,6 +13,8 @@
 | 14:38 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
 | 14:39 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
 | 21:01 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
+| session | Fixed 400 on order-logo upload — anon role had no storage.objects RLS policy on 'logos' bucket; added policy migration | supabase/migrations/006_logos_bucket_anon_policy.sql | bug-092 | ~600 |
+| session | Reworked cart logo upload: uploads immediately on file select via XHR with real progress bar, remove/re-upload button | app/[locale]/(public)/cart/page.tsx | completed | ~900 |
 | 21:07 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
 | 21:08 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
 | 21:10 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
@@ -804,3 +806,49 @@
 | 20:15 | Session end: 4 writes across 2 files (page.tsx, not-found.tsx) | 10 reads | ~16280 tok |
 | 20:16 | Session end: 4 writes across 2 files (page.tsx, not-found.tsx) | 10 reads | ~16280 tok |
 | 20:16 | Session end: 4 writes across 2 files (page.tsx, not-found.tsx) | 10 reads | ~16280 tok |
+
+## Session: 2026-07-11 18:54
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 18:56 | Created supabase/migrations/006_logos_bucket_anon_policy.sql | — | ~258 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | inline fix | ~18 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | 2→6 lines | ~102 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | CSS: file | ~603 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | modified if() | ~125 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | 3→3 lines | ~44 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | CSS: width | ~492 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | 3→3 lines | ~26 |
+| 19:05 | Edited supabase/migrations/006_logos_bucket_anon_policy.sql | 15→18 lines | ~179 |
+
+## Session: 2026-07-11 19:11
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 19:13 | Created supabase/migrations/007_orders_anon_insert_grant.sql | — | ~177 |
+| 19:17 | Created ../../../root/.claude/plans/jolly-napping-rabin.md | — | ~2860 |
+| session | Fixed checkout submission failing with generic error — orders table had RLS policy for anon insert but no GRANT INSERT, so it was rejected with permission denied (same class as gallery_items fix) | supabase/migrations/007_orders_anon_insert_grant.sql | bug-096 | ~300 |
+| 19:21 | Created supabase/migrations/008_coupons.sql | — | ~1145 |
+| 19:23 | Created supabase/migrations/008_fix_order_number_trigger.sql | — | ~287 |
+| 19:23 | Edited app/actions/submit-order.ts | 2→3 lines | ~27 |
+| session | User confirmed checkout still failing after migrations 006+007 — found second independent bug: trg_orders_order_number WHEN clause never matched NULL order_number, so public checkout inserts violated NOT NULL (admin manual orders worked because they explicitly send order_number: ""). Fixed trigger + submit-order.ts. Renamed 008_coupons.sql → 009_coupons.sql to keep this more urgent fix as 008. | supabase/migrations/008_fix_order_number_trigger.sql, supabase/migrations/009_coupons.sql, app/actions/submit-order.ts | bug-097 | ~600 |
+| 19:25 | Edited components/admin/AdminSidebar.tsx | 15→17 lines | ~210 |
+| 19:25 | Created app/admin/actions/coupons.ts | — | ~521 |
+| 19:25 | Created app/admin/(protected)/coupons/page.tsx | — | ~193 |
+| 19:26 | Created components/admin/CouponsManager.tsx | — | ~2726 |
+| 19:26 | Created app/actions/apply-coupon.ts | — | ~240 |
+| 19:26 | Edited app/actions/submit-order.ts | 4→5 lines | ~30 |
+| 19:26 | Edited app/actions/submit-order.ts | added 2 condition(s) | ~561 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | added nullish coalescing | ~346 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | 2→6 lines | ~110 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | added 2 condition(s) | ~298 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | 8→10 lines | ~84 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | added optional chaining | ~56 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | added 1 condition(s) | ~126 |
+| 19:27 | Edited app/[locale]/(public)/cart/page.tsx | expanded (+41 lines) | ~748 |
+| 19:28 | Edited messages/he.json | 2→5 lines | ~53 |
+| 19:28 | Edited messages/en.json | 2→5 lines | ~54 |
+| 19:28 | Edited app/admin/(protected)/orders/[id]/page.tsx | expanded (+8 lines) | ~260 |
+| 19:30 | Created supabase/migrations/010_order_insert_rpc.sql | — | ~626 |
+| 19:30 | Edited app/actions/submit-order.ts | added optional chaining | ~340 |
+| session | User confirmed checkout still failing after 006+007+008 with NO console error — diagnosed as RLS filtering the RETURNING clause of INSERT through SELECT policies (orders has no anon SELECT policy by design, PII table). .insert().select().single() got 0 rows back, .single() threw a controlled (not console-visible) error. Fixed by moving the insert into a SECURITY DEFINER function create_order() called via rpc(), same pattern as is_admin(). Also completed the full coupon-code feature (migration 009, admin CRUD, checkout apply/remove UI, server-side redemption) per approved plan. | supabase/migrations/009_coupons.sql, supabase/migrations/010_order_insert_rpc.sql, app/actions/submit-order.ts, app/actions/apply-coupon.ts, app/admin/actions/coupons.ts, components/admin/CouponsManager.tsx, app/admin/(protected)/coupons/page.tsx, components/admin/AdminSidebar.tsx, app/[locale]/(public)/cart/page.tsx, app/admin/(protected)/orders/[id]/page.tsx, messages/*.json | bug-103 | ~1200 |

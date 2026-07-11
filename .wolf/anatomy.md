@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-06-30T17:14:41.134Z
-> Files: 111 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T19:30:45.032Z
+> Files: 121 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -10,6 +10,10 @@
 - `MEMORY.md` — Memory Index — Rina Kadosh Project (~156 tok)
 - `project_rina_kadosh.md` — פרויקט רינה קדוש — Rina Kadosh (~1192 tok)
 - `vercel_workflow.md` — $dep.state → READY / ERROR / BUILDING (~287 tok)
+
+## ../../../root/.claude/plans/
+
+- `jolly-napping-rabin.md` — Coupon Codes: Admin-Managed Discounts at Checkout (~2681 tok)
 
 ## ./
 
@@ -48,7 +52,7 @@
 
 ## app/[locale]/(public)/cart/
 
-- `page.tsx` — ALLOWED_MIME — renders form (~3716 tok)
+- `page.tsx` — ALLOWED_MIME — renders form (~5688 tok)
 
 ## app/[locale]/(public)/catalog/
 
@@ -80,7 +84,8 @@
 
 ## app/actions/
 
-- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1064 tok)
+- `apply-coupon.ts` — Exports ApplyCouponResult, applyCoupon (~240 tok)
+- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1491 tok)
 
 ## app/admin/
 
@@ -107,6 +112,10 @@
 ## app/admin/(protected)/catalog/
 
 - `page.tsx` — CatalogPage (~368 tok)
+
+## app/admin/(protected)/coupons/
+
+- `page.tsx` — CouponsPage (~193 tok)
 
 ## app/admin/(protected)/create-order/
 
@@ -142,7 +151,7 @@
 
 ## app/admin/(protected)/orders/[id]/
 
-- `page.tsx` — STATUS_LABELS (~3359 tok)
+- `page.tsx` — STATUS_LABELS (~3489 tok)
 
 ## app/admin/(protected)/production/
 
@@ -164,6 +173,7 @@
 
 - `bundles.ts` — Exports BundleItem, BundleFormData, createBundle, updateBundle, archiveBundle (~773 tok)
 - `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1243 tok)
+- `coupons.ts` — Exports CouponData, createCoupon, updateCoupon, deleteCoupon (~521 tok)
 - `create-order.ts` — Exports ManualOrderItem, ManualOrderData, createManualOrder (~465 tok)
 - `gallery.ts` — Exports GalleryFormData, createGalleryItem, updateGalleryItem, deleteGalleryItem (~362 tok)
 - `materials.ts` — Exports createMaterial, updateMaterial, deleteMaterial, addStockQuantity + 2 more (~1420 tok)
@@ -184,11 +194,12 @@
 
 ## components/admin/
 
-- `AdminSidebar.tsx` — NAV_ITEMS (~1346 tok)
+- `AdminSidebar.tsx` — NAV_ITEMS (~1365 tok)
 - `ArchiveBundleButton.tsx` — ArchiveBundleButton (~284 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
 - `BundleForm.tsx` — Field (~3851 tok)
 - `CatalogManager.tsx` — EMPTY_FORM (~6500 tok)
+- `CouponsManager.tsx` — EMPTY (~2726 tok)
 - `CreateOrderForm.tsx` — Input (~3824 tok)
 - `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~227 tok)
 - `DeleteProductButton.tsx` — DeleteProductButton (~263 tok)
@@ -265,8 +276,8 @@
 
 ## messages/
 
-- `en.json` (~974 tok)
-- `he.json` (~883 tok)
+- `en.json` (~1005 tok)
+- `he.json` (~913 tok)
 
 ## supabase/migrations/
 
@@ -275,3 +286,8 @@
 - `003_style_atmosphere_image.sql` — Migration 003: Add atmosphere_image to design_styles (~35 tok)
 - `004_gallery_grant.sql` — Grant table-level SELECT on gallery_items (required alongside RLS policy) (~35 tok)
 - `005_clear_demo_data.sql` — Migration 005: Clear all demo catalog data (~94 tok)
+- `006_logos_bucket_anon_policy.sql` — ============================================================ (~307 tok)
+- `007_orders_anon_insert_grant.sql` — Migration 007: GRANT INSERT ON orders TO anon (RLS policy alone wasn't enough — fixes checkout submission failing with permission denied) (~177 tok)
+- `008_fix_order_number_trigger.sql` — Migration 008: trg_orders_order_number WHEN clause didn't match NULL, so public checkout inserts (which omit order_number) violated NOT NULL — fixed trigger + submit-order.ts (~287 tok)
+- `009_coupons.sql` — Migration 009: coupons table (admin-only RLS) + validate_coupon/redeem_coupon SECURITY DEFINER functions granted to anon; orders.coupon_code/discount_amount columns (~1145 tok)
+- `010_order_insert_rpc.sql` — Migration 010: create_order() SECURITY DEFINER function — orders insert moved here because RLS filters INSERT's RETURNING through SELECT policies too, and anon has none on orders (fixes checkout still failing after 006/007/008 with no console error) (~626 tok)

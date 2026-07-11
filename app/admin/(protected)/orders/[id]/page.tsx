@@ -267,13 +267,21 @@ export default async function OrderDetailPage({
                 ))
               )}
             </div>
-            <div className="px-5 py-4 border-t border-stone-100 bg-stone-50 flex justify-between items-center">
-              <span className="font-semibold text-stone-700 text-sm">סה״כ</span>
-              <span className="font-bold text-stone-800 text-lg">
-                {order.total_amount
-                  ? `₪${Number(order.total_amount).toLocaleString("he-IL")}`
-                  : "—"}
-              </span>
+            <div className="px-5 py-4 border-t border-stone-100 bg-stone-50">
+              {order.coupon_code && (
+                <div className="flex justify-between items-center text-sm text-stone-500 mb-1.5">
+                  <span>קופון: <span className="font-mono">{order.coupon_code}</span></span>
+                  <span className="text-[var(--gold)]">-₪{Number(order.discount_amount).toLocaleString("he-IL")}</span>
+                </div>
+              )}
+              <div className="flex justify-between items-center">
+                <span className="font-semibold text-stone-700 text-sm">סה״כ</span>
+                <span className="font-bold text-stone-800 text-lg">
+                  {order.total_amount
+                    ? `₪${Number(order.total_amount).toLocaleString("he-IL")}`
+                    : "—"}
+                </span>
+              </div>
             </div>
           </div>
 

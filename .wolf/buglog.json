@@ -1448,10 +1448,222 @@
       "file": "app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx",
       "root_cause": "design_styles queried by slug alone but uniqueness is (event_type_id, slug). After SQL duplication of products with reused style slugs across event_types, .single() returned PGRST116 (multiple rows), data became null, notFound() was called. Missing not-found.tsx caused Next.js to try rendering 404 at document level, creating HTML structure conflict and hydration mismatch (HierarchyRequestError).",
       "fix": "1) Changed design_styles query to first fetch event_type, then filter design_styles by .eq('event_type_id', eventType.id). 2) Created app/[locale]/not-found.tsx to handle 404 within the locale layout.",
-      "tags": ["hydration", "supabase", "single()", "not-found", "design_styles", "sql-duplication"],
+      "tags": [
+        "hydration",
+        "supabase",
+        "single()",
+        "not-found",
+        "design_styles",
+        "sql-duplication"
+      ],
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-06-30T00:00:00.000Z"
+    },
+    {
+      "id": "bug-092",
+      "timestamp": "2026-07-11T18:57:30.282Z",
+      "error_message": "Missing guard clause",
+      "file": "app/[locale]/(public)/cart/page.tsx",
+      "root_cause": "No early return/throw for edge case: !file",
+      "fix": "Added guard clause: if (!file)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T18:57:30.282Z"
+    },
+    {
+      "id": "bug-093",
+      "timestamp": "2026-07-11T18:57:36.890Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/[locale]/(public)/cart/page.tsx",
+      "root_cause": "9 lines replaced/restructured",
+      "fix": "Rewrote 23→15 lines (9 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T18:57:36.890Z"
+    },
+    {
+      "id": "bug-094",
+      "timestamp": "2026-07-11T18:57:39.958Z",
+      "error_message": "CSS fix: logo_url",
+      "file": "app/[locale]/(public)/cart/page.tsx",
+      "root_cause": "logo_url: logoUrl, → logoUrl || undefined,",
+      "fix": "Changed logo_url: logoUrl, → logoUrl || undefined,",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-11T18:57:52.142Z"
+    },
+    {
+      "id": "bug-095",
+      "timestamp": "2026-07-11T00:00:00.000Z",
+      "error_message": "400 (Bad Request) on POST https://xurvbykietluqnpggaof.supabase.co/storage/v1/object/logos/orders/*.jpg during checkout — \"שגיאה בהעלאת לוגו בתהליך ההזמנה\"",
+      "file": "app/[locale]/(public)/cart/page.tsx",
+      "root_cause": "Customer logo upload on the public /cart checkout runs as the anon Supabase role (no login). No storage.objects RLS policy existed for the 'logos' bucket at all — bucket/policy setup had only ever been done for the authenticated admin buckets (products/catalog/gallery) via components/admin/ImageUpload.tsx. Storage API rejects the anon INSERT with 400.",
+      "fix": "Added supabase/migrations/006_logos_bucket_anon_policy.sql: ensures 'logos' bucket exists + is public, and adds storage.objects RLS policies — anon INSERT (bucket_id = 'logos'), anon+authenticated SELECT, admin (is_admin()) ALL. Also reworked the cart logo input to upload immediately on selection (via XHR with real progress) instead of at submit time, with a remove/re-upload control.",
+      "tags": [
+        "supabase",
+        "storage",
+        "rls",
+        "anon",
+        "400",
+        "logo-upload",
+        "checkout"
+      ],
+      "related_bugs": [
+        "bug-092"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T00:00:00.000Z"
+    },
+    {
+      "id": "bug-096",
+      "timestamp": "2026-07-11T00:00:00.000Z",
+      "error_message": "\"שגיאה בשליחת ההזמנה. אנא נסה שוב.\" — checkout submission fails even after the logo upload (bug-095) was fixed",
+      "file": "app/actions/submit-order.ts",
+      "root_cause": "orders table has RLS policy \"orders: anon insert\" (migration 001) but no table-level GRANT INSERT ON orders TO anon. Postgres checks GRANT privileges before RLS, so every anon checkout submission was rejected with \"permission denied for table orders\", caught by submitOrder and surfaced as a generic error. Exact same class of bug already fixed once for gallery_items (migration 004) — RLS policy alone is not sufficient in this project; anon needs an explicit GRANT.",
+      "fix": "Added supabase/migrations/007_orders_anon_insert_grant.sql: GRANT INSERT ON orders TO anon.",
+      "tags": [
+        "supabase",
+        "rls",
+        "grant",
+        "anon",
+        "orders",
+        "checkout",
+        "permission-denied"
+      ],
+      "related_bugs": [
+        "bug-095"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T00:00:00.000Z"
+    },
+    {
+      "id": "bug-097",
+      "timestamp": "2026-07-11T00:00:00.000Z",
+      "error_message": "Checkout submission still fails with the generic error after applying migrations 006 and 007 (user confirmed: \"הרצתי את מיגרציות 6 ו7 ולא עזר\")",
+      "file": "supabase/migrations/001_initial_schema.sql / app/actions/submit-order.ts",
+      "root_cause": "trg_orders_order_number only fires WHEN (NEW.order_number = ''). When order_number is omitted from an insert it defaults to NULL, and in SQL `NULL = ''` evaluates to NULL (not true), so the WHEN condition never matches and the trigger body never runs. app/admin/actions/create-order.ts (manual admin orders) explicitly inserts order_number: \"\" so it always worked; app/actions/submit-order.ts (public checkout) never set order_number at all, so orders.order_number's NOT NULL constraint rejected every public submission — a second, independent bug stacked on top of bug-096, present since the checkout was first built.",
+      "fix": "1) supabase/migrations/008_fix_order_number_trigger.sql: changed the trigger WHEN clause to `WHEN (NEW.order_number IS NULL OR NEW.order_number = '')`. 2) app/actions/submit-order.ts: explicitly insert order_number: \"\" to match the already-working admin pattern (belt-and-suspenders — either fix alone would have been enough).",
+      "tags": [
+        "supabase",
+        "trigger",
+        "null-vs-empty-string",
+        "orders",
+        "checkout",
+        "not-null-constraint"
+      ],
+      "related_bugs": [
+        "bug-096"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T00:00:00.000Z"
+    },
+    {
+      "id": "bug-098",
+      "timestamp": "2026-07-11T19:27:05.034Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/[locale]/(public)/cart/page.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: coupon_code:      appliedCoupon?.code,",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-11T19:27:25.455Z"
+    },
+    {
+      "id": "bug-099",
+      "timestamp": "2026-07-11T19:27:14.754Z",
+      "error_message": "Missing guard clause",
+      "file": "app/[locale]/(public)/cart/page.tsx",
+      "root_cause": "No early return/throw for edge case: !code",
+      "fix": "Added guard clause: if (!code)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T19:27:14.754Z"
+    },
+    {
+      "id": "bug-100",
+      "timestamp": "2026-07-11T19:27:21.216Z",
+      "error_message": "CSS fix: 100",
+      "file": "app/[locale]/(public)/cart/page.tsx",
+      "root_cause": "100: appliedCoupon.discount_value, → appliedCoupon.discount_value) * 100",
+      "fix": "Changed 100: appliedCoupon.discount_value, → appliedCoupon.discount_value) * 100",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T19:27:21.216Z"
+    },
+    {
+      "id": "bug-101",
+      "timestamp": "2026-07-11T19:27:50.571Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/[locale]/(public)/cart/page.tsx",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 13→54 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T19:27:50.571Z"
+    },
+    {
+      "id": "bug-102",
+      "timestamp": "2026-07-11T19:30:45.044Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/actions/submit-order.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T19:30:45.044Z"
+    },
+    {
+      "id": "bug-103",
+      "timestamp": "2026-07-11T00:00:00.000Z",
+      "error_message": "Checkout submission still fails with the generic error after migrations 006, 007, AND 008 (user confirmed: \"גם מיגרציה 8 לא עזרה. אין שום שגיאה בקונסול\")",
+      "file": "app/actions/submit-order.ts",
+      "root_cause": "Postgres RLS filters the RETURNING clause of INSERT/UPDATE through the table's SELECT policies too, not just plain SELECT queries. orders has no anon SELECT policy at all (by design — it holds customer PII: name/phone/email/address). submitOrder did `.from(\"orders\").insert({...}).select(\"order_number\").single()` — the INSERT itself now succeeded (after 006/007/008), but the RETURNING was filtered to zero rows by RLS, and `.single()` on zero rows throws a controlled PostgREST error (PGRST116) that submitOrder catches and returns as `{error}` — nothing thrown, so nothing in the browser console, matching the user's report exactly.",
+      "fix": "supabase/migrations/010_order_insert_rpc.sql: added create_order(...) as a SECURITY DEFINER function (same pattern as is_admin()/validate_coupon/redeem_coupon) that performs the INSERT and returns only order_number as a scalar — bypasses RLS entirely since it runs as the function owner, and never exposes the orders table itself to anon (no public SELECT policy needed, unlike the naive fix of opening one). submit-order.ts now calls `supabase.rpc(\"create_order\", {...})` instead of `.insert().select().single()`.",
+      "tags": ["supabase", "rls", "returning", "select-policy", "orders", "checkout", "security-definer", "rpc"],
+      "related_bugs": ["bug-096", "bug-097"],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T00:00:00.000Z"
     }
   ]
 }

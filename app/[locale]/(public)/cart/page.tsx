@@ -4,14 +4,30 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { Trash2, Upload, CheckCircle } from "lucide-react";
+import { Trash2, Upload, CheckCircle, X } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { createClient } from "@/lib/supabase/client";
 import { submitOrder } from "@/app/actions/submit-order";
+import { applyCoupon } from "@/app/actions/apply-coupon";
 import { sanitizePhone, isValidPhone, PHONE_ERROR_HE, PHONE_ERROR_EN } from "@/lib/phone";
 
 const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/gif", "application/pdf"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+
+type AppliedCoupon = { code: string; discount_type: "percent" | "amount"; discount_value: number };
+
+function couponErrorMessage(code: string, locale: string) {
+  const MAP: Record<string, [string, string]> = {
+    not_found:         ["קוד קופון לא קיים", "Coupon code not found"],
+    inactive:          ["קופון זה אינו פעיל", "This coupon is inactive"],
+    not_yet_valid:     ["קופון זה עדיין לא בתוקף", "This coupon is not yet valid"],
+    expired:           ["קופון זה פג תוקף", "This coupon has expired"],
+    max_uses_reached:  ["קופון זה מוצה", "This coupon has reached its usage limit"],
+    invalid:           ["קוד קופון לא תקין", "Invalid coupon code"],
+  };
+  const [he, en] = MAP[code] ?? MAP.invalid;
+  return locale === "he" ? he : en;
+}
 
 export default function CartPage() {
   const locale = useLocale();
@@ -29,6 +45,14 @@ export default function CartPage() {
     notes: "",
   });
   const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [logoProgress, setLogoProgress] = useState(0);
+  const [logoUploading, setLogoUploading] = useState(false);
+  const [logoError, setLogoError] = useState<string | null>(null);
+  const [couponInput, setCouponInput] = useState("");
+  const [couponApplying, setCouponApplying] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<AppliedCoupon | null>(null);
+  const [couponError, setCouponError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [orderNumber, setOrderNumber] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -42,22 +66,98 @@ export default function CartPage() {
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] ?? null;
-    if (!file) { setLogoFile(null); return; }
+    e.target.value = "";
+    if (!file) return;
 
     if (!ALLOWED_MIME.includes(file.type)) {
-      setError(locale === "he" ? "סוג קובץ לא נתמך. השתמש ב-JPG, PNG, WEBP, GIF או PDF." : "Unsupported file type. Use JPG, PNG, WEBP, GIF or PDF.");
-      e.target.value = "";
+      setLogoError(locale === "he" ? "סוג קובץ לא נתמך. השתמש ב-JPG, PNG, WEBP, GIF או PDF." : "Unsupported file type. Use JPG, PNG, WEBP, GIF or PDF.");
       return;
     }
     if (file.size > MAX_FILE_SIZE) {
-      setError(locale === "he" ? "הקובץ גדול מדי (מקסימום 5MB)." : "File too large (max 5MB).");
-      e.target.value = "";
+      setLogoError(locale === "he" ? "הקובץ גדול מדי (מקסימום 5MB)." : "File too large (max 5MB).");
       return;
     }
 
-    setError(null);
-    setLogoFile(file);
+    setLogoError(null);
+    uploadLogo(file);
   }
+
+  function uploadLogo(file: File) {
+    const ext = file.name.split(".").pop()?.toLowerCase();
+    const path = `orders/${Date.now()}.${ext}`;
+    const endpoint = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/logos/${path}`;
+
+    setLogoFile(file);
+    setLogoUrl(null);
+    setLogoUploading(true);
+    setLogoProgress(0);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", endpoint);
+    xhr.setRequestHeader("apikey", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+    xhr.setRequestHeader("Authorization", `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`);
+    xhr.setRequestHeader("Content-Type", file.type);
+    xhr.upload.onprogress = (ev) => {
+      if (ev.lengthComputable) setLogoProgress(Math.round((ev.loaded / ev.total) * 100));
+    };
+    xhr.onload = () => {
+      setLogoUploading(false);
+      if (xhr.status >= 200 && xhr.status < 300) {
+        setLogoUrl(createClient().storage.from("logos").getPublicUrl(path).data.publicUrl);
+      } else {
+        setLogoFile(null);
+        setLogoError(locale === "he" ? "לא ניתן להעלות את הלוגו. אנא נסה שוב." : "Could not upload logo. Please try again.");
+      }
+    };
+    xhr.onerror = () => {
+      setLogoUploading(false);
+      setLogoFile(null);
+      setLogoError(locale === "he" ? "לא ניתן להעלות את הלוגו. אנא נסה שוב." : "Could not upload logo. Please try again.");
+    };
+    xhr.send(file);
+  }
+
+  function removeLogo() {
+    setLogoFile(null);
+    setLogoUrl(null);
+    setLogoProgress(0);
+    setLogoError(null);
+  }
+
+  async function handleApplyCoupon() {
+    const code = couponInput.trim();
+    if (!code) return;
+
+    setCouponApplying(true);
+    setCouponError(null);
+    const result = await applyCoupon(code);
+    setCouponApplying(false);
+
+    if (!result.valid) {
+      setCouponError(couponErrorMessage(result.error, locale));
+      return;
+    }
+
+    setAppliedCoupon({ code: code.toUpperCase(), discount_type: result.discount_type, discount_value: result.discount_value });
+    setCouponInput("");
+  }
+
+  function removeCoupon() {
+    setAppliedCoupon(null);
+    setCouponError(null);
+  }
+
+  const discountAmount = appliedCoupon
+    ? Math.min(
+        Math.round(
+          (appliedCoupon.discount_type === "percent"
+            ? totalAmount * appliedCoupon.discount_value / 100
+            : appliedCoupon.discount_value) * 100
+        ) / 100,
+        totalAmount
+      )
+    : 0;
+  const finalTotal = Math.round((totalAmount - discountAmount) * 100) / 100;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,21 +170,13 @@ export default function CartPage() {
       return;
     }
 
-    const supabase = createClient();
-
-    // Upload logo client-side (binary) then pass URL to server action
-    let logoUrl: string | undefined;
-    if (logoFile) {
-      const ext = logoFile.name.split(".").pop()?.toLowerCase();
-      const path = `orders/${Date.now()}.${ext}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage.from("logos").upload(path, logoFile);
-      if (uploadError || !uploadData) {
-        setError(locale === "he" ? "לא ניתן להעלות את הלוגו. אנא נסה שוב." : "Could not upload logo. Please try again.");
-        setLoading(false);
-        return;
-      }
-      logoUrl = supabase.storage.from("logos").getPublicUrl(path).data.publicUrl;
+    if (logoUploading) {
+      setError(locale === "he" ? "המתן לסיום העלאת הלוגו." : "Please wait for the logo upload to finish.");
+      setLoading(false);
+      return;
     }
+
+    const supabase = createClient();
 
     // Upload any per-item custom images (base64 → Supabase Storage)
     const itemsWithCustomization = await Promise.all(
@@ -120,15 +212,21 @@ export default function CartPage() {
       delivery_method:  form.delivery_method,
       delivery_address: form.delivery_method === "delivery" ? form.address : undefined,
       delivery_notes:   form.delivery_notes || undefined,
-      logo_url:         logoUrl,
+      logo_url:         logoUrl || undefined,
       special_requests: form.notes || undefined,
+      coupon_code:      appliedCoupon?.code,
       items:            itemsWithCustomization,
     });
 
     setLoading(false);
 
     if ("error" in result) {
-      setError(locale === "he" ? "שגיאה בשליחת ההזמנה. אנא נסה שוב." : "Error submitting order. Please try again.");
+      if (result.error === "invalid_coupon") {
+        setAppliedCoupon(null);
+        setError(locale === "he" ? "הקופון כבר אינו תקף. הוא הוסר — נסה לשלוח שוב." : "The coupon is no longer valid. It's been removed — please try submitting again.");
+      } else {
+        setError(locale === "he" ? "שגיאה בשליחת ההזמנה. אנא נסה שוב." : "Error submitting order. Please try again.");
+      }
       return;
     }
 
@@ -239,14 +337,35 @@ export default function CartPage() {
           {/* Logo upload */}
           <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif,application/pdf" className="hidden"
             onChange={handleFileChange} />
-          <button
-            type="button"
-            onClick={() => fileRef.current?.click()}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-dashed border-gray-300 text-[var(--muted)] text-sm hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors"
-          >
-            <Upload size={15} />
-            {logoFile ? logoFile.name : t("logo")}
-          </button>
+
+          {!logoFile ? (
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-dashed border-gray-300 text-[var(--muted)] text-sm hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors"
+            >
+              <Upload size={15} />
+              {t("logo")}
+            </button>
+          ) : (
+            <div className="px-4 py-3 rounded-xl border border-gray-200 bg-white">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-sm text-[var(--charcoal)] truncate">{logoFile.name}</span>
+                <button type="button" onClick={removeLogo} className="text-gray-400 hover:text-red-400 transition-colors shrink-0">
+                  <X size={15} />
+                </button>
+              </div>
+              {logoUploading && (
+                <div className="mt-2 h-1.5 rounded-full bg-gray-100 overflow-hidden">
+                  <div className="h-full bg-[var(--gold)] transition-all" style={{ width: `${logoProgress}%` }} />
+                </div>
+              )}
+              {!logoUploading && logoUrl && (
+                <p className="mt-1 text-xs text-[var(--gold)]">{locale === "he" ? "הועלה בהצלחה" : "Uploaded"}</p>
+              )}
+            </div>
+          )}
+          {logoError && <p className="text-red-500 text-xs">{logoError}</p>}
 
           <textarea
             placeholder={t("notes")}
@@ -260,7 +379,7 @@ export default function CartPage() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || logoUploading}
             className="w-full py-4 bg-[var(--gold)] text-white rounded-xl font-semibold text-sm hover:bg-[#b8915a] transition-colors disabled:opacity-60 shadow-md"
           >
             {loading ? (locale === "he" ? "שולח..." : "Sending...") : t("submit")}
@@ -298,11 +417,52 @@ export default function CartPage() {
             ))}
           </ul>
 
-          <div className="pt-4 border-t border-gray-200 flex justify-between items-center">
-            <span className="font-semibold text-[var(--charcoal)]">{tc("total")}</span>
-            <span className="font-bold text-2xl text-[var(--charcoal)]">
-              ₪{totalAmount.toLocaleString("he-IL")}
-            </span>
+          {/* Coupon */}
+          <div className="pt-4 border-t border-gray-200">
+            {!appliedCoupon ? (
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={couponInput}
+                  onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                  placeholder={t("couponPlaceholder")}
+                  className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-gray-200 bg-white text-sm text-[var(--charcoal)] placeholder:text-gray-400 focus:outline-none focus:border-[var(--gold)] transition-colors uppercase"
+                />
+                <button
+                  type="button"
+                  onClick={handleApplyCoupon}
+                  disabled={couponApplying || !couponInput.trim()}
+                  className="shrink-0 px-4 py-2 rounded-lg bg-[var(--charcoal)] text-white text-sm font-medium hover:bg-black transition-colors disabled:opacity-50"
+                >
+                  {couponApplying ? (locale === "he" ? "בודק..." : "Checking...") : t("couponApply")}
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-white border border-[var(--gold)]/40">
+                <span className="text-sm text-[var(--charcoal)]">
+                  {t("couponApplied")}: <b className="font-mono">{appliedCoupon.code}</b>
+                </span>
+                <button type="button" onClick={removeCoupon} className="text-gray-400 hover:text-red-400 transition-colors shrink-0">
+                  <X size={15} />
+                </button>
+              </div>
+            )}
+            {couponError && <p className="text-red-500 text-xs mt-1.5">{couponError}</p>}
+          </div>
+
+          <div className="pt-4 border-t border-gray-200 space-y-2">
+            {discountAmount > 0 && (
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-[var(--muted)]">{t("couponApplied")}</span>
+                <span className="text-[var(--gold)] font-medium">-₪{discountAmount.toLocaleString("he-IL")}</span>
+              </div>
+            )}
+            <div className="flex justify-between items-center">
+              <span className="font-semibold text-[var(--charcoal)]">{tc("total")}</span>
+              <span className="font-bold text-2xl text-[var(--charcoal)]">
+                ₪{finalTotal.toLocaleString("he-IL")}
+              </span>
+            </div>
           </div>
         </div>
       </div>
