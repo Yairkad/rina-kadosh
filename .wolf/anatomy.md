@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T19:05:11.348Z
-> Files: 112 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T19:17:25.820Z
+> Files: 114 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -10,6 +10,10 @@
 - `MEMORY.md` — Memory Index — Rina Kadosh Project (~156 tok)
 - `project_rina_kadosh.md` — פרויקט רינה קדוש — Rina Kadosh (~1192 tok)
 - `vercel_workflow.md` — $dep.state → READY / ERROR / BUILDING (~287 tok)
+
+## ../../../root/.claude/plans/
+
+- `jolly-napping-rabin.md` — Coupon Codes: Admin-Managed Discounts at Checkout (~2681 tok)
 
 ## ./
 
@@ -276,3 +280,4 @@
 - `004_gallery_grant.sql` — Grant table-level SELECT on gallery_items (required alongside RLS policy) (~35 tok)
 - `005_clear_demo_data.sql` — Migration 005: Clear all demo catalog data (~94 tok)
 - `006_logos_bucket_anon_policy.sql` — ============================================================ (~307 tok)
+- `007_orders_anon_insert_grant.sql` — Migration 007: GRANT INSERT ON orders TO anon (RLS policy alone wasn't enough — fixes checkout submission failing with permission denied) (~177 tok)

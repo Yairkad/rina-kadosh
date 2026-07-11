@@ -820,3 +820,11 @@
 | 18:57 | Edited app/[locale]/(public)/cart/page.tsx | CSS: width | ~492 |
 | 18:57 | Edited app/[locale]/(public)/cart/page.tsx | 3→3 lines | ~26 |
 | 19:05 | Edited supabase/migrations/006_logos_bucket_anon_policy.sql | 15→18 lines | ~179 |
+
+## Session: 2026-07-11 19:11
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 19:13 | Created supabase/migrations/007_orders_anon_insert_grant.sql | — | ~177 |
+| 19:17 | Created ../../../root/.claude/plans/jolly-napping-rabin.md | — | ~2860 |
+| session | Fixed checkout submission failing with generic error — orders table had RLS policy for anon insert but no GRANT INSERT, so it was rejected with permission denied (same class as gallery_items fix) | supabase/migrations/007_orders_anon_insert_grant.sql | bug-096 | ~300 |

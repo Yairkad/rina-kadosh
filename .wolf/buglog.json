@@ -1519,6 +1519,18 @@
       "related_bugs": ["bug-092"],
       "occurrences": 1,
       "last_seen": "2026-07-11T00:00:00.000Z"
+    },
+    {
+      "id": "bug-096",
+      "timestamp": "2026-07-11T00:00:00.000Z",
+      "error_message": "\"שגיאה בשליחת ההזמנה. אנא נסה שוב.\" — checkout submission fails even after the logo upload (bug-095) was fixed",
+      "file": "app/actions/submit-order.ts",
+      "root_cause": "orders table has RLS policy \"orders: anon insert\" (migration 001) but no table-level GRANT INSERT ON orders TO anon. Postgres checks GRANT privileges before RLS, so every anon checkout submission was rejected with \"permission denied for table orders\", caught by submitOrder and surfaced as a generic error. Exact same class of bug already fixed once for gallery_items (migration 004) — RLS policy alone is not sufficient in this project; anon needs an explicit GRANT.",
+      "fix": "Added supabase/migrations/007_orders_anon_insert_grant.sql: GRANT INSERT ON orders TO anon.",
+      "tags": ["supabase", "rls", "grant", "anon", "orders", "checkout", "permission-denied"],
+      "related_bugs": ["bug-095"],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T00:00:00.000Z"
     }
   ]
 }
