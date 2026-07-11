@@ -859,3 +859,10 @@
 | session | User still hitting a checkout error after 009+010 applied, wanted full console detail instead of the generic message. Added console.log/error at every step of the client submit flow (payload, result, thrown exceptions) plus console.error at every server-side error branch in submitOrder, and changed the displayed error text to interpolate the actual result.error string instead of a fixed generic message — the real DB/RPC error will now show directly in the UI and browser console on next attempt. | app/[locale]/(public)/cart/page.tsx, app/actions/submit-order.ts | diagnostic | ~400 |
 | 19:48 | Created supabase/migrations/011_default_privileges_fix.sql | — | ~460 |
 | 19:50 | Created supabase/migrations/011_coupons_authenticated_grant.sql | — | ~187 |
+
+## Session: 2026-07-11 19:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 19:59 | Edited ../../../root/.claude/plans/jolly-napping-rabin.md | modified does() | ~783 |
+| 20:00 | Created supabase/migrations/012_security_definer_search_path.sql | — | ~1235 |

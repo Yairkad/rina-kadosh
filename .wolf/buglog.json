@@ -1704,6 +1704,18 @@
       "related_bugs": ["bug-096", "bug-095"],
       "occurrences": 1,
       "last_seen": "2026-07-11T00:00:00.000Z"
+    },
+    {
+      "id": "bug-106",
+      "timestamp": "2026-07-11T00:00:00.000Z",
+      "error_message": "[submitOrder] result: {error: 'relation \"orders\" does not exist'} — checkout submission fails after migrations 009/010/011 all applied, coupon creation now works",
+      "file": "supabase/migrations/010_order_insert_rpc.sql",
+      "root_cause": "validate_coupon/redeem_coupon (009) and create_order (010) are SECURITY DEFINER functions that reference `orders`/`coupons` unqualified, relying on the calling session's search_path to resolve them to `public`. SECURITY DEFINER functions run with the owner's privileges but do NOT get a fixed search_path unless one is set explicitly — they inherit whatever search_path is active in the caller's session at execution time. The RPC call itself succeeded (create_order() was found and invoked), but the unqualified `orders` reference inside the function body couldn't be resolved during execution. Direct `.from(\"orders\")` calls elsewhere are unaffected because PostgREST resolves those schema-qualified internally regardless of session search_path.",
+      "fix": "supabase/migrations/012_security_definer_search_path.sql: CREATE OR REPLACE all three functions with `SET search_path = public` added and every table reference schema-qualified as `public.orders`/`public.coupons` (belt-and-suspenders, matches Postgres's own documented best practice for SECURITY DEFINER functions). Scoped to only these three — is_admin()/handle_new_user() aren't reported broken.",
+      "tags": ["supabase", "security-definer", "search_path", "rpc", "orders", "coupons", "checkout"],
+      "related_bugs": ["bug-103"],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T00:00:00.000Z"
     }
   ]
 }
