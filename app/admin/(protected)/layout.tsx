@@ -25,9 +25,15 @@ export default async function AdminProtectedLayout({
     redirect("/admin/login");
   }
 
+  const { count: pendingOrdersCount } = await supabase
+    .from("orders")
+    .select("id", { count: "exact", head: true })
+    .eq("status", "pending")
+    .is("deleted_at", null);
+
   return (
     <div className="h-screen bg-stone-50 flex" dir="rtl">
-      <AdminSidebar email={profile.email} />
+      <AdminSidebar email={profile.email} initialPendingOrdersCount={pendingOrdersCount ?? 0} />
       <main className="flex-1 min-w-0 overflow-auto pt-14 md:pt-0">
         {children}
       </main>

@@ -867,3 +867,9 @@
 | 19:59 | Edited ../../../root/.claude/plans/jolly-napping-rabin.md | modified does() | ~783 |
 | 20:00 | Created supabase/migrations/012_security_definer_search_path.sql | — | ~1235 |
 | 20:07 | Created supabase/migrations/013_order_number_trigger_search_path.sql | — | ~311 |
+| 20:11 | Edited app/admin/(protected)/layout.tsx | added nullish coalescing | ~118 |
+| 20:11 | Edited components/admin/AdminSidebar.tsx | 4→4 lines | ~54 |
+| 20:11 | Edited components/admin/AdminSidebar.tsx | CSS: pendingOrdersCount, pendingOrdersCount | ~370 |
+| 20:12 | Edited components/admin/AdminSidebar.tsx | CSS: count, head | ~240 |
+| 20:12 | Edited components/admin/AdminSidebar.tsx | 13→13 lines | ~186 |
+| session | Checkout finally confirmed working. Added a "new order" indicator to the admin panel per request: pending-order count fetched server-side in the protected layout, passed to AdminSidebar as initial value, shown as a red badge on the "הזמנות" nav item, refreshed client-side every 30s so it updates without navigation. | app/admin/(protected)/layout.tsx, components/admin/AdminSidebar.tsx | completed | ~250 |

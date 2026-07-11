@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T20:07:47.188Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T20:12:13.995Z
 > Files: 124 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
@@ -94,7 +94,7 @@
 
 ## app/admin/(protected)/
 
-- `layout.tsx` — AdminProtectedLayout (~242 tok)
+- `layout.tsx` — AdminProtectedLayout (~310 tok)
 - `page.tsx` — redirect → /admin/dashboard (~35 tok)
 
 ## app/admin/(protected)/bundles/
@@ -194,7 +194,7 @@
 
 ## components/admin/
 
-- `AdminSidebar.tsx` — NAV_ITEMS (~1365 tok)
+- `AdminSidebar.tsx` — NAV_ITEMS (~1677 tok)
 - `ArchiveBundleButton.tsx` — ArchiveBundleButton (~284 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
 - `BundleForm.tsx` — Field (~3851 tok)
