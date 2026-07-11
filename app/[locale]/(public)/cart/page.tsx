@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { Trash2, Upload, CheckCircle } from "lucide-react";
+import { Trash2, Upload, CheckCircle, X } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { createClient } from "@/lib/supabase/client";
 import { submitOrder } from "@/app/actions/submit-order";
@@ -29,6 +29,10 @@ export default function CartPage() {
     notes: "",
   });
   const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [logoProgress, setLogoProgress] = useState(0);
+  const [logoUploading, setLogoUploading] = useState(false);
+  const [logoError, setLogoError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [orderNumber, setOrderNumber] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -42,21 +46,62 @@ export default function CartPage() {
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] ?? null;
-    if (!file) { setLogoFile(null); return; }
+    e.target.value = "";
+    if (!file) return;
 
     if (!ALLOWED_MIME.includes(file.type)) {
-      setError(locale === "he" ? "סוג קובץ לא נתמך. השתמש ב-JPG, PNG, WEBP, GIF או PDF." : "Unsupported file type. Use JPG, PNG, WEBP, GIF or PDF.");
-      e.target.value = "";
+      setLogoError(locale === "he" ? "סוג קובץ לא נתמך. השתמש ב-JPG, PNG, WEBP, GIF או PDF." : "Unsupported file type. Use JPG, PNG, WEBP, GIF or PDF.");
       return;
     }
     if (file.size > MAX_FILE_SIZE) {
-      setError(locale === "he" ? "הקובץ גדול מדי (מקסימום 5MB)." : "File too large (max 5MB).");
-      e.target.value = "";
+      setLogoError(locale === "he" ? "הקובץ גדול מדי (מקסימום 5MB)." : "File too large (max 5MB).");
       return;
     }
 
-    setError(null);
+    setLogoError(null);
+    uploadLogo(file);
+  }
+
+  function uploadLogo(file: File) {
+    const ext = file.name.split(".").pop()?.toLowerCase();
+    const path = `orders/${Date.now()}.${ext}`;
+    const endpoint = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/logos/${path}`;
+
     setLogoFile(file);
+    setLogoUrl(null);
+    setLogoUploading(true);
+    setLogoProgress(0);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", endpoint);
+    xhr.setRequestHeader("apikey", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+    xhr.setRequestHeader("Authorization", `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`);
+    xhr.setRequestHeader("Content-Type", file.type);
+    xhr.upload.onprogress = (ev) => {
+      if (ev.lengthComputable) setLogoProgress(Math.round((ev.loaded / ev.total) * 100));
+    };
+    xhr.onload = () => {
+      setLogoUploading(false);
+      if (xhr.status >= 200 && xhr.status < 300) {
+        setLogoUrl(createClient().storage.from("logos").getPublicUrl(path).data.publicUrl);
+      } else {
+        setLogoFile(null);
+        setLogoError(locale === "he" ? "לא ניתן להעלות את הלוגו. אנא נסה שוב." : "Could not upload logo. Please try again.");
+      }
+    };
+    xhr.onerror = () => {
+      setLogoUploading(false);
+      setLogoFile(null);
+      setLogoError(locale === "he" ? "לא ניתן להעלות את הלוגו. אנא נסה שוב." : "Could not upload logo. Please try again.");
+    };
+    xhr.send(file);
+  }
+
+  function removeLogo() {
+    setLogoFile(null);
+    setLogoUrl(null);
+    setLogoProgress(0);
+    setLogoError(null);
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -70,21 +115,13 @@ export default function CartPage() {
       return;
     }
 
-    const supabase = createClient();
-
-    // Upload logo client-side (binary) then pass URL to server action
-    let logoUrl: string | undefined;
-    if (logoFile) {
-      const ext = logoFile.name.split(".").pop()?.toLowerCase();
-      const path = `orders/${Date.now()}.${ext}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage.from("logos").upload(path, logoFile);
-      if (uploadError || !uploadData) {
-        setError(locale === "he" ? "לא ניתן להעלות את הלוגו. אנא נסה שוב." : "Could not upload logo. Please try again.");
-        setLoading(false);
-        return;
-      }
-      logoUrl = supabase.storage.from("logos").getPublicUrl(path).data.publicUrl;
+    if (logoUploading) {
+      setError(locale === "he" ? "המתן לסיום העלאת הלוגו." : "Please wait for the logo upload to finish.");
+      setLoading(false);
+      return;
     }
+
+    const supabase = createClient();
 
     // Upload any per-item custom images (base64 → Supabase Storage)
     const itemsWithCustomization = await Promise.all(
@@ -120,7 +157,7 @@ export default function CartPage() {
       delivery_method:  form.delivery_method,
       delivery_address: form.delivery_method === "delivery" ? form.address : undefined,
       delivery_notes:   form.delivery_notes || undefined,
-      logo_url:         logoUrl,
+      logo_url:         logoUrl || undefined,
       special_requests: form.notes || undefined,
       items:            itemsWithCustomization,
     });
@@ -239,14 +276,35 @@ export default function CartPage() {
           {/* Logo upload */}
           <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif,application/pdf" className="hidden"
             onChange={handleFileChange} />
-          <button
-            type="button"
-            onClick={() => fileRef.current?.click()}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-dashed border-gray-300 text-[var(--muted)] text-sm hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors"
-          >
-            <Upload size={15} />
-            {logoFile ? logoFile.name : t("logo")}
-          </button>
+
+          {!logoFile ? (
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-dashed border-gray-300 text-[var(--muted)] text-sm hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors"
+            >
+              <Upload size={15} />
+              {t("logo")}
+            </button>
+          ) : (
+            <div className="px-4 py-3 rounded-xl border border-gray-200 bg-white">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-sm text-[var(--charcoal)] truncate">{logoFile.name}</span>
+                <button type="button" onClick={removeLogo} className="text-gray-400 hover:text-red-400 transition-colors shrink-0">
+                  <X size={15} />
+                </button>
+              </div>
+              {logoUploading && (
+                <div className="mt-2 h-1.5 rounded-full bg-gray-100 overflow-hidden">
+                  <div className="h-full bg-[var(--gold)] transition-all" style={{ width: `${logoProgress}%` }} />
+                </div>
+              )}
+              {!logoUploading && logoUrl && (
+                <p className="mt-1 text-xs text-[var(--gold)]">{locale === "he" ? "הועלה בהצלחה" : "Uploaded"}</p>
+              )}
+            </div>
+          )}
+          {logoError && <p className="text-red-500 text-xs">{logoError}</p>}
 
           <textarea
             placeholder={t("notes")}
@@ -260,7 +318,7 @@ export default function CartPage() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || logoUploading}
             className="w-full py-4 bg-[var(--gold)] text-white rounded-xl font-semibold text-sm hover:bg-[#b8915a] transition-colors disabled:opacity-60 shadow-md"
           >
             {loading ? (locale === "he" ? "שולח..." : "Sending...") : t("submit")}

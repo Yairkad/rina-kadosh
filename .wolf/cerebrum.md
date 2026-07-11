@@ -44,6 +44,7 @@
 - **[2026-05-28] אל תשתמש ב-Get-ChildItem בכלי Bash** — PowerShell cmdlets לא עובדים ב-Bash tool. להשתמש ב-`find` או בכלי Glob.
 - **[2026-06-30] design_styles.slug אינו unique גלובלי** — הייחוד הוא `(event_type_id, slug)`. כל query על design_styles לפי slug בלבד חייב להוסיף `.eq("event_type_id", ...)` כדי למנוע PGRST116 כשיש מספר event_types עם אותו style slug.
 - **[2026-06-30] חסר not-found.tsx** — ללא קובץ זה Next.js מנסה להציג 404 ברמת ה-document ומחוץ ל-locale layout, מה שגורם ל-HierarchyRequestError. חייב ליצור `app/[locale]/not-found.tsx`.
+- **[2026-07-11] Storage buckets גם צריכים RLS policy — לא רק טבלאות** — כל bucket חדש ב-Supabase Storage שנגיש ל-`anon` (למשל "logos" בתהליך ההזמנה הציבורי) חייב policies מפורשים על `storage.objects` (INSERT/SELECT ל-anon), אחרת מתקבל 400 מה-Storage API. buckets שמשמשים רק את הפאנל המנהלי (products/catalog/gallery) עובדים כי הם נגישים רק ב-authenticated context — לא הוכיח שה-RLS מוגדר נכון ל-anon. תמיד לבדוק/להוסיף migration עם `storage.objects` policies כשמוסיפים bucket חדש שנגיש ללקוחות לא-מחוברים.
 
 ## Key Learnings (עדכון 2026-05-28)
 

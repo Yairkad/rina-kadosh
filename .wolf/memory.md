@@ -13,6 +13,8 @@
 | 14:38 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
 | 14:39 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
 | 21:01 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
+| session | Fixed 400 on order-logo upload — anon role had no storage.objects RLS policy on 'logos' bucket; added policy migration | supabase/migrations/006_logos_bucket_anon_policy.sql | bug-092 | ~600 |
+| session | Reworked cart logo upload: uploads immediately on file select via XHR with real progress bar, remove/re-upload button | app/[locale]/(public)/cart/page.tsx | completed | ~900 |
 | 21:07 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
 | 21:08 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
 | 21:10 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
@@ -804,3 +806,16 @@
 | 20:15 | Session end: 4 writes across 2 files (page.tsx, not-found.tsx) | 10 reads | ~16280 tok |
 | 20:16 | Session end: 4 writes across 2 files (page.tsx, not-found.tsx) | 10 reads | ~16280 tok |
 | 20:16 | Session end: 4 writes across 2 files (page.tsx, not-found.tsx) | 10 reads | ~16280 tok |
+
+## Session: 2026-07-11 18:54
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 18:56 | Created supabase/migrations/006_logos_bucket_anon_policy.sql | — | ~258 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | inline fix | ~18 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | 2→6 lines | ~102 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | CSS: file | ~603 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | modified if() | ~125 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | 3→3 lines | ~44 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | CSS: width | ~492 |
+| 18:57 | Edited app/[locale]/(public)/cart/page.tsx | 3→3 lines | ~26 |

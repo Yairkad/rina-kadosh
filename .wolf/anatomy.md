@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-06-30T17:14:41.134Z
-> Files: 111 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T18:57:55.014Z
+> Files: 112 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -48,7 +48,7 @@
 
 ## app/[locale]/(public)/cart/
 
-- `page.tsx` — ALLOWED_MIME — renders form (~3716 tok)
+- `page.tsx` — ALLOWED_MIME — logo uploads immediately on select via XHR to Storage REST (real progress bar + remove button), not deferred to submit (~4382 tok)
 
 ## app/[locale]/(public)/catalog/
 
@@ -275,3 +275,4 @@
 - `003_style_atmosphere_image.sql` — Migration 003: Add atmosphere_image to design_styles (~35 tok)
 - `004_gallery_grant.sql` — Grant table-level SELECT on gallery_items (required alongside RLS policy) (~35 tok)
 - `005_clear_demo_data.sql` — Migration 005: Clear all demo catalog data (~94 tok)
+- `006_logos_bucket_anon_policy.sql` — Migration 006: storage.objects RLS for 'logos' bucket — anon INSERT/SELECT + admin ALL (fixes 400 on public checkout logo upload) (~258 tok)
