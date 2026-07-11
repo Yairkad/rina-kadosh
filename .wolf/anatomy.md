@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T19:17:25.820Z
-> Files: 114 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T19:23:10.693Z
+> Files: 116 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -84,7 +84,7 @@
 
 ## app/actions/
 
-- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1064 tok)
+- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1072 tok)
 
 ## app/admin/
 
@@ -281,3 +281,5 @@
 - `005_clear_demo_data.sql` — Migration 005: Clear all demo catalog data (~94 tok)
 - `006_logos_bucket_anon_policy.sql` — ============================================================ (~307 tok)
 - `007_orders_anon_insert_grant.sql` — Migration 007: GRANT INSERT ON orders TO anon (RLS policy alone wasn't enough — fixes checkout submission failing with permission denied) (~177 tok)
+- `008_fix_order_number_trigger.sql` — Migration 008: trg_orders_order_number WHEN clause didn't match NULL, so public checkout inserts (which omit order_number) violated NOT NULL — fixed trigger + submit-order.ts (~287 tok)
+- `009_coupons.sql` — Migration 009: coupons table (admin-only RLS) + validate_coupon/redeem_coupon SECURITY DEFINER functions granted to anon; orders.coupon_code/discount_amount columns (~1145 tok)

@@ -828,3 +828,7 @@
 | 19:13 | Created supabase/migrations/007_orders_anon_insert_grant.sql | — | ~177 |
 | 19:17 | Created ../../../root/.claude/plans/jolly-napping-rabin.md | — | ~2860 |
 | session | Fixed checkout submission failing with generic error — orders table had RLS policy for anon insert but no GRANT INSERT, so it was rejected with permission denied (same class as gallery_items fix) | supabase/migrations/007_orders_anon_insert_grant.sql | bug-096 | ~300 |
+| 19:21 | Created supabase/migrations/008_coupons.sql | — | ~1145 |
+| 19:23 | Created supabase/migrations/008_fix_order_number_trigger.sql | — | ~287 |
+| 19:23 | Edited app/actions/submit-order.ts | 2→3 lines | ~27 |
+| session | User confirmed checkout still failing after migrations 006+007 — found second independent bug: trg_orders_order_number WHEN clause never matched NULL order_number, so public checkout inserts violated NOT NULL (admin manual orders worked because they explicitly send order_number: ""). Fixed trigger + submit-order.ts. Renamed 008_coupons.sql → 009_coupons.sql to keep this more urgent fix as 008. | supabase/migrations/008_fix_order_number_trigger.sql, supabase/migrations/009_coupons.sql, app/actions/submit-order.ts | bug-097 | ~600 |

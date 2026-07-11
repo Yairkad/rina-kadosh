@@ -1531,6 +1531,18 @@
       "related_bugs": ["bug-095"],
       "occurrences": 1,
       "last_seen": "2026-07-11T00:00:00.000Z"
+    },
+    {
+      "id": "bug-097",
+      "timestamp": "2026-07-11T00:00:00.000Z",
+      "error_message": "Checkout submission still fails with the generic error after applying migrations 006 and 007 (user confirmed: \"הרצתי את מיגרציות 6 ו7 ולא עזר\")",
+      "file": "supabase/migrations/001_initial_schema.sql / app/actions/submit-order.ts",
+      "root_cause": "trg_orders_order_number only fires WHEN (NEW.order_number = ''). When order_number is omitted from an insert it defaults to NULL, and in SQL `NULL = ''` evaluates to NULL (not true), so the WHEN condition never matches and the trigger body never runs. app/admin/actions/create-order.ts (manual admin orders) explicitly inserts order_number: \"\" so it always worked; app/actions/submit-order.ts (public checkout) never set order_number at all, so orders.order_number's NOT NULL constraint rejected every public submission — a second, independent bug stacked on top of bug-096, present since the checkout was first built.",
+      "fix": "1) supabase/migrations/008_fix_order_number_trigger.sql: changed the trigger WHEN clause to `WHEN (NEW.order_number IS NULL OR NEW.order_number = '')`. 2) app/actions/submit-order.ts: explicitly insert order_number: \"\" to match the already-working admin pattern (belt-and-suspenders — either fix alone would have been enough).",
+      "tags": ["supabase", "trigger", "null-vs-empty-string", "orders", "checkout", "not-null-constraint"],
+      "related_bugs": ["bug-096"],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T00:00:00.000Z"
     }
   ]
 }

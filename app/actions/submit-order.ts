@@ -78,6 +78,7 @@ export async function submitOrder(input: SubmitOrderInput): Promise<{ order_numb
   const { data: created, error } = await supabase
     .from("orders")
     .insert({
+      order_number:     "",
       customer_name:    input.customer_name.trim(),
       customer_phone:   input.customer_phone.trim(),
       customer_email:   input.customer_email.trim().toLowerCase(),
