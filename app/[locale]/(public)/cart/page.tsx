@@ -178,60 +178,71 @@ export default function CartPage() {
 
     const supabase = createClient();
 
-    // Upload any per-item custom images (base64 → Supabase Storage)
-    const itemsWithCustomization = await Promise.all(
-      items.map(async (item) => {
-        let custom_image_url: string | undefined;
-        if (item.custom_image) {
-          try {
-            const res = await fetch(item.custom_image);
-            const blob = await res.blob();
-            const ext = blob.type.includes("pdf") ? "pdf" : blob.type.split("/")[1] || "png";
-            const path = `personalizations/${Date.now()}-${item.id}.${ext}`;
-            const { data: up } = await supabase.storage.from("logos").upload(path, blob);
-            if (up) custom_image_url = supabase.storage.from("logos").getPublicUrl(path).data.publicUrl;
-          } catch {
-            // non-fatal — proceed without image URL
+    try {
+      // Upload any per-item custom images (base64 → Supabase Storage)
+      const itemsWithCustomization = await Promise.all(
+        items.map(async (item) => {
+          let custom_image_url: string | undefined;
+          if (item.custom_image) {
+            try {
+              const res = await fetch(item.custom_image);
+              const blob = await res.blob();
+              const ext = blob.type.includes("pdf") ? "pdf" : blob.type.split("/")[1] || "png";
+              const path = `personalizations/${Date.now()}-${item.id}.${ext}`;
+              const { data: up } = await supabase.storage.from("logos").upload(path, blob);
+              if (up) custom_image_url = supabase.storage.from("logos").getPublicUrl(path).data.publicUrl;
+            } catch {
+              // non-fatal — proceed without image URL
+            }
           }
+          return {
+            id:               item.id,
+            is_bundle:        item.is_bundle,
+            quantity:         item.quantity,
+            custom_text:      item.custom_text      || undefined,
+            custom_image_url: custom_image_url      || undefined,
+          };
+        })
+      );
+
+      const payload = {
+        customer_name:    form.name,
+        customer_phone:   form.phone,
+        customer_email:   form.email,
+        delivery_method:  form.delivery_method,
+        delivery_address: form.delivery_method === "delivery" ? form.address : undefined,
+        delivery_notes:   form.delivery_notes || undefined,
+        logo_url:         logoUrl || undefined,
+        special_requests: form.notes || undefined,
+        coupon_code:      appliedCoupon?.code,
+        items:            itemsWithCustomization,
+      };
+      console.log("[submitOrder] payload:", payload);
+
+      // Server action validates prices, computes total, inserts order
+      const result = await submitOrder(payload);
+      console.log("[submitOrder] result:", result);
+
+      setLoading(false);
+
+      if ("error" in result) {
+        console.error("[submitOrder] failed:", result.error);
+        if (result.error === "invalid_coupon") {
+          setAppliedCoupon(null);
+          setError(locale === "he" ? "הקופון כבר אינו תקף. הוא הוסר — נסה לשלוח שוב." : "The coupon is no longer valid. It's been removed — please try submitting again.");
+        } else {
+          setError(locale === "he" ? `שגיאה בשליחת ההזמנה: ${result.error}` : `Error submitting order: ${result.error}`);
         }
-        return {
-          id:               item.id,
-          is_bundle:        item.is_bundle,
-          quantity:         item.quantity,
-          custom_text:      item.custom_text      || undefined,
-          custom_image_url: custom_image_url      || undefined,
-        };
-      })
-    );
-
-    // Server action validates prices, computes total, inserts order
-    const result = await submitOrder({
-      customer_name:    form.name,
-      customer_phone:   form.phone,
-      customer_email:   form.email,
-      delivery_method:  form.delivery_method,
-      delivery_address: form.delivery_method === "delivery" ? form.address : undefined,
-      delivery_notes:   form.delivery_notes || undefined,
-      logo_url:         logoUrl || undefined,
-      special_requests: form.notes || undefined,
-      coupon_code:      appliedCoupon?.code,
-      items:            itemsWithCustomization,
-    });
-
-    setLoading(false);
-
-    if ("error" in result) {
-      if (result.error === "invalid_coupon") {
-        setAppliedCoupon(null);
-        setError(locale === "he" ? "הקופון כבר אינו תקף. הוא הוסר — נסה לשלוח שוב." : "The coupon is no longer valid. It's been removed — please try submitting again.");
-      } else {
-        setError(locale === "he" ? "שגיאה בשליחת ההזמנה. אנא נסה שוב." : "Error submitting order. Please try again.");
+        return;
       }
-      return;
-    }
 
-    setOrderNumber(result.order_number);
-    clearCart();
+      setOrderNumber(result.order_number);
+      clearCart();
+    } catch (err) {
+      console.error("[submitOrder] threw:", err);
+      setLoading(false);
+      setError(locale === "he" ? `שגיאה בלתי צפויה: ${err instanceof Error ? err.message : String(err)}` : `Unexpected error: ${err instanceof Error ? err.message : String(err)}`);
+    }
   };
 
   // ── Success state ──────────────────────────────────────────────────────────

@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T19:30:45.032Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T19:46:42.828Z
 > Files: 121 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
@@ -52,7 +52,7 @@
 
 ## app/[locale]/(public)/cart/
 
-- `page.tsx` — ALLOWED_MIME — renders form (~5688 tok)
+- `page.tsx` — ALLOWED_MIME (~5858 tok)
 
 ## app/[locale]/(public)/catalog/
 
@@ -85,7 +85,7 @@
 ## app/actions/
 
 - `apply-coupon.ts` — Exports ApplyCouponResult, applyCoupon (~240 tok)
-- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1491 tok)
+- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1591 tok)
 
 ## app/admin/
 
