@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T20:00:41.346Z
-> Files: 123 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T20:07:47.188Z
+> Files: 124 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -293,3 +293,4 @@
 - `010_order_insert_rpc.sql` — Migration 010: create_order() SECURITY DEFINER function — orders insert moved here because RLS filters INSERT's RETURNING through SELECT policies too, and anon has none on orders (fixes checkout still failing after 006/007/008 with no console error) (~626 tok)
 - `011_coupons_authenticated_grant.sql` — Migration 011: GRANT SELECT/INSERT/UPDATE/DELETE ON coupons TO authenticated (RLS policy from 009 wasn't enough — fixes "permission denied for table coupons" when creating a coupon) (~187 tok)
 - `012_security_definer_search_path.sql` — Migration 012: CREATE OR REPLACE validate_coupon/redeem_coupon/create_order with SET search_path = public + schema-qualified refs (fixes 'relation "orders" does not exist' at runtime inside create_order) (~1235 tok)
+- `013_order_number_trigger_search_path.sql` — Migration 013: CREATE OR REPLACE generate_order_number() trigger with public.orders + SET search_path = public (012 missed this 4th unqualified reference, fired as a trigger inside create_order's INSERT) (~311 tok)

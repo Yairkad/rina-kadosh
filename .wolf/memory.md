@@ -866,3 +866,4 @@
 |------|--------|---------|---------|--------|
 | 19:59 | Edited ../../../root/.claude/plans/jolly-napping-rabin.md | modified does() | ~783 |
 | 20:00 | Created supabase/migrations/012_security_definer_search_path.sql | — | ~1235 |
+| 20:07 | Created supabase/migrations/013_order_number_trigger_search_path.sql | — | ~311 |
