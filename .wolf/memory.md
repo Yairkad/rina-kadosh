@@ -852,3 +852,13 @@
 | 19:30 | Created supabase/migrations/010_order_insert_rpc.sql | — | ~626 |
 | 19:30 | Edited app/actions/submit-order.ts | added optional chaining | ~340 |
 | session | User confirmed checkout still failing after 006+007+008 with NO console error — diagnosed as RLS filtering the RETURNING clause of INSERT through SELECT policies (orders has no anon SELECT policy by design, PII table). .insert().select().single() got 0 rows back, .single() threw a controlled (not console-visible) error. Fixed by moving the insert into a SECURITY DEFINER function create_order() called via rpc(), same pattern as is_admin(). Also completed the full coupon-code feature (migration 009, admin CRUD, checkout apply/remove UI, server-side redemption) per approved plan. | supabase/migrations/009_coupons.sql, supabase/migrations/010_order_insert_rpc.sql, app/actions/submit-order.ts, app/actions/apply-coupon.ts, app/admin/actions/coupons.ts, components/admin/CouponsManager.tsx, app/admin/(protected)/coupons/page.tsx, components/admin/AdminSidebar.tsx, app/[locale]/(public)/cart/page.tsx, app/admin/(protected)/orders/[id]/page.tsx, messages/*.json | bug-103 | ~1200 |
+
+## Session: 2026-07-21 18:30
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-21 18:35
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
