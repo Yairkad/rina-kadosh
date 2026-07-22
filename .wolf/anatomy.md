@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-22T07:43:01.918Z
-> Files: 123 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-22T08:00:11.355Z
+> Files: 127 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -14,6 +14,16 @@
 ## ../../../root/.claude/plans/
 
 - `jolly-napping-rabin.md` — Coupon Codes: Admin-Managed Discounts at Checkout (~2681 tok)
+
+## ../../../tmp/claude-0/-home-user-rina-kadosh/11e9958c-136e-51de-a815-3f85aafdf7e2/scratchpad/skill-extract/supabase-keepalive/
+
+- `SKILL.md` — Supabase Keep-Alive Setup (~2048 tok)
+
+## ../../../tmp/claude-0/-home-user-rina-kadosh/11e9958c-136e-51de-a815-3f85aafdf7e2/scratchpad/skill-extract/supabase-keepalive/templates/
+
+- `nextjs-app-router.ts` — app/api/keep-alive/route.ts (~479 tok)
+- `nextjs-pages-router.ts` — pages/api/keep-alive.ts (~474 tok)
+- `node-express.js` — Mount this route in the existing Express app, e.g.: (~463 tok)
 
 ## ./
 
