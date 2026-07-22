@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-11T19:30:45.032Z
-> Files: 121 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-22T07:43:01.918Z
+> Files: 123 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
@@ -25,6 +25,7 @@
 - `OVERVIEW.html` — רינה קדוש — סיכום האתר (~7732 tok)
 - `SPEC.md` — רינה קדוש / Rina Kadosh — מפרט פרויקט מלא (~3397 tok)
 - `tsconfig.json` — TypeScript configuration (~170 tok)
+- `vercel.json` (~28 tok)
 
 ## .claude/
 
@@ -183,6 +184,10 @@
 ## app/admin/login/
 
 - `page.tsx` — AdminLoginPage — renders form (~1002 tok)
+
+## app/api/keep-alive/
+
+- `route.ts` — Weekly ping to Supabase so the free-tier project doesn't get auto-paused (~322 tok)
 
 ## app/api/og/
 
