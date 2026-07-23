@@ -1660,10 +1660,54 @@
       "file": "app/actions/submit-order.ts",
       "root_cause": "Postgres RLS filters the RETURNING clause of INSERT/UPDATE through the table's SELECT policies too, not just plain SELECT queries. orders has no anon SELECT policy at all (by design — it holds customer PII: name/phone/email/address). submitOrder did `.from(\"orders\").insert({...}).select(\"order_number\").single()` — the INSERT itself now succeeded (after 006/007/008), but the RETURNING was filtered to zero rows by RLS, and `.single()` on zero rows throws a controlled PostgREST error (PGRST116) that submitOrder catches and returns as `{error}` — nothing thrown, so nothing in the browser console, matching the user's report exactly.",
       "fix": "supabase/migrations/010_order_insert_rpc.sql: added create_order(...) as a SECURITY DEFINER function (same pattern as is_admin()/validate_coupon/redeem_coupon) that performs the INSERT and returns only order_number as a scalar — bypasses RLS entirely since it runs as the function owner, and never exposes the orders table itself to anon (no public SELECT policy needed, unlike the naive fix of opening one). submit-order.ts now calls `supabase.rpc(\"create_order\", {...})` instead of `.insert().select().single()`.",
-      "tags": ["supabase", "rls", "returning", "select-policy", "orders", "checkout", "security-definer", "rpc"],
-      "related_bugs": ["bug-096", "bug-097"],
+      "tags": [
+        "supabase",
+        "rls",
+        "returning",
+        "select-policy",
+        "orders",
+        "checkout",
+        "security-definer",
+        "rpc"
+      ],
+      "related_bugs": [
+        "bug-096",
+        "bug-097"
+      ],
       "occurrences": 1,
       "last_seen": "2026-07-11T00:00:00.000Z"
+    },
+    {
+      "id": "bug-104",
+      "timestamp": "2026-07-23T19:43:04.319Z",
+      "error_message": "Incorrect value in code",
+      "file": "../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_references.md",
+      "root_cause": "Had \"דוגמאות עיצוב שנאספו לפרויקט — קומפוננטות ספציפיו",
+      "fix": "Changed to \"מקור עיצוב = הדמיית Illustrator אישית של המשתמש (",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-23T19:43:04.319Z"
+    },
+    {
+      "id": "bug-105",
+      "timestamp": "2026-07-23T19:53:59.502Z",
+      "error_message": "Wrong operator: && should be ===",
+      "file": "app/api/keep-alive/route.ts",
+      "root_cause": "Used \"&&\" instead of \"===\"",
+      "fix": "Changed operator && → ===",
+      "tags": [
+        "auto-detected",
+        "operator-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-23T19:53:59.502Z"
     }
   ]
 }
