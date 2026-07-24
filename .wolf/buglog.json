@@ -1679,6 +1679,136 @@
     },
     {
       "id": "bug-104",
+      "timestamp": "2026-07-11T19:46:35.119Z",
+      "error_message": "Wrong return value",
+      "file": "app/actions/submit-order.ts",
+      "root_cause": "Was returning: { error: productsRes.error.message };",
+      "fix": "Now returns: { error: productsRes.error.message }; }",
+      "tags": [
+        "auto-detected",
+        "return-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T19:46:35.119Z"
+    },
+    {
+      "id": "bug-105",
+      "timestamp": "2026-07-11T00:00:00.000Z",
+      "error_message": "\"permission denied for table coupons\" when an admin tried to create a coupon in /admin/coupons",
+      "file": "supabase/migrations/009_coupons.sql",
+      "root_cause": "Same bug class as bug-096 (orders) and the earlier gallery_items fix (004) — RLS policy created without the matching table-level GRANT — but this time hitting `authenticated`, disproving the earlier assumption that authenticated already has default privileges in this project (that assumption was only ever confirmed for tables that happened to work, not verified against a GRANT). Hit this exact bug class 3 separate times now, once per table.",
+      "fix": "Added supabase/migrations/011_coupons_authenticated_grant.sql: GRANT SELECT/INSERT/UPDATE/DELETE ON coupons TO authenticated, matching the minimal per-table pattern already used for gallery_items (004) and orders (007). (A schema-wide GRANT ALL TABLES + ALTER DEFAULT PRIVILEGES fix was drafted first but reverted — auto-mode correctly flagged it as a broader permission escalation than the user asked for; scoped back to just the coupons table. The systemic pattern — every new table in this project needs an explicit GRANT alongside its RLS policy — stays documented in cerebrum.md as a recurring Do-Not-Repeat check, not as a standing blanket grant.)",
+      "tags": [
+        "supabase",
+        "rls",
+        "grant",
+        "authenticated",
+        "coupons",
+        "permission-denied"
+      ],
+      "related_bugs": [
+        "bug-096",
+        "bug-095"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T00:00:00.000Z"
+    },
+    {
+      "id": "bug-106",
+      "timestamp": "2026-07-11T00:00:00.000Z",
+      "error_message": "[submitOrder] result: {error: 'relation \"orders\" does not exist'} — checkout submission fails after migrations 009/010/011 all applied, coupon creation now works",
+      "file": "supabase/migrations/010_order_insert_rpc.sql",
+      "root_cause": "validate_coupon/redeem_coupon (009) and create_order (010) are SECURITY DEFINER functions that reference `orders`/`coupons` unqualified, relying on the calling session's search_path to resolve them to `public`. SECURITY DEFINER functions run with the owner's privileges but do NOT get a fixed search_path unless one is set explicitly — they inherit whatever search_path is active in the caller's session at execution time. The RPC call itself succeeded (create_order() was found and invoked), but the unqualified `orders` reference inside the function body couldn't be resolved during execution. Direct `.from(\"orders\")` calls elsewhere are unaffected because PostgREST resolves those schema-qualified internally regardless of session search_path.",
+      "fix": "supabase/migrations/012_security_definer_search_path.sql: CREATE OR REPLACE all three functions with `SET search_path = public` added and every table reference schema-qualified as `public.orders`/`public.coupons` (belt-and-suspenders, matches Postgres's own documented best practice for SECURITY DEFINER functions). Scoped to only these three — is_admin()/handle_new_user() aren't reported broken. TURNED OUT INCOMPLETE — see bug-107: the same exact error persisted after 012, because a 4th function (generate_order_number(), a trigger fired by the INSERT inside create_order()) was still unqualified and untouched.",
+      "tags": [
+        "supabase",
+        "security-definer",
+        "search_path",
+        "rpc",
+        "orders",
+        "coupons",
+        "checkout"
+      ],
+      "related_bugs": [
+        "bug-103",
+        "bug-107"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T00:00:00.000Z"
+    },
+    {
+      "id": "bug-107",
+      "timestamp": "2026-07-11T00:00:00.000Z",
+      "error_message": "\"relation \\\"orders\\\" does not exist\" — identical error persists after migration 012, verified via pg_proc that create_order/validate_coupon/redeem_coupon are all correctly public.-qualified with search_path=public in proconfig",
+      "file": "supabase/migrations/001_initial_schema.sql",
+      "root_cause": "generate_order_number() — the BEFORE INSERT trigger function on `orders` from the very first migration (001) — still has an unqualified `FROM orders` and was never touched by migration 012 (which only fixed validate_coupon/redeem_coupon/create_order). It fires as part of the same INSERT INTO public.orders executed inside create_order(), and is the last remaining unqualified reference to `orders` anywhere in the SQL. Diagnosed by asking the user to run `select proname, prosrc, proconfig from pg_proc where proname in (...)` to directly verify the DB state rather than guessing further — confirmed the three RPC functions were correctly fixed, narrowing the remaining suspect to the trigger function.",
+      "fix": "supabase/migrations/013_order_number_trigger_search_path.sql: CREATE OR REPLACE generate_order_number() with `FROM public.orders` and `LANGUAGE plpgsql SET search_path = public`.",
+      "tags": [
+        "supabase",
+        "trigger",
+        "search_path",
+        "orders",
+        "checkout",
+        "generate_order_number"
+      ],
+      "related_bugs": [
+        "bug-106"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T00:00:00.000Z"
+    },
+    {
+      "id": "bug-108",
+      "timestamp": "2026-07-11T20:11:42.099Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/admin/(protected)/layout.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T20:11:42.099Z"
+    },
+    {
+      "id": "bug-109",
+      "timestamp": "2026-07-11T20:11:55.649Z",
+      "error_message": "Null/undefined access in ",
+      "file": "components/admin/AdminSidebar.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T20:11:55.649Z"
+    },
+    {
+      "id": "bug-110",
+      "timestamp": "2026-07-11T20:12:01.133Z",
+      "error_message": "Missing await",
+      "file": "components/admin/AdminSidebar.tsx",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-11T20:12:01.133Z"
+    },
+    {
+      "id": "bug-111",
       "timestamp": "2026-07-23T19:43:04.319Z",
       "error_message": "Incorrect value in code",
       "file": "../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_references.md",
@@ -1694,7 +1824,7 @@
       "last_seen": "2026-07-23T19:43:04.319Z"
     },
     {
-      "id": "bug-105",
+      "id": "bug-112",
       "timestamp": "2026-07-23T19:53:59.502Z",
       "error_message": "Wrong operator: && should be ===",
       "file": "app/api/keep-alive/route.ts",

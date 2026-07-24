@@ -13,7 +13,7 @@
 
 ## ../../../root/.claude/plans/
 
-- `jolly-napping-rabin.md` — Coupon Codes: Admin-Managed Discounts at Checkout (~2681 tok)
+- `jolly-napping-rabin.md` — Coupon Codes: Admin-Managed Discounts at Checkout (~3412 tok)
 
 ## ../../../tmp/claude-0/-home-user-rina-kadosh/11e9958c-136e-51de-a815-3f85aafdf7e2/scratchpad/skill-extract/supabase-keepalive/
 
@@ -63,7 +63,7 @@
 
 ## app/[locale]/(public)/cart/
 
-- `page.tsx` — ALLOWED_MIME — renders form (~5688 tok)
+- `page.tsx` — ALLOWED_MIME (~5858 tok)
 
 ## app/[locale]/(public)/catalog/
 
@@ -96,7 +96,7 @@
 ## app/actions/
 
 - `apply-coupon.ts` — Exports ApplyCouponResult, applyCoupon (~240 tok)
-- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1491 tok)
+- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1591 tok)
 
 ## app/admin/
 
@@ -105,7 +105,7 @@
 
 ## app/admin/(protected)/
 
-- `layout.tsx` — AdminProtectedLayout (~242 tok)
+- `layout.tsx` — AdminProtectedLayout (~310 tok)
 - `page.tsx` — redirect → /admin/dashboard (~35 tok)
 
 ## app/admin/(protected)/bundles/
@@ -209,7 +209,7 @@
 
 ## components/admin/
 
-- `AdminSidebar.tsx` — NAV_ITEMS (~1365 tok)
+- `AdminSidebar.tsx` — NAV_ITEMS (~1677 tok)
 - `ArchiveBundleButton.tsx` — ArchiveBundleButton (~284 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
 - `BundleForm.tsx` — Field (~3851 tok)
@@ -306,3 +306,6 @@
 - `008_fix_order_number_trigger.sql` — Migration 008: trg_orders_order_number WHEN clause didn't match NULL, so public checkout inserts (which omit order_number) violated NOT NULL — fixed trigger + submit-order.ts (~287 tok)
 - `009_coupons.sql` — Migration 009: coupons table (admin-only RLS) + validate_coupon/redeem_coupon SECURITY DEFINER functions granted to anon; orders.coupon_code/discount_amount columns (~1145 tok)
 - `010_order_insert_rpc.sql` — Migration 010: create_order() SECURITY DEFINER function — orders insert moved here because RLS filters INSERT's RETURNING through SELECT policies too, and anon has none on orders (fixes checkout still failing after 006/007/008 with no console error) (~626 tok)
+- `011_coupons_authenticated_grant.sql` — Migration 011: GRANT SELECT/INSERT/UPDATE/DELETE ON coupons TO authenticated (RLS policy from 009 wasn't enough — fixes "permission denied for table coupons" when creating a coupon) (~187 tok)
+- `012_security_definer_search_path.sql` — Migration 012: CREATE OR REPLACE validate_coupon/redeem_coupon/create_order with SET search_path = public + schema-qualified refs (fixes 'relation "orders" does not exist' at runtime inside create_order) (~1235 tok)
+- `013_order_number_trigger_search_path.sql` — Migration 013: CREATE OR REPLACE generate_order_number() trigger with public.orders + SET search_path = public (012 missed this 4th unqualified reference, fired as a trigger inside create_order's INSERT) (~311 tok)

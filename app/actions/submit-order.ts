@@ -40,8 +40,8 @@ export async function submitOrder(input: SubmitOrderInput): Promise<{ order_numb
       : Promise.resolve({ data: [] as { id: string; name_he: string; bundle_price: number }[], error: null }),
   ]);
 
-  if (productsRes.error) return { error: productsRes.error.message };
-  if (bundlesRes.error)  return { error: bundlesRes.error.message };
+  if (productsRes.error) { console.error("[submitOrder] products query failed:", productsRes.error); return { error: productsRes.error.message }; }
+  if (bundlesRes.error)  { console.error("[submitOrder] bundles query failed:", bundlesRes.error); return { error: bundlesRes.error.message }; }
 
   // Build a price + name map from server-authoritative DB values
   const priceMap = new Map<string, { name_he: string; price: number }>();
@@ -89,6 +89,7 @@ export async function submitOrder(input: SubmitOrderInput): Promise<{ order_numb
       .single<{ success: boolean; discount_type: "percent" | "amount" | null; discount_value: number | null; error: string | null }>();
 
     if (redeemError || !redeemed || !redeemed.success || !redeemed.discount_type || redeemed.discount_value === null) {
+      console.error("[submitOrder] redeem_coupon failed:", { redeemError, redeemed });
       return { error: "invalid_coupon" };
     }
 
@@ -119,7 +120,10 @@ export async function submitOrder(input: SubmitOrderInput): Promise<{ order_numb
     p_discount_amount:  discountAmount,
   });
 
-  if (error || !orderNumber) return { error: error?.message || "insert_failed" };
+  if (error || !orderNumber) {
+    console.error("[submitOrder] create_order rpc failed:", error, "orderNumber:", orderNumber);
+    return { error: error?.message || "insert_failed" };
+  }
 
   return { order_number: orderNumber };
 }

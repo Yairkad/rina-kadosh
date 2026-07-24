@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import {
   LayoutDashboard,
@@ -34,11 +34,12 @@ const NAV_ITEMS = [
   { href: "/admin/create-order", label: "הזמנה ידנית", icon: Plus },
 ];
 
-function NavLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
+function NavLinks({ pathname, onNavigate, pendingOrdersCount }: { pathname: string; onNavigate?: () => void; pendingOrdersCount: number }) {
   return (
     <nav className="flex-1 py-4 px-3 space-y-0.5 overflow-y-auto">
       {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
         const active = pathname === href || pathname.startsWith(href + "/");
+        const badge = href === "/admin/orders" && pendingOrdersCount > 0 ? pendingOrdersCount : null;
         return (
           <Link
             key={href}
@@ -52,6 +53,11 @@ function NavLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () 
           >
             <Icon size={16} strokeWidth={1.8} />
             <span>{label}</span>
+            {badge !== null && (
+              <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold leading-[18px] text-center">
+                {badge}
+              </span>
+            )}
             {active && <ChevronLeft size={14} className="mr-auto opacity-60" />}
           </Link>
         );
@@ -60,10 +66,25 @@ function NavLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () 
   );
 }
 
-export default function AdminSidebar({ email }: { email: string }) {
+export default function AdminSidebar({ email, initialPendingOrdersCount = 0 }: { email: string; initialPendingOrdersCount?: number }) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [pendingOrdersCount, setPendingOrdersCount] = useState(initialPendingOrdersCount);
+
+  useEffect(() => {
+    const supabase = createClient();
+    async function refreshCount() {
+      const { count } = await supabase
+        .from("orders")
+        .select("id", { count: "exact", head: true })
+        .eq("status", "pending")
+        .is("deleted_at", null);
+      if (typeof count === "number") setPendingOrdersCount(count);
+    }
+    const interval = setInterval(refreshCount, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   async function handleSignOut() {
     const supabase = createClient();
@@ -118,7 +139,7 @@ export default function AdminSidebar({ email }: { email: string }) {
                 <X size={18} />
               </button>
             </div>
-            <NavLinks pathname={pathname} onNavigate={() => setMobileOpen(false)} />
+            <NavLinks pathname={pathname} onNavigate={() => setMobileOpen(false)} pendingOrdersCount={pendingOrdersCount} />
             {footer}
           </aside>
         </div>
@@ -130,7 +151,7 @@ export default function AdminSidebar({ email }: { email: string }) {
           <div className="text-sm font-bold text-stone-800">רינה קדוש</div>
           <div className="text-xs text-stone-400 mt-0.5">ממשק ניהול</div>
         </div>
-        <NavLinks pathname={pathname} />
+        <NavLinks pathname={pathname} pendingOrdersCount={pendingOrdersCount} />
         {footer}
       </aside>
     </>

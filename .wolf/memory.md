@@ -852,6 +852,27 @@
 | 19:30 | Created supabase/migrations/010_order_insert_rpc.sql | — | ~626 |
 | 19:30 | Edited app/actions/submit-order.ts | added optional chaining | ~340 |
 | session | User confirmed checkout still failing after 006+007+008 with NO console error — diagnosed as RLS filtering the RETURNING clause of INSERT through SELECT policies (orders has no anon SELECT policy by design, PII table). .insert().select().single() got 0 rows back, .single() threw a controlled (not console-visible) error. Fixed by moving the insert into a SECURITY DEFINER function create_order() called via rpc(), same pattern as is_admin(). Also completed the full coupon-code feature (migration 009, admin CRUD, checkout apply/remove UI, server-side redemption) per approved plan. | supabase/migrations/009_coupons.sql, supabase/migrations/010_order_insert_rpc.sql, app/actions/submit-order.ts, app/actions/apply-coupon.ts, app/admin/actions/coupons.ts, components/admin/CouponsManager.tsx, app/admin/(protected)/coupons/page.tsx, components/admin/AdminSidebar.tsx, app/[locale]/(public)/cart/page.tsx, app/admin/(protected)/orders/[id]/page.tsx, messages/*.json | bug-103 | ~1200 |
+| 19:46 | Edited app/[locale]/(public)/cart/page.tsx | modified if() | ~820 |
+| 19:46 | Edited app/actions/submit-order.ts | modified if() | ~84 |
+| 19:46 | Edited app/actions/submit-order.ts | modified if() | ~73 |
+| 19:46 | Edited app/actions/submit-order.ts | modified if() | ~66 |
+| session | User still hitting a checkout error after 009+010 applied, wanted full console detail instead of the generic message. Added console.log/error at every step of the client submit flow (payload, result, thrown exceptions) plus console.error at every server-side error branch in submitOrder, and changed the displayed error text to interpolate the actual result.error string instead of a fixed generic message — the real DB/RPC error will now show directly in the UI and browser console on next attempt. | app/[locale]/(public)/cart/page.tsx, app/actions/submit-order.ts | diagnostic | ~400 |
+| 19:48 | Created supabase/migrations/011_default_privileges_fix.sql | — | ~460 |
+| 19:50 | Created supabase/migrations/011_coupons_authenticated_grant.sql | — | ~187 |
+
+## Session: 2026-07-11 19:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 19:59 | Edited ../../../root/.claude/plans/jolly-napping-rabin.md | modified does() | ~783 |
+| 20:00 | Created supabase/migrations/012_security_definer_search_path.sql | — | ~1235 |
+| 20:07 | Created supabase/migrations/013_order_number_trigger_search_path.sql | — | ~311 |
+| 20:11 | Edited app/admin/(protected)/layout.tsx | added nullish coalescing | ~118 |
+| 20:11 | Edited components/admin/AdminSidebar.tsx | 4→4 lines | ~54 |
+| 20:11 | Edited components/admin/AdminSidebar.tsx | CSS: pendingOrdersCount, pendingOrdersCount | ~370 |
+| 20:12 | Edited components/admin/AdminSidebar.tsx | CSS: count, head | ~240 |
+| 20:12 | Edited components/admin/AdminSidebar.tsx | 13→13 lines | ~186 |
+| session | Checkout finally confirmed working. Added a "new order" indicator to the admin panel per request: pending-order count fetched server-side in the protected layout, passed to AdminSidebar as initial value, shown as a red badge on the "הזמנות" nav item, refreshed client-side every 30s so it updates without navigation. | app/admin/(protected)/layout.tsx, components/admin/AdminSidebar.tsx | completed | ~250 |
 
 ## Session: 2026-07-21 18:30
 
