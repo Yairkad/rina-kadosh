@@ -40,7 +40,7 @@ Each template uses placeholder tokens — replace **every occurrence of each tok
 - `{{TABLE_NAME}}` → the table chosen in Step 1.4
 - `{{SUPABASE_URL_VAR}}` / `{{SUPABASE_ANON_KEY_VAR}}` → the project's actual existing env var names from Step 1.2 (or `SUPABASE_URL` / `SUPABASE_ANON_KEY` if this is a brand-new connection from Step 2)
 
-Then merge the cron entry from `templates/vercel-json-snippet.json` into the project's `vercel.json`, **preserving all other existing keys and any other cron entries** (per Step 1.3). Default schedule: `0 3 * * 1` (every Monday 03:00 UTC) — adjust the day/hour only if the user asks. Note for the user: Hobby plan cron jobs fire sometime within the scheduled hour, not at the exact minute — that's fine for this use case.
+Then merge the cron entry from `templates/vercel-json-snippet.json` into the project's `vercel.json`, **preserving all other existing keys and any other cron entries** (per Step 1.3). Default schedule: `0 3 * * *` (daily, 03:00 UTC) — adjust the hour only if the user asks. **Don't default to weekly.** Supabase's pause threshold is ~7 days of inactivity, so a weekly ping has zero safety margin: Hobby plan cron jobs aren't guaranteed to fire at an exact time (documented "flexible time window" — currently up to 1 hour, per Vercel's dashboard), and any single delayed, skipped, or transiently-failed run is then enough to tip the project over the threshold and get it paused anyway, even with otherwise-correct code and secrets. A daily ping needs several consecutive misses before that happens.
 
 ### CRON_SECRET — read carefully, this is a common misconception
 

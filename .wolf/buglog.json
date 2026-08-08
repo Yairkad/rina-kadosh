@@ -1838,6 +1838,445 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-23T19:53:59.502Z"
+    },
+    {
+      "id": "bug-113",
+      "timestamp": "2026-07-24T14:05:35.715Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_references.md",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 9→5 lines (8 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-24T14:05:35.715Z"
+    },
+    {
+      "id": "bug-114",
+      "timestamp": "2026-07-24T14:25:03.663Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/layout.tsx",
+      "root_cause": "Had \"antialiased\"",
+      "fix": "Changed to `antialiased ${mekomi.variable} ${happyBirthday.va",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-24T14:25:03.663Z"
+    },
+    {
+      "id": "bug-115",
+      "timestamp": "2026-07-24T14:25:19.252Z",
+      "error_message": "CSS fix: font-family",
+      "file": "app/globals.css",
+      "root_cause": "font-family: \"Segoe UI\", \"Arial Hebrew\", Arial, system-ui, sans-serif → var(--font-mekomi), \"Segoe UI\", \"Arial Hebrew\", Arial, system-ui, sans-serif",
+      "fix": "Changed font-family: \"Segoe UI\", \"Arial Hebrew\", Arial, system-ui, sans-serif → var(--font-mekomi), \"Segoe UI\", \"Arial Hebrew\", Arial, system-ui, sans-serif",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "css"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-24T14:25:19.252Z"
+    },
+    {
+      "id": "bug-116",
+      "timestamp": "2026-07-24T14:27:54.643Z",
+      "error_message": "CSS fix: sm",
+      "file": "app/[locale]/(public)/catalog/[event]/page.tsx",
+      "root_cause": "sm: w-40 sm:h-40 mx-auto\"> → text-2xl font-semibold text-[var(--charcoal)] mb-5\">",
+      "fix": "Changed sm: w-40 sm:h-40 mx-auto\"> → text-2xl font-semibold text-[var(--charcoal)] mb-5\">",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-24T14:27:54.643Z"
+    },
+    {
+      "id": "bug-117",
+      "timestamp": "2026-07-27T07:28:19.244Z",
+      "error_message": "CSS fix: backgroundColor",
+      "file": "components/layout/Navbar.tsx",
+      "root_cause": "backgroundColor: scrolled ? \"rgba(237,231,221,0.95)\" : \"rgba(237,231,221,0.0)\", → scrolled ? \"rgba(183,179,132,0.97)\" : \"rgba(183,179,132,0.85)\",",
+      "fix": "Changed backgroundColor: scrolled ? \"rgba(237,231,221,0.95)\" : \"rgba(237,231,221,0.0)\", → scrolled ? \"rgba(183,179,132,0.97)\" : \"rgba(183,179,132,0.85)\",",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-27T07:28:22.692Z"
+    },
+    {
+      "id": "bug-118",
+      "timestamp": "2026-07-27T07:28:46.572Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/(public)/page.tsx",
+      "root_cause": "Had \"@/components/home/InspirationSection\"",
+      "fix": "Changed to \"@/components/home/ProcessSteps\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T07:28:46.572Z"
+    },
+    {
+      "id": "bug-119",
+      "timestamp": "2026-07-27T07:28:47.850Z",
+      "error_message": "Wrong reference: InspirationSection should be ProcessSteps",
+      "file": "app/[locale]/(public)/page.tsx",
+      "root_cause": "Used \"InspirationSection\" instead of \"ProcessSteps\"",
+      "fix": "Changed InspirationSection → ProcessSteps",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T07:28:47.850Z"
+    },
+    {
+      "id": "bug-120",
+      "timestamp": "2026-07-27T07:28:55.521Z",
+      "error_message": "CSS fix: sm",
+      "file": "components/home/ProcessSteps.tsx",
+      "root_cause": "sm: text-3xl font-semibold text-white mb-12\" → text-3xl font-semibold text-[var(--charcoal)] mb-12\"",
+      "fix": "Changed sm: text-3xl font-semibold text-white mb-12\" → text-3xl font-semibold text-[var(--charcoal)] mb-12\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T07:28:55.521Z"
+    },
+    {
+      "id": "bug-121",
+      "timestamp": "2026-07-27T07:29:46.609Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/admin/actions/products.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T07:29:46.609Z"
+    },
+    {
+      "id": "bug-122",
+      "timestamp": "2026-07-27T07:31:01.537Z",
+      "error_message": "CSS fix: name_he",
+      "file": "components/admin/CatalogManager.tsx",
+      "root_cause": "name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, atmosphere_image: style.atmosphere_image → style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, og_image: style.og_image, atmosphere_image: style.atmosphere_image",
+      "fix": "Changed name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, atmosphere_image: style.atmosphere_image → style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, og_image: style.og_image, atmosphere_image: style.atmosphere_image",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-27T07:31:58.923Z"
+    },
+    {
+      "id": "bug-123",
+      "timestamp": "2026-07-27T07:31:43.134Z",
+      "error_message": "Missing guard clause",
+      "file": "components/admin/CatalogManager.tsx",
+      "root_cause": "No early return/throw for edge case: !order",
+      "fix": "Added guard clause: if (!order)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T07:31:43.134Z"
+    },
+    {
+      "id": "bug-124",
+      "timestamp": "2026-07-27T07:32:26.158Z",
+      "error_message": "CSS fix: sm",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/page.tsx",
+      "root_cause": "sm: px-6 lg:px-8 pt-8 bg-[var(--cream)]\"> → px-6 lg:px-8 pt-8 bg-marble bg-cover bg-center bg-fixed\">",
+      "fix": "Changed sm: px-6 lg:px-8 pt-8 bg-[var(--cream)]\"> → px-6 lg:px-8 pt-8 bg-marble bg-cover bg-center bg-fixed\">",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T07:32:26.158Z"
+    },
+    {
+      "id": "bug-125",
+      "timestamp": "2026-07-27T07:45:55.642Z",
+      "error_message": "Significant refactor of ",
+      "file": "components/catalog/ExpandingEventCards.tsx",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 10→3 lines (8 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T07:45:55.642Z"
+    },
+    {
+      "id": "bug-126",
+      "timestamp": "2026-07-27T07:47:00.329Z",
+      "error_message": "CSS fix: sm",
+      "file": "app/[locale]/(public)/page.tsx",
+      "root_cause": "sm: px-6 lg:px-8\"> → px-6 lg:px-8 overflow-hidden\">",
+      "fix": "Changed sm: px-6 lg:px-8\"> → px-6 lg:px-8 overflow-hidden\">",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T07:47:00.329Z"
+    },
+    {
+      "id": "bug-127",
+      "timestamp": "2026-07-27T07:49:45.665Z",
+      "error_message": "Significant refactor of ",
+      "file": "components/layout/Navbar.tsx",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 11→20 lines (8 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T07:49:45.665Z"
+    },
+    {
+      "id": "bug-128",
+      "timestamp": "2026-07-27T07:51:09.760Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/layout/Navbar.tsx",
+      "root_cause": "Had \"next/image\"",
+      "fix": "Changed to \"next-intl\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T07:51:09.760Z"
+    },
+    {
+      "id": "bug-129",
+      "timestamp": "2026-07-27T07:54:07.589Z",
+      "error_message": "CSS fix: sm",
+      "file": "app/[locale]/(public)/page.tsx",
+      "root_cause": "sm: px-6 lg:px-8 overflow-hidden\"> → inset-x-10 lg:inset-x-16 h-[560px] sm:h-[640px] rounded-3xl overflow-hidden -z-10\"",
+      "fix": "Changed sm: px-6 lg:px-8 overflow-hidden\"> → inset-x-10 lg:inset-x-16 h-[560px] sm:h-[640px] rounded-3xl overflow-hidden -z-10\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T07:54:07.589Z"
+    },
+    {
+      "id": "bug-130",
+      "timestamp": "2026-07-27T07:59:57.127Z",
+      "error_message": "CSS fix: sm",
+      "file": "app/[locale]/(public)/page.tsx",
+      "root_cause": "sm: inset-x-10 lg:inset-x-16 h-[560px] sm:h-[640px] rounded-3xl overflow-hidden -z-10\" → inset-x-10 lg:inset-x-16 h-[560px] sm:h-[640px] -z-10\"",
+      "fix": "Changed sm: inset-x-10 lg:inset-x-16 h-[560px] sm:h-[640px] rounded-3xl overflow-hidden -z-10\" → inset-x-10 lg:inset-x-16 h-[560px] sm:h-[640px] -z-10\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-27T08:02:27.648Z"
+    },
+    {
+      "id": "bug-131",
+      "timestamp": "2026-07-27T08:04:24.320Z",
+      "error_message": "CSS fix: md",
+      "file": "components/catalog/ExpandingEventCards.tsx",
+      "root_cause": "md: min-w-[72px] min-h-0\" → min-w-[56px] min-h-0\"",
+      "fix": "Changed md: min-w-[72px] min-h-0\" → min-w-[56px] min-h-0\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T08:04:24.320Z"
+    },
+    {
+      "id": "bug-132",
+      "timestamp": "2026-07-27T08:33:11.434Z",
+      "error_message": "CSS fix: sm",
+      "file": "app/[locale]/(public)/page.tsx",
+      "root_cause": "sm: h-[640px] -z-10 overflow-hidden\"> → h-[640px] -z-20 overflow-hidden\">",
+      "fix": "Changed sm: h-[640px] -z-10 overflow-hidden\"> → h-[640px] -z-20 overflow-hidden\">",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T08:33:11.434Z"
+    },
+    {
+      "id": "bug-133",
+      "timestamp": "2026-07-27T08:42:43.516Z",
+      "error_message": "CSS fix: sm",
+      "file": "app/[locale]/(public)/page.tsx",
+      "root_cause": "sm: h-[640px] -z-20 overflow-hidden\"> → inset-10 lg:inset-12 -z-10\"",
+      "fix": "Changed sm: h-[640px] -z-20 overflow-hidden\"> → inset-10 lg:inset-12 -z-10\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-27T08:42:43.516Z"
+    },
+    {
+      "id": "bug-134",
+      "timestamp": "2026-08-08T20:44:58.441Z",
+      "error_message": "Wrong operator: !== should be &&",
+      "file": "app/api/keep-alive/route.ts",
+      "root_cause": "Used \"!==\" instead of \"&&\"",
+      "fix": "Changed operator !== → &&",
+      "tags": [
+        "auto-detected",
+        "operator-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-08T20:44:58.441Z"
+    },
+    {
+      "id": "bug-135",
+      "timestamp": "2026-08-08T20:50:56.604Z",
+      "error_message": "Wrong operator: !== should be &&",
+      "file": ".claude/skills/supabase-keepalive/templates/nextjs-app-router.ts",
+      "root_cause": "Used \"!==\" instead of \"&&\"",
+      "fix": "Changed operator !== → &&",
+      "tags": [
+        "auto-detected",
+        "operator-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-08T20:50:56.604Z"
+    },
+    {
+      "id": "bug-136",
+      "timestamp": "2026-08-08T21:00:00.000Z",
+      "error_message": "Supabase project auto-paused despite weekly keep-alive Vercel Cron being enabled",
+      "file": "app/api/keep-alive/route.ts",
+      "root_cause": "Two contributing issues, one confirmed and one not fully provable retroactively. (1) UNCONFIRMED: commit a7c1dc2 (2026-07-23) made the CRON_SECRET check fail-closed — if CRON_SECRET was unset in Vercel, the route returned 500 before ever querying Supabase. This was the initial hypothesis, but it was undercut in-session: with the OLD (still fail-closed) code untouched, a manual 'Run' from the Vercel Cron Jobs dashboard returned 200 (CRON_SECRET correct, Supabase reachable) — so we can't prove CRON_SECRET was ever actually missing; Hobby-plan log retention was too short to see historical Monday runs either way. (2) CONFIRMED structural risk, independent of (1): the cron was scheduled weekly (`0 3 * * 1`), exactly matching Supabase's ~7-day pause threshold with zero safety margin. Vercel's own Cron Jobs dashboard states Hobby-plan jobs fire within a 'flexible time window of 1-hour', i.e. exact timing isn't guaranteed — so a single delayed, skipped, or transiently-failed weekly run is sufficient to cross the 7-day threshold and get the project paused even with fully correct code/secrets.",
+      "fix": "(a) Rewrote the auth check in app/api/keep-alive/route.ts (and the matching .claude/skills/supabase-keepalive/templates/nextjs-app-router.ts template) to fail OPEN instead of closed: the Supabase ping always executes; a missing/mismatched CRON_SECRET only adds an `authenticated: false` / warning field to the JSON response and a console.warn, it no longer blocks the request. Justified because this route only reads already-public catalog data with the anon key (no mutation, no PII). (b) Changed the cron schedule in vercel.json (and the skill's templates/vercel-json-snippet.json + SKILL.md default) from weekly (`0 3 * * 1`) to daily (`0 3 * * *`) — still within Vercel Hobby's allowed cadence — so a single missed/delayed run can no longer cause a pause; it now takes several consecutive misses. User manually restored the paused Supabase project via its dashboard.",
+      "tags": [
+        "supabase",
+        "cron",
+        "keep-alive",
+        "pause",
+        "cron-secret",
+        "vercel",
+        "fail-open"
+      ],
+      "related_bugs": [
+        "bug-105",
+        "bug-134"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-08-08T21:00:00.000Z"
+    },
+    {
+      "id": "bug-137",
+      "timestamp": "2026-08-08T21:06:36.295Z",
+      "error_message": "Incorrect value in code",
+      "file": "vercel.json",
+      "root_cause": "Had \"0 3 * * 1\"",
+      "fix": "Changed to \"0 3 * * *\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "json"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-08T21:06:36.295Z"
+    },
+    {
+      "id": "bug-138",
+      "timestamp": "2026-08-08T21:09:58.589Z",
+      "error_message": "Incorrect value in code",
+      "file": ".claude/skills/supabase-keepalive/templates/vercel-json-snippet.json",
+      "root_cause": "Had \"0 3 * * 1\"",
+      "fix": "Changed to \"0 3 * * *\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "json"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-08T21:09:58.589Z"
+    },
+    {
+      "id": "bug-139",
+      "timestamp": "2026-08-08T21:10:11.710Z",
+      "error_message": "Incorrect value in code",
+      "file": ".claude/skills/supabase-keepalive/SKILL.md",
+      "root_cause": "Had ` (every Monday 03:00 UTC) — adjust the day/hour o",
+      "fix": "Changed to ` (daily, 03:00 UTC) — adjust the hour only if the",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-08T21:10:11.710Z"
     }
   ]
 }
