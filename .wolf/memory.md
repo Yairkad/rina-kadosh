@@ -1,8 +1,14 @@
 # Memory
 
 > Chronological action log. Hooks and AI append to this file automatically.
+| 10:34 | Fixed bug-155 (user report: uploaded video not showing in admin or public site): (1) ImageUpload.tsx MIME check now falls back to file extension (fixes .mov reporting empty file.type on Windows), explicit contentType passed to Supabase upload; (2) catalog.ts's 7 mutation functions were missing public /he+en/catalog revalidatePath (only had /admin/catalog) — added, matching products.ts/bundles.ts/gallery.ts pattern | components/admin/ImageUpload.tsx, app/admin/actions/catalog.ts | tsc clean, logged to buglog.json bug-155, not yet re-tested by user | ~2400 |
+| 10:15 | Redesigned circle+square composition on /catalog/[event] style rows per user feedback (2 iterations): circle now large/dominant, small pattern square peeks out from behind at one corner, no ring/frame on circle | app/[locale]/(public)/catalog/[event]/page.tsx | tsc clean, verified via designqc screenshot (real data: /catalog/y) | ~1400 |
+| 10:06 | TODO item 2 done: redesigned ProcessSteps (cards w/ lucide icons, faint gold number watermark, gold underline hover, full-bleed GeometricPattern bg) — replaced flat olive band + plain circles. Fixed text-[var(--gold)]/10 opacity-modifier not rendering (color-mix silently failed in headless capture) by switching to separate `opacity-10` utility | components/home/ProcessSteps.tsx | tsc clean, verified via designqc desktop+mobile screenshots | ~2100 |
+| 09:49 | Hero fixed to fill first screen under transparent navbar (-mt-16, 100dvh), GeometricPattern now full-bleed, logo spacing fixed (h-16→h-14); added video support to atmosphere_image field (ImageUpload allowVideo/maxMB props, video render in style page hero); replaced ExpandingEventCards nav spinner ring with rotating ✦ star | components/home/HeroSection.tsx, components/layout/Navbar.tsx, components/admin/ImageUpload.tsx, components/admin/CatalogManager.tsx, app/[locale]/(public)/catalog/[event]/[style]/page.tsx, components/catalog/ExpandingEventCards.tsx | tsc clean, hero verified via designqc screenshots | ~5200 |
+| 09:27 | TODO item 1 done: navbar logo bigger+black, header transparent-until-scroll; swapped unlicensed mekomi Hebrew font for Rubik (Google Fonts) across 4 files, deleted unused mekomi .otf files | components/layout/Navbar.tsx, app/fonts/index.ts, app/[locale]/layout.tsx, tailwind.config.ts, app/globals.css | tsc clean, designqc screenshot pending | ~2600 |
 > Old sessions are consolidated by the daemon weekly.
 | 14:28 | Created design-references/ExpandingCards.tsx | — | ~1159 |
+| 09:29 | Saved pasted CinematicFooter reference (GSAP magnetic buttons/marquee/curtain-reveal) + built 5-item design TODO plan (logo/navbar, ProcessSteps, style-square PNG, wording changes, footer-code effects) | design-references/CinematicFooter.tsx, .wolf/anatomy.md, .wolf/cerebrum.md | plan approved, no site code changed | ~4700 |
 | session | Fixed HierarchyRequestError on product page — design_styles query scoped by event_type_id + created not-found.tsx | app/[locale]/(public)/catalog/[event]/[style]/[product]/page.tsx, app/[locale]/not-found.tsx | bug-091 | ~800 |
 | SESSION | Built admin interface foundation: middleware update, login page, protected layout + sidebar, dashboard with KPIs | middleware.ts, app/admin/**, components/admin/AdminSidebar.tsx | completed | ~1200 |
 | 14:29 | Session end: 1 writes across 1 files (ExpandingCards.tsx) | 0 reads | ~1159 tok |
@@ -1062,3 +1068,115 @@
 | 00:09 | Edited .claude/skills/supabase-keepalive/templates/vercel-json-snippet.json | inline fix | ~9 |
 | 00:10 | Edited .claude/skills/supabase-keepalive/SKILL.md | inline fix | ~213 |
 | 00:11 | Session end: 6 writes across 6 files (crystalline-coalescing-llama.md, route.ts, nextjs-app-router.ts, vercel.json, vercel-json-snippet.json) | 6 reads | ~9127 tok |
+| 00:15 | Session end: 6 writes across 6 files (crystalline-coalescing-llama.md, route.ts, nextjs-app-router.ts, vercel.json, vercel-json-snippet.json) | 6 reads | ~9127 tok |
+| 00:20 | Session end: 6 writes across 6 files (crystalline-coalescing-llama.md, route.ts, nextjs-app-router.ts, vercel.json, vercel-json-snippet.json) | 6 reads | ~9127 tok |
+| 00:29 | Session end: 6 writes across 6 files (crystalline-coalescing-llama.md, route.ts, nextjs-app-router.ts, vercel.json, vercel-json-snippet.json) | 6 reads | ~9127 tok |
+| 00:29 | Session end: 6 writes across 6 files (crystalline-coalescing-llama.md, route.ts, nextjs-app-router.ts, vercel.json, vercel-json-snippet.json) | 6 reads | ~9127 tok |
+| 00:30 | Session end: 6 writes across 6 files (crystalline-coalescing-llama.md, route.ts, nextjs-app-router.ts, vercel.json, vercel-json-snippet.json) | 6 reads | ~9127 tok |
+
+## Session: 2026-08-10 00:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-10 00:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-10 00:02
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-10 00:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:16 | Created ../../../.claude/plans/memoized-wandering-sunrise.md | — | ~739 |
+| 09:21 | Session end: 1 writes across 1 files (memoized-wandering-sunrise.md) | 14 reads | ~13984 tok |
+| 09:24 | Edited ../../../.claude/plans/memoized-wandering-sunrise.md | expanded (+16 lines) | ~671 |
+| 09:24 | Edited ../../../.claude/plans/memoized-wandering-sunrise.md | 3→5 lines | ~95 |
+| 09:29 | Created design-references/CinematicFooter.tsx | — | ~4682 |
+| 09:31 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_references.md | expanded (+8 lines) | ~448 |
+| 09:31 | Created ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_todo_2026_08_11.md | — | ~783 |
+| 09:32 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/MEMORY.md | 3→4 lines | ~173 |
+| 09:32 | Session end: 7 writes across 5 files (memoized-wandering-sunrise.md, CinematicFooter.tsx, design_references.md, design_todo_2026_08_11.md, MEMORY.md) | 17 reads | ~21708 tok |
+
+## Session: 2026-08-19 09:01
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-19 09:01
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-19 09:01
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-19 09:01
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:04 | Edited components/layout/Navbar.tsx | 5→5 lines | ~77 |
+| 09:04 | Edited components/layout/Navbar.tsx | header() → charcoal() | ~103 |
+| 09:08 | Created app/fonts/index.ts | — | ~177 |
+| 09:08 | Edited app/[locale]/layout.tsx | inline fix | ~15 |
+| 09:08 | Edited app/[locale]/layout.tsx | "antialiased ${mekomi.vari" → "antialiased ${rubik.varia" | ~24 |
+| 09:08 | Edited tailwind.config.ts | "var(--font-mekomi)" → "var(--font-hebrew)" | ~16 |
+| 09:08 | Edited app/globals.css | inline fix | ~27 |
+| 09:10 | designqc: captured 0 screenshots (0KB, ~0 tok) | C:/Program Files/Git/ | ready for eval | ~0 |
+| 09:12 | Session end: 7 writes across 5 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 3 reads | ~3238 tok |
+| 09:25 | Session end: 7 writes across 5 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 3 reads | ~3238 tok |
+| 09:27 | Session end: 7 writes across 5 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 4 reads | ~3238 tok |
+| 09:28 | Session end: 7 writes across 5 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 4 reads | ~3238 tok |
+| 09:34 | Session end: 7 writes across 5 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 6 reads | ~5376 tok |
+| 09:35 | Edited components/layout/Navbar.tsx | "block h-16" → "block h-14" | ~11 |
+| 09:35 | Edited components/home/HeroSection.tsx | reduced (-6 lines) | ~177 |
+| 09:38 | designqc: captured 1 screenshots (16KB, ~2500 tok) | C:/Program Files/Git/ | ready for eval | ~0 |
+| 09:40 | Session end: 9 writes across 6 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 8 reads | ~6351 tok |
+| 09:42 | Session end: 9 writes across 6 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 8 reads | ~6351 tok |
+| 09:45 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | added nullish coalescing | ~96 |
+| 09:46 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | expanded (+11 lines) | ~169 |
+| 09:46 | Edited components/admin/ImageUpload.tsx | modified ImageUpload() | ~443 |
+| 09:46 | Edited components/admin/ImageUpload.tsx | 3→7 lines | ~108 |
+| 09:46 | Edited components/admin/ImageUpload.tsx | inline fix | ~11 |
+| 09:46 | Edited components/admin/ImageUpload.tsx | 5→5 lines | ~74 |
+| 09:47 | Edited components/admin/CatalogManager.tsx | 13→15 lines | ~192 |
+| 09:48 | Edited components/catalog/ExpandingEventCards.tsx | CSS: animationDuration | ~107 |
+| 09:50 | Session end: 17 writes across 10 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 12 reads | ~11944 tok |
+| 09:59 | Created components/home/ProcessSteps.tsx | — | ~895 |
+| 10:00 | Session end: 18 writes across 11 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 13 reads | ~13344 tok |
+| 10:02 | designqc: captured 5 screenshots (103KB, ~12500 tok) | / | ready for eval | ~0 |
+| 10:04 | Edited components/home/ProcessSteps.tsx | "absolute -top-3 end-3 tex" → "absolute -top-3 end-3 tex" | ~38 |
+| 10:04 | Session end: 19 writes across 11 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 13 reads | ~13382 tok |
+| 10:06 | designqc: captured 4 screenshots (185KB, ~10000 tok) | / | ready for eval | ~0 |
+| 10:08 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_todo_2026_08_11.md | 7→8 lines | ~399 |
+| 10:09 | Edited app/[locale]/(public)/catalog/[event]/page.tsx | 17→17 lines | ~333 |
+| 10:13 | designqc: captured 6 screenshots (222KB, ~15000 tok) | / | ready for eval | ~0 |
+| 10:13 | Edited app/[locale]/(public)/catalog/[event]/page.tsx | 17→21 lines | ~413 |
+| 10:14 | Session end: 22 writes across 12 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 15 reads | ~15975 tok |
+| 10:14 | designqc: captured 6 screenshots (228KB, ~15000 tok) | / | ready for eval | ~0 |
+| 10:16 | Session end: 22 writes across 12 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 15 reads | ~15975 tok |
+| 10:28 | Edited components/admin/ImageUpload.tsx | 4→9 lines | ~136 |
+| 10:28 | Edited components/admin/ImageUpload.tsx | CSS: contentType | ~306 |
+| 10:29 | Edited app/admin/actions/catalog.ts | 3→5 lines | ~44 |
+| 10:29 | Edited app/admin/actions/catalog.ts | 4→6 lines | ~54 |
+| 10:36 | Session end: 26 writes across 13 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 17 reads | ~25450 tok |
+| 10:38 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | "relative w-full h-[80vh] " → "relative w-full h-[45vh] " | ~25 |
+| 10:46 | Edited lib/utils.ts | added 1 condition(s) | ~196 |
+| 10:46 | Created app/api/media/[...path]/route.ts | — | ~285 |
+| 10:47 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | added 1 import(s) | ~40 |
+| 10:47 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | 3→3 lines | ~33 |
+| 10:51 | Edited app/api/media/[...path]/route.ts | modified if() | ~47 |
+| 10:52 | Edited app/api/media/[...path]/route.ts | added nullish coalescing | ~96 |
+| 10:52 | Edited app/api/media/[...path]/route.ts | modified if() | ~53 |
+| 10:53 | Edited app/api/media/[...path]/route.ts | 3→1 lines | ~12 |
+| 10:55 | Created app/api/media/[...path]/route.ts | — | ~308 |
+| 10:56 | Edited .gitignore | 2→3 lines | ~18 |
+| 10:56 | Edited .gitignore | 4→5 lines | ~14 |
+| 10:57 | Edited .gitignore | 3→6 lines | ~31 |

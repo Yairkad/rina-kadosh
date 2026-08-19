@@ -98,6 +98,24 @@ export async function deleteProduct(id: string) {
   return { success: true };
 }
 
+export async function reorderProducts(orderedIds: string[]) {
+  const supabase = await getAdminClient();
+  if (!supabase) return { error: "Unauthorized" };
+
+  const results = await Promise.all(
+    orderedIds.map((id, index) =>
+      supabase.from("products").update({ display_order: index }).eq("id", id)
+    )
+  );
+  const failed = results.find((r) => r.error);
+  if (failed?.error) return { error: failed.error.message };
+
+  revalidatePath("/admin/catalog");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
+  return { success: true };
+}
+
 export async function archiveProduct(id: string) {
   const supabase = await getAdminClient();
   if (!supabase) return { error: "Unauthorized" };

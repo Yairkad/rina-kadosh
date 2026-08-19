@@ -2,10 +2,11 @@ export const revalidate = 300;
 
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
 import ProductCard from "@/components/catalog/ProductCard";
+import { toProxiedMediaUrl } from "@/lib/utils";
 
 interface Props {
   params: Promise<{ locale: string; event: string; style: string }>;
@@ -14,6 +15,7 @@ interface Props {
 export default async function StylePage({ params }: Props) {
   const { event, style } = await params;
   const locale = await getLocale();
+  const t = await getTranslations("catalog");
   const supabase = await createClient();
 
   const { data: eventType } = await supabase
@@ -40,7 +42,7 @@ export default async function StylePage({ params }: Props) {
     .eq("design_style_id", designStyle.id)
     .eq("status", "published")
     .is("deleted_at", null)
-    .order("created_at", { ascending: false });
+    .order("display_order");
 
   const { data: bundles } = await supabase
     .from("bundles")
@@ -51,6 +53,7 @@ export default async function StylePage({ params }: Props) {
   const styleName = locale === "he" ? designStyle.name_he : designStyle.name_en;
   const eventName = locale === "he" ? eventType.name_he : eventType.name_en;
   const hasAtmosphere = true; // always show hero — placeholder until image uploaded
+  const isAtmosphereVideo = /\.(mp4|webm|mov)$/i.test(designStyle.atmosphere_image ?? "");
 
   return (
     <div className="min-h-screen">
@@ -58,29 +61,49 @@ export default async function StylePage({ params }: Props) {
       {/* ── Atmosphere Hero ── */}
       {hasAtmosphere ? (
         <div
-          className="relative w-full h-[80vh] overflow-hidden"
+          className="relative w-full h-[45vh] sm:h-[60vh] lg:h-[80vh] overflow-hidden"
           style={{
             WebkitMaskImage: "linear-gradient(to bottom, black 25%, rgba(0,0,0,0.9) 45%, rgba(0,0,0,0.4) 68%, transparent 92%)",
             maskImage: "linear-gradient(to bottom, black 25%, rgba(0,0,0,0.9) 45%, rgba(0,0,0,0.4) 68%, transparent 92%)",
           }}
         >
           {designStyle.atmosphere_image ? (
+            isAtmosphereVideo ? (
+              <video
+                src={toProxiedMediaUrl(designStyle.atmosphere_image)}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <Image
+                src={designStyle.atmosphere_image}
+                alt={styleName}
+                fill
+                className="object-cover"
+                priority
+              />
+            )
+          ) : (
             <Image
-              src={designStyle.atmosphere_image}
-              alt={styleName}
+              src="/textures/marble-bg.jpg"
+              alt=""
               fill
               className="object-cover"
               priority
             />
-          ) : (
-            <div
-              className="absolute inset-0"
-              style={{ background: "linear-gradient(135deg, #1C1A18 0%, #3A2A18 45%, #1C1C2A 100%)" }}
-            />
           )}
 
-          {/* Dark scrim for text readability */}
-          <div className="absolute inset-0 bg-black/35" />
+          {/* Scrim for text readability — darker over photos, olive tint over the marble fallback */}
+          <div
+            className={
+              designStyle.atmosphere_image
+                ? "absolute inset-0 bg-black/35"
+                : "absolute inset-0 bg-[var(--olive)]/55"
+            }
+          />
 
           {/* Back button — top overlay */}
           <Link
@@ -88,12 +111,12 @@ export default async function StylePage({ params }: Props) {
             className="absolute top-6 start-6 z-10 inline-flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors"
           >
             <span>{locale === "he" ? "→" : "←"}</span>
-            {locale === "he" ? `חזרה לסגנונות ${eventName}` : `Back to ${eventName} styles`}
+            {t("backToStyles", { event: eventName })}
           </Link>
 
           {/* Style name — centered on the image */}
           <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ paddingBottom: "10%" }}>
-            <p className="text-sm uppercase tracking-[0.35em] text-[var(--gold)] mb-5">
+            <p className="text-sm uppercase tracking-[0.35em] text-[var(--terracotta)] mb-5">
               {eventName}
             </p>
             <h1
@@ -102,7 +125,7 @@ export default async function StylePage({ params }: Props) {
             >
               {styleName}
             </h1>
-            <div className="mt-6 w-16 h-px bg-[var(--gold)]" />
+            <div className="mt-6 w-16 h-px bg-[var(--terracotta)]" />
           </div>
         </div>
       ) : (
@@ -111,13 +134,13 @@ export default async function StylePage({ params }: Props) {
           <div className="max-w-7xl mx-auto">
             <Link
               href={`/${locale}/catalog/${event}`}
-              className="inline-flex items-center gap-1.5 text-sm text-[var(--muted)] hover:text-[var(--gold)] transition-colors mb-10"
+              className="inline-flex items-center gap-1.5 text-sm text-[var(--muted)] hover:text-[var(--terracotta)] transition-colors mb-10"
             >
               <span>{locale === "he" ? "→" : "←"}</span>
-              {locale === "he" ? `חזרה לסגנונות ${eventName}` : `Back to ${eventName} styles`}
+              {t("backToStyles", { event: eventName })}
             </Link>
             <div className="mb-10 text-center">
-              <p className="text-xs uppercase tracking-widest text-[var(--gold)] mb-2">{eventName}</p>
+              <p className="text-xs uppercase tracking-widest text-[var(--terracotta)] mb-2">{eventName}</p>
               <h1 className="text-3xl sm:text-4xl font-bold text-[var(--charcoal)]">{styleName}</h1>
             </div>
           </div>
@@ -125,11 +148,14 @@ export default async function StylePage({ params }: Props) {
       )}
 
       {/* ── Content ── */}
-      <section className="relative z-10 -mt-[22vh] px-4 pb-16 sm:px-6 lg:px-8 pt-8 bg-[var(--cream)]">
-        {/* Subtle gold radial glow */}
+      <section className="relative z-10 -mt-[22vh] px-4 pb-16 sm:px-6 lg:px-8 pt-8 bg-marble bg-cover bg-center bg-fixed">
+        {/* Cream wash over the marble texture for readability */}
+        <div className="absolute inset-0 bg-[var(--cream)]/88" />
+
+        {/* Subtle terracotta radial glow */}
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse 90% 55% at 50% 0%, rgba(201,169,110,0.09) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(ellipse 90% 55% at 50% 0%, rgba(200,87,65,0.08) 0%, transparent 70%)" }}
         />
 
         <div className="max-w-7xl 2xl:max-w-[1600px] mx-auto relative z-10">
@@ -137,8 +163,8 @@ export default async function StylePage({ params }: Props) {
           {(bundles ?? []).length > 0 && (
             <div className="mb-14">
               <h2 className="text-lg font-semibold text-[var(--charcoal)] mb-6 flex items-center gap-2">
-                <span className="text-[var(--gold)]">✦</span>
-                {locale === "he" ? "חבילות מומלצות" : "Recommended Bundles"}
+                <span className="text-[var(--terracotta)]">✦</span>
+                {t("bundles")}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {(bundles ?? []).map((bundle) => {
@@ -149,7 +175,7 @@ export default async function StylePage({ params }: Props) {
                   return (
                     <div
                       key={bundle.id}
-                      className="rounded-xl border border-[var(--gold-light,#E8D5A3)] bg-white p-5 flex gap-4"
+                      className="rounded-xl border border-[var(--olive)] bg-white p-5 flex gap-4"
                     >
                       {bundle.images?.[0] && (
                         <img
@@ -160,7 +186,7 @@ export default async function StylePage({ params }: Props) {
                       )}
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-xs font-medium px-2 py-0.5 bg-[var(--gold)] text-white rounded-full">
+                          <span className="text-xs font-medium px-2 py-0.5 bg-[var(--terracotta)] text-white rounded-full">
                             {locale === "he" ? "חבילה" : "Bundle"}
                           </span>
                           {savings && (
@@ -189,7 +215,7 @@ export default async function StylePage({ params }: Props) {
           {/* Products grid */}
           <div className="mt-8">
             <h2 className="text-lg font-semibold text-[var(--charcoal)] mb-6">
-              {locale === "he" ? "כל המוצרים" : "All Products"}
+              {t("allProducts")}
             </h2>
             {(products ?? []).length > 0 ? (
               <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
@@ -210,7 +236,7 @@ export default async function StylePage({ params }: Props) {
               </ul>
             ) : (
               <div className="text-center py-20 text-[var(--muted)]">
-                <p>{locale === "he" ? "אין מוצרים זמינים כרגע" : "No products available yet"}</p>
+                <p>{t("noProducts")}</p>
               </div>
             )}
           </div>

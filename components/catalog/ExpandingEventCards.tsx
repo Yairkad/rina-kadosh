@@ -67,8 +67,8 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
   return (
     <ul
       className={cn(
-        "w-full max-w-6xl mx-auto gap-2 grid",
-        "h-[520px] md:h-[480px]",
+        "w-full max-w-6xl mx-auto gap-4 grid",
+        "h-[600px] md:h-[560px]",
         "transition-[grid-template-columns,grid-template-rows] duration-500 ease-out"
       )}
       style={gridStyle}
@@ -78,7 +78,7 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
         return (
           <li
             key={item.id}
-            className="group relative cursor-pointer overflow-hidden rounded-2xl shadow-sm md:min-w-[72px] min-h-0"
+            className="group relative cursor-pointer overflow-hidden shadow-sm md:min-w-[56px] min-h-0"
             onMouseEnter={() => setActiveIndex(index)}
             onMouseLeave={() => setActiveIndex(null)}
             onClick={() => handleClick(index, item.slug)}
@@ -97,7 +97,7 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
                 )}
               />
             ) : (
-              <div className="absolute inset-0 bg-[var(--charcoal)]" />
+              <div className="absolute inset-0 bg-[var(--olive)]" />
             )}
 
             {/* Gradient overlay */}
@@ -106,7 +106,13 @@ export default function ExpandingEventCards({ items }: ExpandingEventCardsProps)
             {/* Loading indicator */}
             {navigating === index && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-20">
-                <div className="w-8 h-8 rounded-full border-2 border-[var(--gold)] border-t-transparent animate-spin" />
+                <span
+                  aria-hidden="true"
+                  className="text-4xl text-[var(--terracotta)] animate-spin"
+                  style={{ animationDuration: "1.6s" }}
+                >
+                  ✦
+                </span>
               </div>
             )}
 

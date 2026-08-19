@@ -1,8 +1,9 @@
 {
   "nav": {
-    "catalog": "Catalog",
-    "gallery": "Gallery",
-    "contact": "Contact",
+    "home": "Welcome",
+    "catalog": "Your Events",
+    "gallery": "Happy Customers",
+    "contact": "Nice to Meet You",
     "cart": "Cart"
   },
   "home": {
@@ -21,14 +22,27 @@
     "why_3_desc": "Dedicated support from order to delivery",
     "gallery_title": "Selected Works",
     "gallery_cta": "View Full Gallery",
-    "contact_cta": "Contact Us"
+    "contact_cta": "Contact Us",
+    "process_title": "Our process for working together in three simple steps",
+    "process_1_title": "Choose a collection",
+    "process_1_desc": "Browse the catalog and pick the style that fits your event",
+    "process_2_title": "We design and produce",
+    "process_2_desc": "Carefully produced with the materials and branding you chose",
+    "process_3_title": "Receive and delight",
+    "process_3_desc": "The products arrive and add the perfect touch to your event"
   },
   "catalog": {
     "title": "Product Catalog",
     "chooseEvent": "Choose Event Type",
     "chooseStyle": "Choose Design Style",
     "bundles": "Recommended Bundles",
-    "allProducts": "All Products"
+    "allProducts": "All Products",
+    "ctaOrder": "Order Now",
+    "collectionLabel": "{style} Collection",
+    "noStyles": "No styles available yet",
+    "noProducts": "No products available yet",
+    "backToHome": "Back to Home",
+    "backToStyles": "Back to {event} styles"
   },
   "product": {
     "addToCart": "Add to Cart",

@@ -1,69 +1,81 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-22T08:00:11.355Z
-> Files: 127 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-08-19T07:57:04.846Z
+> Files: 143 tracked | Anatomy hits: 0 | Misses: 0
+
+## ../../../.claude/plans/
+
+- `crystalline-coalescing-llama.md` — תיקון: ה-keep-alive לא מנע את ה-Pause של Supabase (~1320 tok)
+- `memoized-wandering-sunrise.md` — TODO — תיקוני עיצוב/תוכן קטנים (Rina Kadosh) (~1323 tok)
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
-- `audit_findings_2026_05_28.md` — ממצאי בדיקות — 2026-05-28 (~1135 tok)
-- `design_references.md` — Design References — Rina Kadosh (~691 tok)
-- `MEMORY.md` — Memory Index — Rina Kadosh Project (~156 tok)
-- `project_rina_kadosh.md` — פרויקט רינה קדוש — Rina Kadosh (~1192 tok)
-- `vercel_workflow.md` — $dep.state → READY / ERROR / BUILDING (~287 tok)
+- `design_references.md` — Design References — Rina Kadosh (~1509 tok)
+- `design_todo_2026_08_11.md` — TODO עיצוב/תוכן — Rina Kadosh (נפתח 2026-08-11) (~934 tok)
+- `MEMORY.md` — Memory Index — Rina Kadosh Project (~213 tok)
 
-## ../../../root/.claude/plans/
+## ../../../.claude/skills/supabase-keepalive/
 
-- `jolly-napping-rabin.md` — Coupon Codes: Admin-Managed Discounts at Checkout (~3412 tok)
-
-## ../../../tmp/claude-0/-home-user-rina-kadosh/11e9958c-136e-51de-a815-3f85aafdf7e2/scratchpad/skill-extract/supabase-keepalive/
-
-- `SKILL.md` — Supabase Keep-Alive Setup (~2048 tok)
-
-## ../../../tmp/claude-0/-home-user-rina-kadosh/11e9958c-136e-51de-a815-3f85aafdf7e2/scratchpad/skill-extract/supabase-keepalive/templates/
-
-- `nextjs-app-router.ts` — app/api/keep-alive/route.ts (~479 tok)
-- `nextjs-pages-router.ts` — pages/api/keep-alive.ts (~474 tok)
-- `node-express.js` — Mount this route in the existing Express app, e.g.: (~463 tok)
+- `SKILL.md` — Supabase Keep-Alive Setup (~2513 tok)
 
 ## ./
 
-- `.gitignore` — Git ignore rules (~115 tok)
+- `.eslintrc.json` — ESLint configuration (~18 tok)
+- `.gitignore` — Git ignore rules (~148 tok)
 - `.mcp.json` (~102 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `middleware.ts` — Exports config (~144 tok)
-- `next.config.mjs` — Declares withNextIntl (~122 tok)
+- `next-env.d.ts` — / <reference types="next" /> (~66 tok)
+- `next.config.mjs` — Next.js configuration (~122 tok)
 - `OVERVIEW.html` — רינה קדוש — סיכום האתר (~7732 tok)
+- `package-lock.json` — npm lock file (~69641 tok)
+- `package.json` — Node.js package manifest (~214 tok)
+- `postcss.config.mjs` — Declares config (~36 tok)
+- `README.md` — Project documentation (~363 tok)
 - `SPEC.md` — רינה קדוש / Rina Kadosh — מפרט פרויקט מלא (~3397 tok)
+- `tailwind.config.ts` — /*.{js,ts,jsx,tsx,mdx}", (~255 tok)
 - `tsconfig.json` — TypeScript configuration (~170 tok)
-- `vercel.json` (~28 tok)
+- `tsconfig.tsbuildinfo` (~30917 tok)
+- `vercel.json` (~30 tok)
 
 ## .claude/
 
 - `settings.json` (~441 tok)
-- `settings.local.json` (~82 tok)
+- `settings.local.json` — Declares p (~1497 tok)
 
 ## .claude/rules/
 
 - `openwolf.md` (~313 tok)
 
+## .claude/skills/supabase-keepalive/
+
+- `SKILL.md` — Supabase Keep-Alive Setup (~2161 tok)
+
+## .claude/skills/supabase-keepalive/templates/
+
+- `nextjs-app-router.ts` — app/api/keep-alive/route.ts (~576 tok)
+- `nextjs-pages-router.ts` — pages/api/keep-alive.ts (~486 tok)
+- `node-express.js` — Mount this route in the existing Express app, e.g.: (~475 tok)
+- `vercel-json-snippet.json` (~30 tok)
+
 ## app/
 
-- `globals.css` — Styles: 4 rules, 5 vars (~157 tok)
+- `globals.css` — Styles: 4 rules, 11 vars (~242 tok)
 - `layout.tsx` — RootLayout (~32 tok)
 
 ## app/[locale]/
 
-- `layout.tsx` — metadata (~589 tok)
+- `layout.tsx` — metadata (~617 tok)
 - `not-found.tsx` — NotFound (~179 tok)
 
 ## app/[locale]/(public)/
 
 - `layout.tsx` — PublicLayout (~150 tok)
-- `page.tsx` — revalidate (~491 tok)
+- `page.tsx` — revalidate (~737 tok)
 
 ## app/[locale]/(public)/cart/
 
-- `page.tsx` — ALLOWED_MIME (~5858 tok)
+- `page.tsx` — ALLOWED_MIME — uses useState (~5996 tok)
 
 ## app/[locale]/(public)/catalog/
 
@@ -71,11 +83,11 @@
 
 ## app/[locale]/(public)/catalog/[event]/
 
-- `page.tsx` — revalidate (~1008 tok)
+- `page.tsx` — revalidate (~1535 tok)
 
 ## app/[locale]/(public)/catalog/[event]/[style]/
 
-- `page.tsx` — revalidate (~2605 tok)
+- `page.tsx` — revalidate (~2818 tok)
 
 ## app/[locale]/(public)/catalog/[event]/[style]/[product]/
 
@@ -83,7 +95,7 @@
 
 ## app/[locale]/(public)/contact/
 
-- `page.tsx` — WHATSAPP_NUMBER — renders form (~1608 tok)
+- `page.tsx` — WHATSAPP_NUMBER — renders form — uses useState (~1608 tok)
 
 ## app/[locale]/(public)/gallery/
 
@@ -91,22 +103,21 @@
 
 ## app/[locale]/(public)/order-status/
 
-- `page.tsx` — STATUS_STEPS (~2096 tok)
+- `page.tsx` — STATUS_STEPS — uses useState (~2096 tok)
 
 ## app/actions/
 
-- `apply-coupon.ts` — Exports ApplyCouponResult, applyCoupon (~240 tok)
-- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1591 tok)
+- `apply-coupon.ts` — Exports ApplyCouponResult, applyCoupon (~246 tok)
+- `submit-order.ts` — Exports OrderItemInput, SubmitOrderInput, submitOrder (~1628 tok)
 
 ## app/admin/
 
 - `layout.tsx` — AdminLayout (~67 tok)
-- `login/page.tsx` — AdminLoginPage — email/password form, checks is_admin (~430 tok)
 
 ## app/admin/(protected)/
 
-- `layout.tsx` — AdminProtectedLayout (~310 tok)
-- `page.tsx` — redirect → /admin/dashboard (~35 tok)
+- `layout.tsx` — AdminProtectedLayout (~322 tok)
+- `page.tsx` — AdminRootPage (~35 tok)
 
 ## app/admin/(protected)/bundles/
 
@@ -122,23 +133,19 @@
 
 ## app/admin/(protected)/catalog/
 
-- `page.tsx` — CatalogPage (~368 tok)
+- `page.tsx` — CatalogPage (~378 tok)
 
 ## app/admin/(protected)/coupons/
 
-- `page.tsx` — CouponsPage (~193 tok)
+- `page.tsx` — CouponsPage (~199 tok)
 
 ## app/admin/(protected)/create-order/
 
 - `page.tsx` — CreateOrderPage (~213 tok)
 
-## app/admin/(protected)/customers/
-
-- `page.tsx` — PAYMENT_LABELS — renders table (~2327 tok)
-
 ## app/admin/(protected)/dashboard/
 
-- `page.tsx` — DashboardPage — KPI cards (today/pending/in_production/revenue) + recent orders table (~350 tok)
+- `page.tsx` — STATUS_LABELS — renders table (~2139 tok)
 
 ## app/admin/(protected)/gallery/
 
@@ -158,11 +165,11 @@
 
 ## app/admin/(protected)/orders/
 
-- `page.tsx` — OrdersPage — list with status filter tabs + CSV export link (~280 tok)
+- `page.tsx` — STATUS_LABELS — renders table (~2169 tok)
 
 ## app/admin/(protected)/orders/[id]/
 
-- `page.tsx` — STATUS_LABELS (~3489 tok)
+- `page.tsx` — STATUS_LABELS (~3580 tok)
 
 ## app/admin/(protected)/production/
 
@@ -183,21 +190,25 @@
 ## app/admin/actions/
 
 - `bundles.ts` — Exports BundleItem, BundleFormData, createBundle, updateBundle, archiveBundle (~773 tok)
-- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1243 tok)
-- `coupons.ts` — Exports CouponData, createCoupon, updateCoupon, deleteCoupon (~521 tok)
+- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1442 tok)
+- `coupons.ts` — Exports CouponData, createCoupon, updateCoupon, deleteCoupon (~535 tok)
 - `create-order.ts` — Exports ManualOrderItem, ManualOrderData, createManualOrder (~465 tok)
 - `gallery.ts` — Exports GalleryFormData, createGalleryItem, updateGalleryItem, deleteGalleryItem (~362 tok)
 - `materials.ts` — Exports createMaterial, updateMaterial, deleteMaterial, addStockQuantity + 2 more (~1420 tok)
 - `orders.ts` — Exports updateOrderStatus, updateOrderNotes (~687 tok)
-- `products.ts` — Exports ProductFormData, createProduct, updateProduct, deleteProduct, archiveProduct (~907 tok)
+- `products.ts` — Exports ProductFormData, createProduct, updateProduct, deleteProduct + 2 more (~1073 tok)
 
 ## app/admin/login/
 
-- `page.tsx` — AdminLoginPage — renders form (~1002 tok)
+- `page.tsx` — AdminLoginPage — renders form — uses useRouter, useState (~1002 tok)
 
 ## app/api/keep-alive/
 
-- `route.ts` — Weekly ping to Supabase so the free-tier project doesn't get auto-paused (~322 tok)
+- `route.ts` — Weekly ping to Supabase so the free-tier project doesn't get auto-paused (~526 tok)
+
+## app/api/media/[...path]/
+
+- `route.ts` — Next.js API route: GET (~308 tok)
 
 ## app/api/og/
 
@@ -207,60 +218,67 @@
 
 - `route.ts` — Next.js API route: POST (~183 tok)
 
+## app/fonts/
+
+- `index.ts` — Hebrew body/heading font — Google Fonts (open license, no web-license purchase needed). Replaces mek (~177 tok)
+
 ## components/admin/
 
-- `AdminSidebar.tsx` — NAV_ITEMS (~1677 tok)
-- `ArchiveBundleButton.tsx` — ArchiveBundleButton (~284 tok)
-- `ArchiveProductButton.tsx` — ArchiveProductButton (~276 tok)
-- `BundleForm.tsx` — Field (~3851 tok)
-- `CatalogManager.tsx` — EMPTY_FORM (~6500 tok)
-- `CouponsManager.tsx` — EMPTY (~2726 tok)
-- `CreateOrderForm.tsx` — Input (~3824 tok)
-- `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton (~227 tok)
-- `DeleteProductButton.tsx` — DeleteProductButton (~263 tok)
-- `GalleryItemForm.tsx` — GalleryItemForm — renders form (~1443 tok)
-- `ImageUpload.tsx` — Single + multi image mode. Multi: star button sets primary (index 0), amber border on primary (~1500 tok)
-- `MaterialsManager.tsx` — stripLeadingZero (~4802 tok)
-- `OrderStatusUpdate.tsx` — STATUS_OPTIONS (~1171 tok)
-- `ProductFilters.tsx` — ProductFilters (~1559 tok)
-- `ProductForm.tsx` — initBOMEntries (~5927 tok)
-- `ProductionStatusButton.tsx` — ProductionStatusButton (~328 tok)
+- `AdminSidebar.tsx` — NAV_ITEMS — uses useRouter, useState, useEffect (~1723 tok)
+- `ArchiveBundleButton.tsx` — ArchiveBundleButton — uses useRouter (~284 tok)
+- `ArchiveProductButton.tsx` — ArchiveProductButton — uses useRouter (~276 tok)
+- `BundleForm.tsx` — Field — uses useRouter, useState, useEffect (~3851 tok)
+- `CatalogManager.tsx` — EMPTY_FORM (~7302 tok)
+- `CouponsManager.tsx` — EMPTY — uses useState (~2779 tok)
+- `CreateOrderForm.tsx` — Input — uses useState, useEffect, useRouter (~3824 tok)
+- `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton — uses useRouter (~227 tok)
+- `DeleteProductButton.tsx` — DeleteProductButton — uses useRouter (~263 tok)
+- `GalleryItemForm.tsx` — GalleryItemForm — renders form — uses useRouter, useState (~1443 tok)
+- `ImageUpload.tsx` — Single image mode (~2033 tok)
+- `MaterialsManager.tsx` — stripLeadingZero — uses useState (~4802 tok)
+- `OrderStatusUpdate.tsx` — STATUS_OPTIONS — uses useState (~1171 tok)
+- `ProductFilters.tsx` — ProductFilters — uses useRouter, useSearchParams, useState, useEffect (~1559 tok)
+- `ProductForm.tsx` — initBOMEntries — uses useRouter, useState, useEffect (~5927 tok)
+- `ProductionStatusButton.tsx` — ProductionStatusButton — uses useRouter (~328 tok)
 
 ## components/cart/
 
-- `CartDrawer.tsx` — CartDrawer (~2410 tok)
+- `CartDrawer.tsx` — CartDrawer — uses useEffect (~2410 tok)
 - `CartRecoveryPopup.tsx` — CartRecoveryPopup (~675 tok)
-- `QuickAdd.tsx` — QuickAddOverlay (~2027 tok)
+- `QuickAdd.tsx` — QuickAddOverlay — uses useState (~2034 tok)
 
 ## components/catalog/
 
-- `ExpandingEventCards.tsx` — ExpandingEventCards (~1633 tok)
-- `ProductCard.tsx` — ProductCard (~910 tok)
+- `ExpandingEventCards.tsx` — ExpandingEventCards (~1667 tok)
+- `ProductCard.tsx` — ProductCard — uses useState (~910 tok)
 
 ## components/gallery/
 
-- `GalleryGrid.tsx` — Client component: filter tabs by event_type + masonry grid of gallery_items, opens lightbox on click (~1593 tok)
-- `GalleryLightbox.tsx` — Client component: full-screen image lightbox with prev/next navigation, dot indicators, ESC/keyboard support (~1243 tok)
+- `GalleryGrid.tsx` — GalleryGrid — uses useMemo (~1593 tok)
+- `GalleryLightbox.tsx` — GalleryLightbox — uses useState, useCallback, useEffect (~1243 tok)
 
 ## components/home/
 
 - `AboutSection.tsx` — STATS (~749 tok)
-- `HeroSection.tsx` — HeroSection (~1334 tok)
-- `InspirationSection.tsx` — QUOTE_HE (~590 tok)
-- `WhySection.tsx` — WhySection (~771 tok)
+- `HeroSection.tsx` — HeroSection (~1092 tok)
+- `ProcessSteps.tsx` — ProcessSteps (~897 tok)
 
 ## components/layout/
 
-- `BottomNav.tsx` — BottomNav (~433 tok)
-- `Footer.tsx` — Footer (~678 tok)
-- `Navbar.tsx` — Navbar (~1637 tok)
-- `WhatsAppButton.tsx` — WHATSAPP_NUMBER (~870 tok)
+- `BottomNav.tsx` — BottomNav (~436 tok)
+- `Footer.tsx` — Footer (~718 tok)
+- `Navbar.tsx` — Navbar (~1916 tok)
+- `WhatsAppButton.tsx` — WHATSAPP_NUMBER — uses useState (~870 tok)
 
 ## components/product/
 
-- `ProductAddToCart.tsx` — ProductAddToCart (~1201 tok)
-- `ProductCustomizeAndAdd.tsx` — ALLOWED_MIME (~3327 tok)
-- `ProductImageGallery.tsx` — ProductImageGallery (~576 tok)
+- `ProductAddToCart.tsx` — ProductAddToCart — uses useState (~1201 tok)
+- `ProductCustomizeAndAdd.tsx` — ALLOWED_MIME — uses useState (~3327 tok)
+- `ProductImageGallery.tsx` — ProductImageGallery — uses useState (~576 tok)
+
+## components/ui/
+
+- `GeometricPattern.tsx` — Semicircle/circle grid pattern recreated in code from ATAR/Asset 3@2x.png (outline "orbit" grid) — same visual language, scalable and tintable inst... (~637 tok)
 
 ## contexts/
 
@@ -268,7 +286,8 @@
 
 ## design-references/
 
-- `ExpandingCards.tsx` — ExpandingCards (~1159 tok)
+- `CinematicFooter.tsx` — Pasted reference component (GSAP + generic shadcn tokens, unrelated placeholder content) — magnetic buttons/glass-pill, scroll marquee, curtain-reveal+back-to-top; needs token remap to project vars + framer-motion port + real content before site-wide reuse (~4682 tok)
+- `ExpandingCards.tsx` — ExpandingCards — uses useState, useEffect, useMemo (~1159 tok)
 
 ## hooks/
 
@@ -282,7 +301,7 @@
 ## lib/
 
 - `phone.ts` — Exports sanitizePhone, isValidPhone, PHONE_ERROR_HE, PHONE_ERROR_EN (~102 tok)
-- `utils.ts` — Exports cn (~49 tok)
+- `utils.ts` — Rewrites a Supabase Storage public URL to a same-origin path (/api/media/...). (~196 tok)
 
 ## lib/supabase/
 
@@ -291,21 +310,27 @@
 
 ## messages/
 
-- `en.json` (~1005 tok)
-- `he.json` (~913 tok)
+- `en.json` (~1258 tok)
+- `he.json` (~1150 tok)
+
+## supabase/.temp/
+
+- `cli-latest` (~3 tok)
 
 ## supabase/migrations/
 
-- `001_initial_schema.sql` — ============================================================ (~3133 tok)
-- `002_atmosphere_image.sql` — Migration 002: Add atmosphere_image to event_types (~34 tok)
-- `003_style_atmosphere_image.sql` — Migration 003: Add atmosphere_image to design_styles (~35 tok)
-- `004_gallery_grant.sql` — Grant table-level SELECT on gallery_items (required alongside RLS policy) (~35 tok)
-- `005_clear_demo_data.sql` — Migration 005: Clear all demo catalog data (~94 tok)
-- `006_logos_bucket_anon_policy.sql` — ============================================================ (~307 tok)
-- `007_orders_anon_insert_grant.sql` — Migration 007: GRANT INSERT ON orders TO anon (RLS policy alone wasn't enough — fixes checkout submission failing with permission denied) (~177 tok)
-- `008_fix_order_number_trigger.sql` — Migration 008: trg_orders_order_number WHEN clause didn't match NULL, so public checkout inserts (which omit order_number) violated NOT NULL — fixed trigger + submit-order.ts (~287 tok)
-- `009_coupons.sql` — Migration 009: coupons table (admin-only RLS) + validate_coupon/redeem_coupon SECURITY DEFINER functions granted to anon; orders.coupon_code/discount_amount columns (~1145 tok)
-- `010_order_insert_rpc.sql` — Migration 010: create_order() SECURITY DEFINER function — orders insert moved here because RLS filters INSERT's RETURNING through SELECT policies too, and anon has none on orders (fixes checkout still failing after 006/007/008 with no console error) (~626 tok)
-- `011_coupons_authenticated_grant.sql` — Migration 011: GRANT SELECT/INSERT/UPDATE/DELETE ON coupons TO authenticated (RLS policy from 009 wasn't enough — fixes "permission denied for table coupons" when creating a coupon) (~187 tok)
-- `012_security_definer_search_path.sql` — Migration 012: CREATE OR REPLACE validate_coupon/redeem_coupon/create_order with SET search_path = public + schema-qualified refs (fixes 'relation "orders" does not exist' at runtime inside create_order) (~1235 tok)
-- `013_order_number_trigger_search_path.sql` — Migration 013: CREATE OR REPLACE generate_order_number() trigger with public.orders + SET search_path = public (012 missed this 4th unqualified reference, fired as a trigger inside create_order's INSERT) (~311 tok)
+- `001_initial_schema.sql` — Migration 001: Initial Schema — Rina Kadosh (~3357 tok)
+- `002_atmosphere_image.sql` — Migration 002: Add atmosphere_image to event_types (~36 tok)
+- `003_style_atmosphere_image.sql` — Migration 003: Add atmosphere_image to design_styles (~38 tok)
+- `004_gallery_grant.sql` — Grant table-level SELECT on gallery_items (required alongside RLS policy) (~38 tok)
+- `005_clear_demo_data.sql` — Migration 005: Clear all demo catalog data (~101 tok)
+- `006_logos_bucket_anon_policy.sql` — Migration 006: Allow anonymous customers to upload order logos (~337 tok)
+- `007_orders_anon_insert_grant.sql` — Migration 007: Grant anon INSERT on orders (~193 tok)
+- `008_fix_order_number_trigger.sql` — Migration 008: Fix order_number trigger not firing for NULL (~313 tok)
+- `009_coupons.sql` — Migration 008: Coupon codes (~1256 tok)
+- `010_order_insert_rpc.sql` — Migration 010: Insert orders via a SECURITY DEFINER function (~687 tok)
+- `011_coupons_authenticated_grant.sql` — Migration 011: Grant authenticated access on coupons (~204 tok)
+- `012_security_definer_search_path.sql` — Migration 012: Pin search_path on SECURITY DEFINER functions (~1356 tok)
+- `013_order_number_trigger_search_path.sql` — Migration 013: Pin search_path on generate_order_number() (~341 tok)
+- `014_products_display_order.sql` — Migration 014: Add display_order to products for drag-to-reorder within a style, backfilled per design_style (~180 tok)
+- `014_products_display_order.sql` — ============================================================ (~211 tok)

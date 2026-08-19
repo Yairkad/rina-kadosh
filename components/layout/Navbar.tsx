@@ -31,7 +31,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { href: `/${locale}`, label: locale === "he" ? "בית" : "Home" },
+    { href: `/${locale}`, label: t("home") },
     { href: `/${locale}/catalog`, label: t("catalog") },
     { href: `/${locale}/gallery`, label: t("gallery") },
     { href: `/${locale}/contact`, label: t("contact") },
@@ -42,32 +42,50 @@ export default function Navbar() {
       <motion.header
         className="fixed top-0 inset-x-0 z-50 transition-colors duration-300"
         animate={{
-          backgroundColor: scrolled ? "rgba(250,248,245,0.95)" : "rgba(250,248,245,0.0)",
+          backgroundColor: scrolled ? "rgba(183,179,132,0.97)" : "rgba(183,179,132,0)",
           backdropFilter: scrolled ? "blur(12px)" : "blur(0px)",
           boxShadow: scrolled ? "0 1px 20px rgba(0,0,0,0.06)" : "0 0 0 rgba(0,0,0,0)",
         }}
         transition={{ duration: 0.3 }}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <Link
-            href={`/${locale}`}
-            className="font-semibold text-xl tracking-wide text-[var(--charcoal)] hover:text-[var(--gold)] transition-colors"
-          >
-            רינה קדוש
+          {/* Logo — masked to charcoal (source PNG is olive) */}
+          <Link href={`/${locale}`} className="shrink-0">
+            <span
+              role="img"
+              aria-label="Rina Kadosh"
+              className="block h-14"
+              style={{
+                aspectRatio: "220 / 158",
+                backgroundColor: "var(--charcoal)",
+                WebkitMaskImage: "url(/images/logo.png)",
+                maskImage: "url(/images/logo.png)",
+                WebkitMaskSize: "contain",
+                maskSize: "contain",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+                WebkitMaskPosition: "center",
+                maskPosition: "center",
+              }}
+            />
           </Link>
 
           {/* Desktop links */}
-          <ul className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <li key={link.href}>
+          <ul className="hidden md:flex items-center gap-4">
+            {navLinks.map((link, i) => (
+              <li key={link.href} className="flex items-center gap-4">
                 <Link
                   href={link.href}
-                  className="text-sm font-medium text-[var(--muted)] hover:text-[var(--gold)] transition-colors relative group"
+                  className="text-sm font-medium text-[var(--charcoal)] hover:text-[var(--terracotta)] transition-colors relative group"
                 >
                   {link.label}
-                  <span className="absolute -bottom-0.5 start-0 w-0 h-px bg-[var(--gold)] transition-all group-hover:w-full" />
+                  <span className="absolute -bottom-0.5 start-0 w-0 h-px bg-[var(--terracotta)] transition-all group-hover:w-full" />
                 </Link>
+                {i < navLinks.length - 1 && (
+                  <span aria-hidden="true" className="text-[var(--terracotta)] text-xs select-none">
+                    ✦
+                  </span>
+                )}
               </li>
             ))}
           </ul>
@@ -77,7 +95,7 @@ export default function Navbar() {
             {/* Language toggle */}
             <button
               onClick={switchLocale}
-              className="hidden sm:flex text-xs font-medium px-2.5 py-1 rounded-full border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-white transition-colors"
+              className="hidden sm:flex text-xs font-medium px-2.5 py-1 rounded-full border border-[var(--terracotta)] text-[var(--terracotta)] hover:bg-[var(--terracotta)] hover:text-white transition-colors"
             >
               {otherLocale === "he" ? "עב" : "EN"}
             </button>
@@ -85,12 +103,12 @@ export default function Navbar() {
             {/* Cart */}
             <button
               onClick={openDrawer}
-              className="relative p-2 text-[var(--charcoal)] hover:text-[var(--gold)] transition-colors"
+              className="relative p-2 text-[var(--charcoal)] hover:text-[var(--terracotta)] transition-colors"
               aria-label={t("cart")}
             >
               <ShoppingBag size={20} />
               {items.length > 0 && (
-                <span className="absolute top-0.5 end-0.5 w-4 h-4 rounded-full bg-[var(--gold)] text-white text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute top-0.5 end-0.5 w-4 h-4 rounded-full bg-[var(--terracotta)] text-white text-[10px] font-bold flex items-center justify-center">
                   {items.length > 9 ? "9+" : items.length}
                 </span>
               )}
@@ -115,7 +133,7 @@ export default function Navbar() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25 }}
-              className="md:hidden overflow-hidden bg-[var(--cream)] border-t border-gray-100"
+              className="md:hidden overflow-hidden bg-[var(--marble)] border-t border-gray-100"
             >
               <ul className="px-4 py-4 flex flex-col gap-4">
                 {navLinks.map((link) => (
@@ -123,7 +141,7 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setMobileOpen(false)}
-                      className="block text-base font-medium text-[var(--charcoal)] hover:text-[var(--gold)] transition-colors"
+                      className="block text-base font-medium text-[var(--charcoal)] hover:text-[var(--terracotta)] transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -132,7 +150,7 @@ export default function Navbar() {
                 <li>
                   <button
                     onClick={() => { switchLocale(); setMobileOpen(false); }}
-                    className="text-sm font-medium text-[var(--muted)] hover:text-[var(--gold)] transition-colors"
+                    className="text-sm font-medium text-[var(--muted)] hover:text-[var(--terracotta)] transition-colors"
                   >
                     {otherLocale === "he" ? "עברית" : "English"}
                   </button>

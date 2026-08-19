@@ -11,14 +11,14 @@ export default function BottomNav() {
   const pathname = usePathname();
 
   const links = [
-    { href: `/${locale}`, icon: Home, label: "בית" },
+    { href: `/${locale}`, icon: Home, label: t("home") },
     { href: `/${locale}/catalog`, icon: BookOpen, label: t("catalog") },
     { href: `/${locale}/cart`, icon: ShoppingBag, label: t("cart") },
     { href: `/${locale}/contact`, icon: Phone, label: t("contact") },
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 inset-x-0 z-50 bg-[var(--cream)] border-t border-gray-200 safe-area-pb">
+    <nav className="md:hidden fixed bottom-0 inset-x-0 z-50 bg-[var(--marble)] border-t border-gray-200 safe-area-pb">
       <ul className="flex items-center justify-around h-16">
         {links.map(({ href, icon: Icon, label }) => {
           const active = pathname === href || (href !== `/${locale}` && pathname.startsWith(href));
@@ -27,7 +27,7 @@ export default function BottomNav() {
               <Link
                 href={href}
                 className={`flex flex-col items-center gap-1 py-2 transition-colors ${
-                  active ? "text-[var(--gold)]" : "text-[var(--muted)]"
+                  active ? "text-[var(--terracotta)]" : "text-[var(--muted)]"
                 }`}
               >
                 <Icon size={20} />

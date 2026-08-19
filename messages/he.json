@@ -1,8 +1,9 @@
 {
   "nav": {
-    "catalog": "קטלוג",
-    "gallery": "גלריה",
-    "contact": "צור קשר",
+    "home": "Welcome",
+    "catalog": "האירועים שלכם",
+    "gallery": "לקוחות מרוצים",
+    "contact": "נשמח להכיר",
     "cart": "עגלה"
   },
   "home": {
@@ -21,14 +22,27 @@
     "why_3_desc": "ליווי צמוד מהזמנה ועד קבלת המוצרים",
     "gallery_title": "עבודות נבחרות",
     "gallery_cta": "לגלריה המלאה",
-    "contact_cta": "צרו קשר"
+    "contact_cta": "צרו קשר",
+    "process_title": "התהליך שלנו לעבודה משותפת בשלושה שלבים פשוטים",
+    "process_1_title": "בוחרים קולקציה",
+    "process_1_desc": "עוברים על הקטלוג ובוחרים את הסגנון שמתאים לאירוע שלכם",
+    "process_2_title": "אנחנו מעצבים ומייצרים",
+    "process_2_desc": "מייצרים בקפידה עם החומרים והמיתוג שבחרתם",
+    "process_3_title": "מקבלים ומפתיעים",
+    "process_3_desc": "המוצרים מגיעים ומוסיפים את הנגיעה המושלמת לאירוע"
   },
   "catalog": {
     "title": "קטלוג מוצרים",
     "chooseEvent": "בחרו סוג אירוע",
     "chooseStyle": "בחרו סגנון עיצוב",
     "bundles": "חבילות מומלצות",
-    "allProducts": "כל המוצרים"
+    "allProducts": "כל המוצרים",
+    "ctaOrder": "הזמינו עכשיו",
+    "collectionLabel": "קולקציית {style}",
+    "noStyles": "אין סגנונות זמינים כרגע",
+    "noProducts": "אין מוצרים זמינים כרגע",
+    "backToHome": "חזרה לדף הבית",
+    "backToStyles": "חזרה לסגנונות {event}"
   },
   "product": {
     "addToCart": "הוסף לסל",

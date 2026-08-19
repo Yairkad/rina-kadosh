@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
 export default function Footer() {
@@ -11,9 +12,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {/* Brand */}
           <div>
-            <h3 className="text-xl font-semibold text-[var(--gold-light,#E8D5A3)] mb-2">
-              רינה קדוש
-            </h3>
+            <Image
+              src="/images/logo.png"
+              alt="Rina Kadosh"
+              width={220}
+              height={158}
+              className="h-14 w-auto mb-3"
+            />
             <p className="text-sm text-gray-400 leading-relaxed">
               מוצרים מודפסים למיתוג ושדרוג אווירה באירועים
             </p>
@@ -25,10 +30,10 @@ export default function Footer() {
               ניווט
             </h4>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li><Link href={`/${locale}`} className="hover:text-[var(--gold)] transition-colors">בית</Link></li>
-              <li><Link href={`/${locale}/catalog`} className="hover:text-[var(--gold)] transition-colors">{t("catalog")}</Link></li>
-              <li><Link href={`/${locale}/gallery`} className="hover:text-[var(--gold)] transition-colors">{t("gallery")}</Link></li>
-              <li><Link href={`/${locale}/contact`} className="hover:text-[var(--gold)] transition-colors">{t("contact")}</Link></li>
+              <li><Link href={`/${locale}`} className="hover:text-[var(--terracotta)] transition-colors">{t("home")}</Link></li>
+              <li><Link href={`/${locale}/catalog`} className="hover:text-[var(--terracotta)] transition-colors">{t("catalog")}</Link></li>
+              <li><Link href={`/${locale}/gallery`} className="hover:text-[var(--terracotta)] transition-colors">{t("gallery")}</Link></li>
+              <li><Link href={`/${locale}/contact`} className="hover:text-[var(--terracotta)] transition-colors">{t("contact")}</Link></li>
             </ul>
           </div>
 
@@ -43,7 +48,7 @@ export default function Footer() {
                   href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[var(--gold)] transition-colors"
+                  className="hover:text-[var(--terracotta)] transition-colors"
                 >
                   WhatsApp
                 </a>

@@ -5,7 +5,7 @@ import { useAutoTranslate } from "@/hooks/useAutoTranslate";
 import Link from "next/link";
 import {
   Plus, ChevronDown, ChevronUp, Pencil, Trash2,
-  Loader2, Check, X, Package, ExternalLink,
+  Loader2, Check, X, Package, ExternalLink, GripVertical,
 } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
 import {
@@ -13,12 +13,13 @@ import {
   createDesignStyle, updateDesignStyle, deleteDesignStyle,
   quickCreateProduct,
 } from "@/app/admin/actions/catalog";
+import { reorderProducts } from "@/app/admin/actions/products";
 
 type ItemStatus = "draft" | "published" | "archived";
 
 type EventType = { id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; image?: string | null; atmosphere_image?: string | null };
-type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; atmosphere_image?: string | null };
-type Product = { id: string; name_he: string; status: string; design_style_id: string | null; event_type_id: string | null };
+type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; og_image?: string | null; atmosphere_image?: string | null };
+type Product = { id: string; name_he: string; status: string; design_style_id: string | null; event_type_id: string | null; display_order?: number };
 type FormData = { name_he: string; name_en: string; display_order: number; status: ItemStatus; event_type_id?: string };
 
 const EMPTY_FORM: FormData = { name_he: "", name_en: "", display_order: 0, status: "published" };
@@ -34,10 +35,10 @@ function toSlug(text: string) {
   return text.toLowerCase().trim().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 }
 
-function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage, showAtmosphereImage }: {
-  initial: FormData & { image?: string | null; atmosphere_image?: string | null };
-  onSave: (d: FormData & { image?: string | null; atmosphere_image?: string | null }) => void;
-  onCancel: () => void; loading: boolean; error: string; label: string; showImage?: boolean; showAtmosphereImage?: boolean;
+function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage, showOgImage, showAtmosphereImage }: {
+  initial: FormData & { image?: string | null; og_image?: string | null; atmosphere_image?: string | null };
+  onSave: (d: FormData & { image?: string | null; og_image?: string | null; atmosphere_image?: string | null }) => void;
+  onCancel: () => void; loading: boolean; error: string; label: string; showImage?: boolean; showOgImage?: boolean; showAtmosphereImage?: boolean;
 }) {
   const [form, setForm] = useState(initial);
   const set = (k: keyof typeof form, v: string | number | null) => setForm((f) => ({ ...f, [k]: v }));
@@ -101,13 +102,28 @@ function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage,
           />
         </div>
       )}
+      {showOgImage && (
+        <div>
+          <label className="block text-xs text-stone-500 mb-1.5">תמונת עיגול (ריבוע הקטגוריה)</label>
+          <p className="text-xs text-stone-400 mb-2">תמונת פורטרט/מוצר שמוצגת כעיגול חופף על ריבוע הזית</p>
+          <ImageUpload
+            bucket="catalog"
+            folder="styles"
+            value={form.og_image}
+            onUpload={(url) => set("og_image", url)}
+            onRemove={() => set("og_image", null)}
+          />
+        </div>
+      )}
       {showAtmosphereImage && (
         <div>
           <label className="block text-xs text-stone-500 mb-1.5">תמונת אווירה (ראש עמוד קטגוריה)</label>
-          <p className="text-xs text-stone-400 mb-2">תמונה רחבה / GIF — ממולץ 1920×800px, מתחת ל-3MB</p>
+          <p className="text-xs text-stone-400 mb-2">תמונה רחבה / GIF / וידאו קצר בלולאה — מומלץ 1920×800px; לוידאו: לדחוס (H.264, ~1080p) ולשאוף לגודל קטן ככל האפשר כדי לא להאט את הטעינה</p>
           <ImageUpload
             bucket="catalog"
             folder="atmosphere"
+            allowVideo
+            maxMB={50}
             value={form.atmosphere_image}
             onUpload={(url) => set("atmosphere_image", url)}
             onRemove={() => set("atmosphere_image", null)}
@@ -184,6 +200,8 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
   const [addingProductFor, setAddingProductFor] = useState<string | null>(null);
   const [isPending, startTransition]            = useTransition();
   const [formError, setFormError]               = useState("");
+  const [localOrders, setLocalOrders]           = useState<Record<string, string[]>>({});
+  const [dragProductId, setDragProductId]       = useState<string | null>(null);
 
   function handleAction(fn: () => Promise<{ error?: string; success?: boolean }>) {
     setFormError("");
@@ -202,7 +220,27 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
   }
 
   const stylesFor    = (etId: string)  => initialStyles.filter((s) => s.event_type_id === etId);
-  const productsFor  = (styleId: string) => initialProducts.filter((p) => p.design_style_id === styleId);
+  const productsFor  = (styleId: string) => {
+    const base = initialProducts.filter((p) => p.design_style_id === styleId);
+    const order = localOrders[styleId];
+    if (!order) return base;
+    const byId = new Map(base.map((p) => [p.id, p]));
+    return order.map((id) => byId.get(id)).filter((p): p is Product => !!p);
+  };
+
+  function handleProductDrop(styleId: string, targetId: string) {
+    if (!dragProductId || dragProductId === targetId) return;
+    const current = productsFor(styleId).map((p) => p.id);
+    const from = current.indexOf(dragProductId);
+    const to = current.indexOf(targetId);
+    if (from === -1 || to === -1) return;
+    const next = [...current];
+    next.splice(from, 1);
+    next.splice(to, 0, dragProductId);
+    setLocalOrders((o) => ({ ...o, [styleId]: next }));
+    setDragProductId(null);
+    startTransition(() => { reorderProducts(next); });
+  }
 
   return (
     <div className="space-y-3">
@@ -284,8 +322,8 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
                     <div key={style.id} className="bg-white rounded-xl border border-stone-200 overflow-hidden">
                       {editingStyle === style.id ? (
                         <div className="p-3">
-                          <ItemForm label="עריכת סגנון" showAtmosphereImage
-                            initial={{ name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, atmosphere_image: style.atmosphere_image }}
+                          <ItemForm label="עריכת סגנון" showOgImage showAtmosphereImage
+                            initial={{ name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, og_image: style.og_image, atmosphere_image: style.atmosphere_image }}
                             loading={isPending} error={formError}
                             onCancel={() => { setEditingStyle(null); setFormError(""); }}
                             onSave={(data) => handleAction(() => updateDesignStyle(style.id, data))} />
@@ -326,8 +364,22 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
                                 <p className="text-xs text-stone-400 py-1">אין מוצרים בסגנון זה</p>
                               )}
 
+                              {styleProducts.length > 1 && (
+                                <p className="text-[10px] text-stone-400 flex items-center gap-1 pb-0.5">
+                                  <GripVertical size={11} /> גררו לשינוי סדר התצוגה בקטלוג
+                                </p>
+                              )}
                               {styleProducts.map((p) => (
-                                <div key={p.id} className="flex items-center gap-2 py-1.5 px-2 rounded-lg hover:bg-white transition-colors group">
+                                <div
+                                  key={p.id}
+                                  draggable
+                                  onDragStart={() => setDragProductId(p.id)}
+                                  onDragOver={(e) => e.preventDefault()}
+                                  onDrop={() => handleProductDrop(style.id, p.id)}
+                                  onDragEnd={() => setDragProductId(null)}
+                                  className={`flex items-center gap-2 py-1.5 px-2 rounded-lg hover:bg-white transition-colors group cursor-grab active:cursor-grabbing ${dragProductId === p.id ? "opacity-40" : ""}`}
+                                >
+                                  <GripVertical size={13} className="text-stone-300 shrink-0" />
                                   <Package size={13} className="text-stone-300 shrink-0" />
                                   <span className="text-xs text-stone-700 flex-1">{p.name_he}</span>
                                   <span className={`text-xs px-1.5 py-0.5 rounded-full ${STATUS_COLORS[p.status as ItemStatus] ?? "bg-stone-100 text-stone-500"}`}>

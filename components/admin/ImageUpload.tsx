@@ -4,8 +4,15 @@ import { useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Upload, X, Loader2, ImageIcon, Star } from "lucide-react";
 
-const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/avif"];
+const ALLOWED_IMAGE = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/avif"];
+const ALLOWED_VIDEO = ["video/mp4", "video/webm", "video/quicktime"];
 const MAX_MB = 10;
+const isVideoUrl = (url: string) => /\.(mp4|webm|mov)$/i.test(url);
+
+const EXT_MIME: Record<string, string> = {
+  jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp",
+  gif: "image/gif", avif: "image/avif", mp4: "video/mp4", webm: "video/webm", mov: "video/quicktime",
+};
 
 interface Props {
   bucket: "products" | "catalog" | "gallery";
@@ -18,27 +25,42 @@ interface Props {
   images?: string[];
   onImagesChange?: (urls: string[]) => void;
   className?: string;
+  /** Allow video files (mp4/webm/mov) alongside images — used for the category atmosphere hero */
+  allowVideo?: boolean;
+  /** Override the default 10MB cap — videos need more room */
+  maxMB?: number;
 }
 
 export default function ImageUpload({
   bucket, folder = "", value, onUpload, onRemove,
   images, onImagesChange, className = "",
+  allowVideo = false, maxMB = MAX_MB,
 }: Props) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   const isMulti = Array.isArray(images);
+  const allowed = allowVideo ? [...ALLOWED_IMAGE, ...ALLOWED_VIDEO] : ALLOWED_IMAGE;
 
   async function upload(file: File): Promise<string | null> {
-    if (!ALLOWED.includes(file.type)) { setError("פורמט לא נתמך (JPG/PNG/WEBP/GIF)"); return null; }
-    if (file.size > MAX_MB * 1024 * 1024) { setError(`מקסימום ${MAX_MB}MB`); return null; }
+    const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
+    const extMime = EXT_MIME[ext];
+    // Some browsers/OSes report an empty or unreliable file.type for certain video containers
+    // (e.g. .mov on Windows) — fall back to trusting a recognized file extension.
+    const isAllowed = allowed.includes(file.type) || (extMime && allowed.includes(extMime));
+    if (!isAllowed) {
+      setError(allowVideo ? "פורמט לא נתמך (JPG/PNG/WEBP/GIF/MP4/WEBM/MOV)" : "פורמט לא נתמך (JPG/PNG/WEBP/GIF)");
+      return null;
+    }
+    if (file.size > maxMB * 1024 * 1024) { setError(`מקסימום ${maxMB}MB`); return null; }
 
-    const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
-    const path = `${folder ? folder + "/" : ""}${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const path = `${folder ? folder + "/" : ""}${Date.now()}-${Math.random().toString(36).slice(2)}.${ext || "jpg"}`;
     const supabase = createClient();
 
-    const { error: err } = await supabase.storage.from(bucket).upload(path, file, { cacheControl: "31536000" });
+    const { error: err } = await supabase.storage
+      .from(bucket)
+      .upload(path, file, { cacheControl: "31536000", contentType: extMime || file.type || undefined });
     if (err) { setError(err.message); return null; }
 
     return supabase.storage.from(bucket).getPublicUrl(path).data.publicUrl;
@@ -70,7 +92,11 @@ export default function ImageUpload({
       {/* Single image preview */}
       {!isMulti && value && (
         <div className="relative w-32 h-32 rounded-xl overflow-hidden border border-stone-200 group bg-stone-100">
-          <img src={value} alt="" className="w-full h-full object-cover" />
+          {isVideoUrl(value) ? (
+            <video src={value} muted loop controls className="w-full h-full object-cover" />
+          ) : (
+            <img src={value} alt="" className="w-full h-full object-cover" />
+          )}
           {onRemove && (
             <button type="button" onClick={onRemove}
               className="absolute top-1.5 right-1.5 p-1 bg-black/60 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity active:scale-95">
@@ -124,7 +150,7 @@ export default function ImageUpload({
         <input
           ref={inputRef}
           type="file"
-          accept={ALLOWED.join(",")}
+          accept={allowed.join(",")}
           multiple={isMulti}
           className="hidden"
           onChange={(e) => handleFiles(e.target.files)}
@@ -143,7 +169,7 @@ export default function ImageUpload({
 
         {!isMulti && !value && (
           <span className="text-xs text-stone-400 flex items-center gap-1">
-            <ImageIcon size={12} /> JPG / PNG / WEBP · עד {MAX_MB}MB
+            <ImageIcon size={12} /> {allowVideo ? "JPG / PNG / WEBP / MP4 / WEBM" : "JPG / PNG / WEBP"} · עד {maxMB}MB
           </span>
         )}
       </div>

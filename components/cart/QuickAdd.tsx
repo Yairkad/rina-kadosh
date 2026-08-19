@@ -82,7 +82,7 @@ export function QuickAddOverlay(props: QuickAddProps) {
           {error && <p className="text-red-300 text-xs px-3 text-center">{error}</p>}
           <button
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleAdd(); }}
-            className="flex items-center gap-1.5 bg-white text-[var(--charcoal)] text-xs font-semibold px-4 py-2 rounded-full hover:bg-[var(--gold)] hover:text-white transition-colors"
+            className="flex items-center gap-1.5 bg-white text-[var(--charcoal)] text-xs font-semibold px-4 py-2 rounded-full hover:bg-[var(--terracotta)] hover:text-white transition-colors"
           >
             <ShoppingBag size={13} />
             {locale === "he" ? "הוסף לסל" : "Add to Cart"}
@@ -126,7 +126,7 @@ export function QuickAddMobileButton(props: QuickAddProps) {
     <>
       <button
         onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen(true); }}
-        className="absolute bottom-3 end-3 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center text-[var(--charcoal)] hover:bg-[var(--gold)] hover:text-white transition-colors z-10"
+        className="absolute bottom-3 end-3 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center text-[var(--charcoal)] hover:bg-[var(--terracotta)] hover:text-white transition-colors z-10"
         aria-label={locale === "he" ? "הוסף לסל" : "Add to Cart"}
       >
         <Plus size={16} />
@@ -148,7 +148,7 @@ export function QuickAddMobileButton(props: QuickAddProps) {
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h3 className="font-semibold text-[var(--charcoal)] text-sm line-clamp-2">{props.name}</h3>
-                  <p className="text-sm text-[var(--gold)] font-medium mt-0.5">₪{props.pricePerUnit.toLocaleString("he-IL")}</p>
+                  <p className="text-sm text-[var(--terracotta)] font-medium mt-0.5">₪{props.pricePerUnit.toLocaleString("he-IL")}</p>
                 </div>
                 <button onClick={() => setOpen(false)} className="p-1 text-[var(--muted)]"><X size={18} /></button>
               </div>
@@ -167,7 +167,7 @@ export function QuickAddMobileButton(props: QuickAddProps) {
 
               <button
                 onClick={handleAdd}
-                className="w-full bg-[var(--charcoal)] text-white font-medium py-3 rounded-xl hover:bg-[var(--gold)] transition-colors"
+                className="w-full bg-[var(--charcoal)] text-white font-medium py-3 rounded-xl hover:bg-[var(--terracotta)] transition-colors"
               >
                 {locale === "he" ? "הוסף לסל" : "Add to Cart"}
               </button>

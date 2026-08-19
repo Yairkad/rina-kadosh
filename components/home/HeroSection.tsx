@@ -1,59 +1,51 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+import { GeometricPattern } from "@/components/ui/GeometricPattern";
 
 export default function HeroSection() {
   const t = useTranslations("home");
   const locale = useLocale();
 
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#FAF8F5] via-[#F5EEE3] to-[#FAF8F5]">
-      {/* Background glow blobs */}
-      <motion.div
-        className="absolute top-16 end-[8%] w-72 h-72 rounded-full bg-[var(--gold)] opacity-[0.08] blur-3xl pointer-events-none"
-        animate={{ scale: [1, 1.18, 1], opacity: [0.08, 0.14, 0.08] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+    <section className="relative -mt-16 min-h-[100dvh] flex items-center justify-center overflow-hidden">
+      {/* Marble background */}
+      <Image
+        src="/textures/marble-bg.jpg"
+        alt=""
+        fill
+        priority
+        quality={65}
+        sizes="100vw"
+        className="object-cover"
       />
-      <motion.div
-        className="absolute bottom-24 start-[4%] w-96 h-96 rounded-full bg-[var(--gold)] opacity-[0.05] blur-3xl pointer-events-none"
-        animate={{ scale: [1, 1.12, 1] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
-      />
+      <div className="absolute inset-0 bg-white/55" />
 
-      {/* Floating dots */}
-      <motion.div
-        className="absolute top-28 start-[18%] w-2.5 h-2.5 rounded-full bg-[var(--gold)] opacity-50 pointer-events-none"
-        animate={{ y: [-12, 12, -12] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-36 end-[22%] w-2 h-2 rounded-full bg-[var(--gold)] opacity-35 pointer-events-none"
-        animate={{ y: [10, -10, 10] }}
-        transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-      />
-      <motion.div
-        className="absolute top-1/2 end-[6%] w-16 h-16 border border-[var(--gold)] opacity-15 rounded-full pointer-events-none"
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-      />
-      <motion.div
-        className="absolute top-[30%] start-[6%] w-8 h-8 border border-[var(--gold)] opacity-10 rounded-full pointer-events-none"
-        animate={{ rotate: [360, 0] }}
-        transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
+      {/* Decorative pattern — full-bleed across the whole hero background */}
+      <GeometricPattern
+        className="absolute inset-0 pointer-events-none"
+        color="var(--terracotta)"
+        opacity={0.08}
+        size={48}
       />
 
       {/* Main content */}
       <div className="relative text-center px-4 max-w-3xl mx-auto">
-        <motion.span
-          className="inline-block text-xs font-semibold text-[var(--gold)] tracking-[0.25em] uppercase mb-6"
+        <motion.div
+          className="flex items-center justify-center gap-3 mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          {t("tagline")}
-        </motion.span>
+          <span aria-hidden className="text-[var(--terracotta)] text-xs">✦</span>
+          <span className="text-xs font-semibold text-[var(--terracotta)] tracking-[0.25em] uppercase">
+            {t("tagline")}
+          </span>
+          <span aria-hidden className="text-[var(--terracotta)] text-xs">✦</span>
+        </motion.div>
 
         <motion.h1
           className="text-5xl sm:text-6xl md:text-7xl font-bold text-[var(--charcoal)] leading-tight"
@@ -81,21 +73,21 @@ export default function HeroSection() {
         >
           <Link
             href={`/${locale}/catalog`}
-            className="px-9 py-3.5 rounded-full bg-[var(--gold)] text-white font-medium text-sm tracking-wide hover:bg-[#b8915a] transition-colors shadow-lg shadow-[var(--gold)]/20 hover:shadow-xl hover:shadow-[var(--gold)]/30"
+            className="px-9 py-3.5 rounded-full bg-[var(--terracotta)] text-white font-medium text-sm tracking-wide hover:bg-[var(--terracotta-dark)] transition-colors shadow-lg shadow-[var(--terracotta)]/20 hover:shadow-xl hover:shadow-[var(--terracotta)]/30"
           >
             {t("cta")}
           </Link>
           <Link
             href={`/${locale}/contact`}
-            className="px-9 py-3.5 rounded-full border border-[var(--charcoal)]/30 text-[var(--charcoal)] font-medium text-sm tracking-wide hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors"
+            className="px-9 py-3.5 rounded-full border border-[var(--charcoal)]/30 text-[var(--charcoal)] font-medium text-sm tracking-wide hover:border-[var(--terracotta)] hover:text-[var(--terracotta)] transition-colors"
           >
             {t("contact_cta")}
           </Link>
         </motion.div>
       </div>
 
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+      {/* Bottom fade into next section */}
+      <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[var(--cream)] to-transparent pointer-events-none" />
 
       {/* Scroll indicator */}
       <motion.div

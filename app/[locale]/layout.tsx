@@ -6,6 +6,7 @@ import { routing } from "@/i18n/routing";
 import { CartProvider } from "@/contexts/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 import CartRecoveryPopup from "@/components/cart/CartRecoveryPopup";
+import { rubik, happyBirthday } from "@/app/fonts";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -53,7 +54,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={dir}>
-      <body className="antialiased">
+      <body className={`antialiased ${rubik.variable} ${happyBirthday.variable}`}>
         <NextIntlClientProvider messages={messages}>
           <CartProvider>
             {children}

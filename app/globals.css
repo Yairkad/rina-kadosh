@@ -9,6 +9,14 @@
     --cream: #FAF8F5;
     --charcoal: #1C1C1E;
     --muted: #6B6B6B;
+
+    /* Illustrator mockup palette — see ATAR/ */
+    --terracotta: #C85741;
+    --terracotta-dark: #A8432E;
+    --olive: #B7B384;
+    --olive-light: #D3D1B4;
+    --marble: #EDE7DD;
+    --marble-texture: url("/textures/marble-bg.jpg");
   }
 
   * {
@@ -25,7 +33,7 @@
   }
 
   [dir="rtl"] body {
-    font-family: "Segoe UI", "Arial Hebrew", Arial, system-ui, sans-serif;
+    font-family: var(--font-hebrew), "Segoe UI", "Arial Hebrew", Arial, system-ui, sans-serif;
   }
 
   [dir="ltr"] body {

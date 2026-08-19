@@ -2277,6 +2277,331 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-08-08T21:10:11.710Z"
+    },
+    {
+      "id": "bug-140",
+      "timestamp": "2026-08-19T06:04:51.232Z",
+      "error_message": "CSS fix: backgroundColor",
+      "file": "components/layout/Navbar.tsx",
+      "root_cause": "backgroundColor: scrolled ? \"rgba(183,179,132,0.97)\" : \"rgba(183,179,132,0.85)\", → scrolled ? \"rgba(183,179,132,0.97)\" : \"rgba(183,179,132,0)\",",
+      "fix": "Changed backgroundColor: scrolled ? \"rgba(183,179,132,0.97)\" : \"rgba(183,179,132,0.85)\", → scrolled ? \"rgba(183,179,132,0.97)\" : \"rgba(183,179,132,0)\",",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-08-19T06:04:58.615Z"
+    },
+    {
+      "id": "bug-141",
+      "timestamp": "2026-08-19T06:08:30.442Z",
+      "error_message": "Wrong reference: mekomi should be rubik",
+      "file": "app/[locale]/layout.tsx",
+      "root_cause": "Used \"mekomi\" instead of \"rubik\"",
+      "fix": "Changed mekomi → rubik",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T06:08:30.442Z"
+    },
+    {
+      "id": "bug-142",
+      "timestamp": "2026-08-19T06:08:35.346Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/layout.tsx",
+      "root_cause": "Had `antialiased ${mekomi.variable} ${happyBirthday.va",
+      "fix": "Changed to `antialiased ${rubik.variable} ${happyBirthday.var",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T06:08:35.346Z"
+    },
+    {
+      "id": "bug-143",
+      "timestamp": "2026-08-19T06:08:40.551Z",
+      "error_message": "Incorrect value in code",
+      "file": "tailwind.config.ts",
+      "root_cause": "Had \"var(--font-mekomi)\"",
+      "fix": "Changed to \"var(--font-hebrew)\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T06:08:40.551Z"
+    },
+    {
+      "id": "bug-144",
+      "timestamp": "2026-08-19T06:08:45.690Z",
+      "error_message": "Wrong reference: mekomi should be hebrew",
+      "file": "app/globals.css",
+      "root_cause": "Used \"mekomi\" instead of \"hebrew\"",
+      "fix": "Changed mekomi → hebrew",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "css"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T06:08:45.690Z"
+    },
+    {
+      "id": "bug-145",
+      "timestamp": "2026-08-19T06:35:36.512Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/layout/Navbar.tsx",
+      "root_cause": "Had \"block h-16\"",
+      "fix": "Changed to \"block h-14\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T06:35:36.512Z"
+    },
+    {
+      "id": "bug-146",
+      "timestamp": "2026-08-19T06:45:52.823Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/page.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T06:45:52.823Z"
+    },
+    {
+      "id": "bug-147",
+      "timestamp": "2026-08-19T06:46:26.529Z",
+      "error_message": "Significant refactor of ",
+      "file": "components/admin/ImageUpload.tsx",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 29→40 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T06:46:26.529Z"
+    },
+    {
+      "id": "bug-148",
+      "timestamp": "2026-08-19T06:46:36.519Z",
+      "error_message": "Type error",
+      "file": "components/admin/ImageUpload.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T06:46:36.519Z"
+    },
+    {
+      "id": "bug-149",
+      "timestamp": "2026-08-19T06:46:43.589Z",
+      "error_message": "Wrong reference: ALLOWED should be allowed",
+      "file": "components/admin/ImageUpload.tsx",
+      "root_cause": "Used \"ALLOWED\" instead of \"allowed\"",
+      "fix": "Changed ALLOWED → allowed",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T06:46:43.589Z"
+    },
+    {
+      "id": "bug-150",
+      "timestamp": "2026-08-19T06:48:35.146Z",
+      "error_message": "Type error",
+      "file": "components/catalog/ExpandingEventCards.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T06:48:35.146Z"
+    },
+    {
+      "id": "bug-151",
+      "timestamp": "2026-08-19T07:04:31.986Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/home/ProcessSteps.tsx",
+      "root_cause": "Had \"absolute -top-3 end-3 text-7xl font-black text-[v",
+      "fix": "Changed to \"absolute -top-3 end-3 text-7xl font-black text-[v",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T07:04:31.986Z"
+    },
+    {
+      "id": "bug-152",
+      "timestamp": "2026-08-19T07:08:23.528Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_todo_2026_08_11.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 7→8 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T07:08:23.528Z"
+    },
+    {
+      "id": "bug-153",
+      "timestamp": "2026-08-19T07:09:38.664Z",
+      "error_message": "CSS fix: sm",
+      "file": "app/[locale]/(public)/catalog/[event]/page.tsx",
+      "root_cause": "sm: w-56 sm:h-56 shrink-0 mx-auto sm:mx-0\"> → w-56 sm:h-56 shrink-0 mx-auto sm:mx-0 rounded-2xl bg-[var(--olive)] overflow-hidden shadow-sm\">",
+      "fix": "Changed sm: w-56 sm:h-56 shrink-0 mx-auto sm:mx-0\"> → w-56 sm:h-56 shrink-0 mx-auto sm:mx-0 rounded-2xl bg-[var(--olive)] overflow-hidden shadow-sm\">",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-08-19T07:13:58.594Z"
+    },
+    {
+      "id": "bug-154",
+      "timestamp": "2026-08-19T07:28:24.424Z",
+      "error_message": "CSS fix: cacheControl",
+      "file": "components/admin/ImageUpload.tsx",
+      "root_cause": "cacheControl: \"31536000\" → \"31536000\", contentType: extMime || file.type || undefined",
+      "fix": "Changed cacheControl: \"31536000\" → \"31536000\", contentType: extMime || file.type || undefined",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T07:28:24.424Z"
+    },
+    {
+      "id": "bug-155",
+      "timestamp": "2026-08-19T07:35:00.000Z",
+      "error_message": "המשתמש העלה וידאו לשדה \"תמונת אווירה\" של סגנון (design_styles.atmosphere_image) — לא מוצג באדמין ולא באתר הציבורי",
+      "file": "components/admin/ImageUpload.tsx, app/admin/actions/catalog.ts",
+      "root_cause": "שתי סיבות נפרדות: (1) ImageUpload.tsx בדק את סוג הקובץ רק לפי file.type (MIME שהדפדפן מדווח מזהה) — דפדפני .mov בפרט (וידאו מאייפון) מקבלים לעתים file.type ריק/לא-צפוי ב-Windows, וההעלאה נדחתה בשקט עם הודעת שגיאה שאפשר להחמיץ — המשתמש לא ראה/שם לב. (2) גם אם ההעלאה מצליחה ונשמרת ב-DB — updateDesignStyle/createDesignStyle/updateEventType/createEventType/deleteEventType/deleteDesignStyle/quickCreateProduct ב-catalog.ts עשו revalidatePath רק ל-/admin/catalog, בניגוד ל-products.ts/bundles.ts/gallery.ts שמרעננים גם /he/catalog ו-/en/catalog (layout) — כל עריכת event_type/design_style נשארת מוצגת באתר הציבורי עד 300s (ISR), לא רק עבור וידאו.",
+      "fix": "(1) ImageUpload.tsx: בדיקת סוג מקובלת עכשיו גם file.type וגם סיומת הקובץ (EXT_MIME map) — מספיק אם אחד מהם תקין; גם הועבר contentType מפורש ל-Supabase upload() מבוסס סיומת הקובץ במקום file.type הגולמי. (2) catalog.ts: הוספו revalidatePath(\"/he/catalog\", \"layout\") + revalidatePath(\"/en/catalog\", \"layout\") לכל פונקציית מוטציה (7 פונקציות), תואם למוסכם הקיים ב-products.ts/bundles.ts/gallery.ts.",
+      "tags": [
+        "user-reported",
+        "video-upload",
+        "isr-staleness",
+        "revalidatePath",
+        "mime-type",
+        "admin"
+      ],
+      "related_bugs": [
+        "bug-091"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T07:35:00.000Z"
+    },
+    {
+      "id": "bug-156",
+      "timestamp": "2026-08-19T07:38:20.193Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/page.tsx",
+      "root_cause": "Had \"relative w-full h-[80vh] overflow-hidden\"",
+      "fix": "Changed to \"relative w-full h-[45vh] sm:h-[60vh] lg:h-[80vh] ",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T07:38:20.193Z"
+    },
+    {
+      "id": "bug-157",
+      "timestamp": "2026-08-19T07:46:01.905Z",
+      "error_message": "Missing guard clause",
+      "file": "lib/utils.ts",
+      "root_cause": "No early return/throw for edge case: i === -1",
+      "fix": "Added guard clause: if (i === -1)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T07:46:01.905Z"
+    },
+    {
+      "id": "bug-158",
+      "timestamp": "2026-08-19T07:51:28.016Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/api/media/[...path]/route.ts",
+      "root_cause": "Had \"Not found\"",
+      "fix": "Changed to `DEBUG upstream=${upstreamUrl} status=${upstreamRe",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-08-19T07:52:47.039Z"
+    },
+    {
+      "id": "bug-159",
+      "timestamp": "2026-08-19T07:52:10.048Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/api/media/[...path]/route.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T07:52:10.048Z"
     }
   ]
 }

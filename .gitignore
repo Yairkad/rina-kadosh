@@ -3,6 +3,7 @@
 .claude/settings.local.json
 .wolf/_session.json
 .wolf/hooks/_session.json
+.wolf/hooks/*.tmp
 .wolf/token-ledger.json
 .wolf/cron-state.json
 .wolf/designqc-report.json
@@ -16,6 +17,7 @@ supabase/.temp/
 /.next/
 /out/
 next-env.d.ts
+*.tsbuildinfo
 
 # Node modules
 node_modules/
@@ -28,3 +30,6 @@ node_modules/
 # OS
 .DS_Store
 Thumbs.db
+
+# Raw design source assets (Illustrator exports etc.) — reference only, not shipped
+/ATAR/

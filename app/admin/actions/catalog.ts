@@ -39,6 +39,8 @@ export async function createEventType(data: {
   if (error) return { error: error.message };
 
   revalidatePath("/admin/catalog");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true };
 }
 
@@ -56,6 +58,8 @@ export async function updateEventType(
   if (error) return { error: error.message };
 
   revalidatePath("/admin/catalog");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true };
 }
 
@@ -70,6 +74,8 @@ export async function deleteEventType(id: string) {
   if (error) return { error: error.message };
 
   revalidatePath("/admin/catalog");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true };
 }
 
@@ -81,6 +87,8 @@ export async function createDesignStyle(data: {
   name_en: string;
   display_order: number;
   status: ItemStatus;
+  og_image?: string | null;
+  atmosphere_image?: string | null;
 }) {
   const supabase = await getAdminClient();
   if (!supabase) return { error: "Unauthorized" };
@@ -90,6 +98,8 @@ export async function createDesignStyle(data: {
   if (error) return { error: error.message };
 
   revalidatePath("/admin/catalog");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true };
 }
 
@@ -100,6 +110,7 @@ export async function updateDesignStyle(
     name_en?: string;
     display_order?: number;
     status?: ItemStatus;
+    og_image?: string | null;
     atmosphere_image?: string | null;
   }
 ) {
@@ -113,6 +124,8 @@ export async function updateDesignStyle(
   if (error) return { error: error.message };
 
   revalidatePath("/admin/catalog");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true };
 }
 
@@ -136,6 +149,8 @@ export async function quickCreateProduct(data: {
 
   revalidatePath("/admin/catalog");
   revalidatePath("/admin/products");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true };
 }
 
@@ -150,5 +165,7 @@ export async function deleteDesignStyle(id: string) {
   if (error) return { error: error.message };
 
   revalidatePath("/admin/catalog");
+  revalidatePath("/he/catalog", "layout");
+  revalidatePath("/en/catalog", "layout");
   return { success: true };
 }
