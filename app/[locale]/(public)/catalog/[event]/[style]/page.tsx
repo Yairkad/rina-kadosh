@@ -27,7 +27,7 @@ export default async function StylePage({ params }: Props) {
 
   const { data: designStyle } = await supabase
     .from("design_styles")
-    .select("id, name_he, name_en, atmosphere_image")
+    .select("id, name_he, name_en, atmosphere_image, background_image")
     .eq("slug", style)
     .eq("event_type_id", eventType.id)
     .eq("status", "published")
@@ -147,7 +147,10 @@ export default async function StylePage({ params }: Props) {
       )}
 
       {/* ── Content ── */}
-      <section className="relative z-10 -mt-[22vh] px-4 pb-16 sm:px-6 lg:px-8 pt-8 bg-marble bg-cover bg-center bg-fixed">
+      <section
+        className="relative z-10 -mt-[22vh] px-4 pb-16 sm:px-6 lg:px-8 pt-8 bg-marble bg-cover bg-center bg-fixed"
+        style={designStyle.background_image ? { backgroundImage: `url(${designStyle.background_image})` } : undefined}
+      >
         {/* Cream wash over the marble texture for readability */}
         <div className="absolute inset-0 bg-[var(--cream)]/88" />
 

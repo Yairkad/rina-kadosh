@@ -19,7 +19,7 @@ export default async function EventPage({ params }: Props) {
 
   const { data: eventType } = await supabase
     .from("event_types")
-    .select("id, name_he, name_en")
+    .select("id, name_he, name_en, atmosphere_image")
     .eq("slug", event)
     .eq("status", "published")
     .single();
@@ -34,18 +34,41 @@ export default async function EventPage({ params }: Props) {
     .order("display_order");
 
   const eventName = locale === "he" ? eventType.name_he : eventType.name_en;
+  const isBgVideo = /\.(mp4|webm|mov)$/i.test(eventType.atmosphere_image ?? "");
 
   return (
     <section className="relative min-h-screen px-4 py-12 sm:px-6 lg:px-8">
-      {/* Marble background */}
-      <Image
-        src="/textures/marble-bg.jpg"
-        alt=""
-        fill
-        quality={60}
-        sizes="100vw"
-        className="object-cover -z-10"
-      />
+      {/* Background — per-category image/video if set, marble texture otherwise */}
+      {eventType.atmosphere_image ? (
+        isBgVideo ? (
+          <video
+            src={eventType.atmosphere_image}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 -z-10 w-full h-full object-cover"
+          />
+        ) : (
+          <Image
+            src={eventType.atmosphere_image}
+            alt=""
+            fill
+            quality={60}
+            sizes="100vw"
+            className="object-cover -z-10"
+          />
+        )
+      ) : (
+        <Image
+          src="/textures/marble-bg.jpg"
+          alt=""
+          fill
+          quality={60}
+          sizes="100vw"
+          className="object-cover -z-10"
+        />
+      )}
       <div className="absolute inset-0 -z-10 bg-white/55" />
 
       <div className="max-w-7xl mx-auto">

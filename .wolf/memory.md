@@ -1,6 +1,8 @@
 # Memory
 
 > Chronological action log. Hooks and AI append to this file automatically.
+| 22:19 | Added design_styles.background_image (new column, migration 015 NOT YET APPLIED to live DB) — lets admin override the marble-bg behind the product grid on /catalog/[event]/[style], per collection. Wired: admin form field, catalog.ts actions, admin catalog.ts select, public style page. | supabase/migrations/015_style_background_image.sql, components/admin/CatalogManager.tsx, app/admin/actions/catalog.ts, app/admin/(protected)/catalog/page.tsx, app/[locale]/(public)/catalog/[event]/[style]/page.tsx | tsc clean, confirmed column missing live (42703) — user must run migration SQL manually, no DB write access in this session | ~1800 |
+| 22:07 | Wired up event_types.atmosphere_image (existed in DB since migration 002, never used anywhere) — admin can now upload a per-category background image/video on /catalog/[event], falls back to shared marble-bg.jpg when unset | components/admin/CatalogManager.tsx, app/[locale]/(public)/catalog/[event]/page.tsx | tsc clean, verified all 5 event_types currently null (no surprise change), designqc screenshot pending | ~1200 |
 | 21:28 | Reverted /api/media proxy (built to work around Netfree blocking supabase.co atmosphere video) — user confirmed it didn't work in production either; real fix was requesting Netfree to whitelist the specific Supabase link directly (no code) | app/api/media/[...path]/route.ts (deleted), lib/utils.ts, app/[locale]/(public)/catalog/[event]/[style]/page.tsx | tsc clean, pushing revert | ~900 |
 | 10:34 | Fixed bug-155 (user report: uploaded video not showing in admin or public site): (1) ImageUpload.tsx MIME check now falls back to file extension (fixes .mov reporting empty file.type on Windows), explicit contentType passed to Supabase upload; (2) catalog.ts's 7 mutation functions were missing public /he+en/catalog revalidatePath (only had /admin/catalog) — added, matching products.ts/bundles.ts/gallery.ts pattern | components/admin/ImageUpload.tsx, app/admin/actions/catalog.ts | tsc clean, logged to buglog.json bug-155, not yet re-tested by user | ~2400 |
 | 10:15 | Redesigned circle+square composition on /catalog/[event] style rows per user feedback (2 iterations): circle now large/dominant, small pattern square peeks out from behind at one corner, no ring/frame on circle | app/[locale]/(public)/catalog/[event]/page.tsx | tsc clean, verified via designqc screenshot (real data: /catalog/y) | ~1400 |
@@ -1186,3 +1188,28 @@
 | 21:24 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | 2→1 lines | ~17 |
 | 21:24 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | 3→3 lines | ~28 |
 | 21:25 | Edited lib/utils.ts | removed 16 lines | ~23 |
+| 21:31 | Session end: 43 writes across 17 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 22 reads | ~27923 tok |
+| 21:36 | Session end: 43 writes across 17 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 22 reads | ~27923 tok |
+| 21:39 | Session end: 43 writes across 17 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 22 reads | ~27923 tok |
+| 21:40 | Session end: 43 writes across 17 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 22 reads | ~27923 tok |
+| 21:45 | Session end: 43 writes across 17 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 22 reads | ~27903 tok |
+| 21:47 | Session end: 43 writes across 17 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 22 reads | ~27903 tok |
+| 22:00 | Session end: 43 writes across 17 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 22 reads | ~27903 tok |
+| 22:02 | Session end: 43 writes across 17 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 22 reads | ~27903 tok |
+| 22:03 | Edited components/admin/CatalogManager.tsx | CSS: atmosphere_image | ~75 |
+| 22:04 | Edited app/[locale]/(public)/catalog/[event]/page.tsx | 6→6 lines | ~55 |
+| 22:04 | Edited app/[locale]/(public)/catalog/[event]/page.tsx | added nullish coalescing | ~319 |
+| 22:07 | designqc: captured 6 screenshots (227KB, ~15000 tok) | / | ready for eval | ~0 |
+| 22:09 | Session end: 46 writes across 17 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 22 reads | ~28467 tok |
+| 22:13 | Created supabase/migrations/015_style_background_image.sql | — | ~88 |
+| 22:14 | Edited app/admin/actions/catalog.ts | 3→4 lines | ~30 |
+| 22:15 | Edited app/admin/actions/catalog.ts | 4→5 lines | ~33 |
+| 22:15 | Edited components/admin/CatalogManager.tsx | inline fix | ~70 |
+| 22:16 | Edited components/admin/CatalogManager.tsx | modified ItemForm() | ~178 |
+| 22:16 | Edited components/admin/CatalogManager.tsx | expanded (+13 lines) | ~188 |
+| 22:17 | Edited components/admin/CatalogManager.tsx | CSS: background_image | ~111 |
+| 22:17 | Edited app/admin/(protected)/catalog/page.tsx | "id, event_type_id, name_h" → "id, event_type_id, name_h" | ~37 |
+| 22:18 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | "id, name_he, name_en, atm" → "id, name_he, name_en, atm" | ~21 |
+| 22:18 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | CSS: backgroundImage | ~74 |
+| 22:19 | Session end: 56 writes across 18 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 23 reads | ~29933 tok |
+| 22:26 | Session end: 56 writes across 18 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 23 reads | ~29933 tok |

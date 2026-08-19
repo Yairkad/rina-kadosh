@@ -89,6 +89,7 @@ export async function createDesignStyle(data: {
   status: ItemStatus;
   og_image?: string | null;
   atmosphere_image?: string | null;
+  background_image?: string | null;
 }) {
   const supabase = await getAdminClient();
   if (!supabase) return { error: "Unauthorized" };
@@ -112,6 +113,7 @@ export async function updateDesignStyle(
     status?: ItemStatus;
     og_image?: string | null;
     atmosphere_image?: string | null;
+    background_image?: string | null;
   }
 ) {
   const supabase = await getAdminClient();

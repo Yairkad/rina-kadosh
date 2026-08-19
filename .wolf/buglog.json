@@ -2618,6 +2618,86 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-08-19T18:25:29.858Z"
+    },
+    {
+      "id": "bug-161",
+      "timestamp": "2026-08-19T19:03:59.276Z",
+      "error_message": "CSS fix: name_he",
+      "file": "components/admin/CatalogManager.tsx",
+      "root_cause": "name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image → et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image, atmosphere_image: et.atmosphere_image",
+      "fix": "Changed name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image → et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image, atmosphere_image: et.atmosphere_image",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T19:03:59.276Z"
+    },
+    {
+      "id": "bug-162",
+      "timestamp": "2026-08-19T19:04:52.600Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/[locale]/(public)/catalog/[event]/page.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T19:04:52.600Z"
+    },
+    {
+      "id": "bug-163",
+      "timestamp": "2026-08-19T19:17:17.438Z",
+      "error_message": "CSS fix: name_he",
+      "file": "components/admin/CatalogManager.tsx",
+      "root_cause": "name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, og_image: style.og_image, atmosphere_image: style.atmosphere_image → style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, og_image: style.og_image, atmosphere_image: style.atmosphere_image, background_image: style.background_image",
+      "fix": "Changed name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, og_image: style.og_image, atmosphere_image: style.atmosphere_image → style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, og_image: style.og_image, atmosphere_image: style.atmosphere_image, background_image: style.background_image",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T19:17:17.438Z"
+    },
+    {
+      "id": "bug-164",
+      "timestamp": "2026-08-19T19:17:45.485Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/admin/(protected)/catalog/page.tsx",
+      "root_cause": "Had \"id, event_type_id, name_he, name_en, slug, displa",
+      "fix": "Changed to \"id, event_type_id, name_he, name_en, slug, displa",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-08-19T19:18:00.352Z"
+    },
+    {
+      "id": "bug-165",
+      "timestamp": "2026-08-19T19:18:14.174Z",
+      "error_message": "Type error",
+      "file": "app/[locale]/(public)/catalog/[event]/[style]/page.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T19:18:14.174Z"
     }
   ]
 }

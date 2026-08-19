@@ -18,7 +18,7 @@ import { reorderProducts } from "@/app/admin/actions/products";
 type ItemStatus = "draft" | "published" | "archived";
 
 type EventType = { id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; image?: string | null; atmosphere_image?: string | null };
-type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; og_image?: string | null; atmosphere_image?: string | null };
+type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; og_image?: string | null; atmosphere_image?: string | null; background_image?: string | null };
 type Product = { id: string; name_he: string; status: string; design_style_id: string | null; event_type_id: string | null; display_order?: number };
 type FormData = { name_he: string; name_en: string; display_order: number; status: ItemStatus; event_type_id?: string };
 
@@ -35,10 +35,10 @@ function toSlug(text: string) {
   return text.toLowerCase().trim().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 }
 
-function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage, showOgImage, showAtmosphereImage }: {
-  initial: FormData & { image?: string | null; og_image?: string | null; atmosphere_image?: string | null };
-  onSave: (d: FormData & { image?: string | null; og_image?: string | null; atmosphere_image?: string | null }) => void;
-  onCancel: () => void; loading: boolean; error: string; label: string; showImage?: boolean; showOgImage?: boolean; showAtmosphereImage?: boolean;
+function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage, showOgImage, showAtmosphereImage, showBackgroundImage }: {
+  initial: FormData & { image?: string | null; og_image?: string | null; atmosphere_image?: string | null; background_image?: string | null };
+  onSave: (d: FormData & { image?: string | null; og_image?: string | null; atmosphere_image?: string | null; background_image?: string | null }) => void;
+  onCancel: () => void; loading: boolean; error: string; label: string; showImage?: boolean; showOgImage?: boolean; showAtmosphereImage?: boolean; showBackgroundImage?: boolean;
 }) {
   const [form, setForm] = useState(initial);
   const set = (k: keyof typeof form, v: string | number | null) => setForm((f) => ({ ...f, [k]: v }));
@@ -127,6 +127,19 @@ function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage,
             value={form.atmosphere_image}
             onUpload={(url) => set("atmosphere_image", url)}
             onRemove={() => set("atmosphere_image", null)}
+          />
+        </div>
+      )}
+      {showBackgroundImage && (
+        <div>
+          <label className="block text-xs text-stone-500 mb-1.5">רקע מאחורי המוצרים בקולקציה</label>
+          <p className="text-xs text-stone-400 mb-2">תחליף לרקע השיש הכללי, רק בעמוד הקולקציה הזו — מומלץ 1920×1080px</p>
+          <ImageUpload
+            bucket="catalog"
+            folder="backgrounds"
+            value={form.background_image}
+            onUpload={(url) => set("background_image", url)}
+            onRemove={() => set("background_image", null)}
           />
         </div>
       )}
@@ -268,8 +281,8 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
             {/* ── Event Type Header ── */}
             {editingEventType === et.id ? (
               <div className="p-4 bg-white">
-                <ItemForm label="עריכת סוג אירוע" showImage
-                  initial={{ name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image }}
+                <ItemForm label="עריכת סוג אירוע" showImage showAtmosphereImage
+                  initial={{ name_he: et.name_he, name_en: et.name_en, display_order: et.display_order, status: et.status, image: et.image, atmosphere_image: et.atmosphere_image }}
                   loading={isPending} error={formError}
                   onCancel={() => { setEditingEventType(null); setFormError(""); }}
                   onSave={(data) => handleAction(() => updateEventType(et.id, data))} />
@@ -322,8 +335,8 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
                     <div key={style.id} className="bg-white rounded-xl border border-stone-200 overflow-hidden">
                       {editingStyle === style.id ? (
                         <div className="p-3">
-                          <ItemForm label="עריכת סגנון" showOgImage showAtmosphereImage
-                            initial={{ name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, og_image: style.og_image, atmosphere_image: style.atmosphere_image }}
+                          <ItemForm label="עריכת סגנון" showOgImage showAtmosphereImage showBackgroundImage
+                            initial={{ name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, og_image: style.og_image, atmosphere_image: style.atmosphere_image, background_image: style.background_image }}
                             loading={isPending} error={formError}
                             onCancel={() => { setEditingStyle(null); setFormError(""); }}
                             onSave={(data) => handleAction(() => updateDesignStyle(style.id, data))} />
