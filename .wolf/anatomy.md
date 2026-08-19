@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-08-19T07:57:04.846Z
-> Files: 143 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-08-19T18:25:29.816Z
+> Files: 144 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/plans/
 
@@ -13,6 +13,7 @@
 - `design_references.md` — Design References — Rina Kadosh (~1509 tok)
 - `design_todo_2026_08_11.md` — TODO עיצוב/תוכן — Rina Kadosh (נפתח 2026-08-11) (~934 tok)
 - `MEMORY.md` — Memory Index — Rina Kadosh Project (~213 tok)
+- `vercel_workflow.md` — $dep.state → READY / ERROR / BUILDING (~521 tok)
 
 ## ../../../.claude/skills/supabase-keepalive/
 
@@ -87,7 +88,7 @@
 
 ## app/[locale]/(public)/catalog/[event]/[style]/
 
-- `page.tsx` — revalidate (~2818 tok)
+- `page.tsx` — revalidate (~2798 tok)
 
 ## app/[locale]/(public)/catalog/[event]/[style]/[product]/
 
@@ -301,7 +302,7 @@
 ## lib/
 
 - `phone.ts` — Exports sanitizePhone, isValidPhone, PHONE_ERROR_HE, PHONE_ERROR_EN (~102 tok)
-- `utils.ts` — Rewrites a Supabase Storage public URL to a same-origin path (/api/media/...). (~196 tok)
+- `utils.ts` — Exports cn (~49 tok)
 
 ## lib/supabase/
 

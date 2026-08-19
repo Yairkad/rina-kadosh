@@ -6,7 +6,6 @@ import { getLocale, getTranslations } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
 import ProductCard from "@/components/catalog/ProductCard";
-import { toProxiedMediaUrl } from "@/lib/utils";
 
 interface Props {
   params: Promise<{ locale: string; event: string; style: string }>;
@@ -70,7 +69,7 @@ export default async function StylePage({ params }: Props) {
           {designStyle.atmosphere_image ? (
             isAtmosphereVideo ? (
               <video
-                src={toProxiedMediaUrl(designStyle.atmosphere_image)}
+                src={designStyle.atmosphere_image}
                 autoPlay
                 muted
                 loop

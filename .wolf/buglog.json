@@ -2602,6 +2602,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-08-19T07:52:10.048Z"
+    },
+    {
+      "id": "bug-160",
+      "timestamp": "2026-08-19T18:25:29.858Z",
+      "error_message": "Significant refactor of ",
+      "file": "lib/utils.ts",
+      "root_cause": "11 lines replaced/restructured",
+      "fix": "Rewrote 16→3 lines (11 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-19T18:25:29.858Z"
     }
   ]
 }

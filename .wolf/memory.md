@@ -1,6 +1,7 @@
 # Memory
 
 > Chronological action log. Hooks and AI append to this file automatically.
+| 21:28 | Reverted /api/media proxy (built to work around Netfree blocking supabase.co atmosphere video) — user confirmed it didn't work in production either; real fix was requesting Netfree to whitelist the specific Supabase link directly (no code) | app/api/media/[...path]/route.ts (deleted), lib/utils.ts, app/[locale]/(public)/catalog/[event]/[style]/page.tsx | tsc clean, pushing revert | ~900 |
 | 10:34 | Fixed bug-155 (user report: uploaded video not showing in admin or public site): (1) ImageUpload.tsx MIME check now falls back to file extension (fixes .mov reporting empty file.type on Windows), explicit contentType passed to Supabase upload; (2) catalog.ts's 7 mutation functions were missing public /he+en/catalog revalidatePath (only had /admin/catalog) — added, matching products.ts/bundles.ts/gallery.ts pattern | components/admin/ImageUpload.tsx, app/admin/actions/catalog.ts | tsc clean, logged to buglog.json bug-155, not yet re-tested by user | ~2400 |
 | 10:15 | Redesigned circle+square composition on /catalog/[event] style rows per user feedback (2 iterations): circle now large/dominant, small pattern square peeks out from behind at one corner, no ring/frame on circle | app/[locale]/(public)/catalog/[event]/page.tsx | tsc clean, verified via designqc screenshot (real data: /catalog/y) | ~1400 |
 | 10:06 | TODO item 2 done: redesigned ProcessSteps (cards w/ lucide icons, faint gold number watermark, gold underline hover, full-bleed GeometricPattern bg) — replaced flat olive band + plain circles. Fixed text-[var(--gold)]/10 opacity-modifier not rendering (color-mix silently failed in headless capture) by switching to separate `opacity-10` utility | components/home/ProcessSteps.tsx | tsc clean, verified via designqc desktop+mobile screenshots | ~2100 |
@@ -1180,3 +1181,8 @@
 | 10:56 | Edited .gitignore | 2→3 lines | ~18 |
 | 10:56 | Edited .gitignore | 4→5 lines | ~14 |
 | 10:57 | Edited .gitignore | 3→6 lines | ~31 |
+| 11:02 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/vercel_workflow.md | 1→3 lines | ~266 |
+| 11:02 | Session end: 40 writes across 17 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 22 reads | ~27688 tok |
+| 21:24 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | 2→1 lines | ~17 |
+| 21:24 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | 3→3 lines | ~28 |
+| 21:25 | Edited lib/utils.ts | removed 16 lines | ~23 |
