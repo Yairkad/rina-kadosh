@@ -84,17 +84,17 @@ export default function ProductCard({
           </div>
         </div>
 
-        {/* Text */}
-        <div className="mt-3.5 px-1 text-center">
-          <h3 className="text-[15px] font-medium text-[var(--charcoal)] leading-snug line-clamp-2 tracking-[0.025em]">
+        {/* Text — name flush to the start (right in RTL), price flush to the end (left) */}
+        <div className="mt-3.5 px-1 flex items-start justify-between gap-2">
+          <h3 className="flex-1 text-start text-[15px] font-medium text-[var(--charcoal)] leading-snug line-clamp-2 tracking-[0.025em]">
             {name}
           </h3>
-          <div className="mt-1.5 flex items-baseline justify-center gap-2">
-            <span className="text-[15px] font-semibold text-[var(--charcoal)] tracking-[0.02em]">
+          <div className="shrink-0 flex flex-col items-end text-end">
+            <span className="text-[15px] font-semibold text-[var(--charcoal)] tracking-[0.02em] whitespace-nowrap">
               ₪{price.toLocaleString("he-IL")}
             </span>
             {minType && minValue && (
-              <span className="text-xs text-[var(--muted)]">
+              <span className="text-xs text-[var(--muted)] whitespace-nowrap">
                 {minType === "units" ? `מינ׳ ${minValue} יח׳` : `מינ׳ ₪${minValue}`}
               </span>
             )}

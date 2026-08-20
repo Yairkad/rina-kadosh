@@ -1,6 +1,7 @@
 # Memory
 
 > Chronological action log. Hooks and AI append to this file automatically.
+| 10:07 | Added optional mobile-specific override for design_styles.atmosphere_image (migration 016, NOT YET APPLIED) — separate video/image can be uploaded for mobile vs desktop, avoids the crop tradeoff discussed with user (single ratio can't fit both well) | supabase/migrations/016_style_atmosphere_mobile.sql, components/admin/CatalogManager.tsx, app/admin/actions/catalog.ts, app/admin/(protected)/catalog/page.tsx, app/[locale]/(public)/catalog/[event]/[style]/page.tsx | tsc clean, confirmed column missing live (42703) — user must run migration SQL | ~1600 |
 | 22:19 | Added design_styles.background_image (new column, migration 015 NOT YET APPLIED to live DB) — lets admin override the marble-bg behind the product grid on /catalog/[event]/[style], per collection. Wired: admin form field, catalog.ts actions, admin catalog.ts select, public style page. | supabase/migrations/015_style_background_image.sql, components/admin/CatalogManager.tsx, app/admin/actions/catalog.ts, app/admin/(protected)/catalog/page.tsx, app/[locale]/(public)/catalog/[event]/[style]/page.tsx | tsc clean, confirmed column missing live (42703) — user must run migration SQL manually, no DB write access in this session | ~1800 |
 | 22:07 | Wired up event_types.atmosphere_image (existed in DB since migration 002, never used anywhere) — admin can now upload a per-category background image/video on /catalog/[event], falls back to shared marble-bg.jpg when unset | components/admin/CatalogManager.tsx, app/[locale]/(public)/catalog/[event]/page.tsx | tsc clean, verified all 5 event_types currently null (no surprise change), designqc screenshot pending | ~1200 |
 | 21:28 | Reverted /api/media proxy (built to work around Netfree blocking supabase.co atmosphere video) — user confirmed it didn't work in production either; real fix was requesting Netfree to whitelist the specific Supabase link directly (no code) | app/api/media/[...path]/route.ts (deleted), lib/utils.ts, app/[locale]/(public)/catalog/[event]/[style]/page.tsx | tsc clean, pushing revert | ~900 |
@@ -1213,3 +1214,30 @@
 | 22:18 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | CSS: backgroundImage | ~74 |
 | 22:19 | Session end: 56 writes across 18 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 23 reads | ~29933 tok |
 | 22:26 | Session end: 56 writes across 18 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 23 reads | ~29933 tok |
+| 22:37 | Session end: 56 writes across 18 files (Navbar.tsx, index.ts, layout.tsx, tailwind.config.ts, globals.css) | 23 reads | ~29933 tok |
+
+## Session: 2026-08-19 00:07
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-19 00:07
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 10:00 | Created supabase/migrations/016_style_atmosphere_mobile.sql | — | ~75 |
+| 10:01 | Edited app/admin/actions/catalog.ts | 4→5 lines | ~42 |
+| 10:02 | Edited app/admin/actions/catalog.ts | 5→6 lines | ~46 |
+| 10:02 | Edited components/admin/CatalogManager.tsx | inline fix | ~81 |
+| 10:02 | Edited components/admin/CatalogManager.tsx | 2→2 lines | ~109 |
+| 10:03 | Edited components/admin/CatalogManager.tsx | inline fix | ~46 |
+| 10:03 | Edited components/admin/CatalogManager.tsx | inline fix | ~60 |
+| 10:03 | Edited components/admin/CatalogManager.tsx | expanded (+15 lines) | ~232 |
+| 10:04 | Edited components/admin/CatalogManager.tsx | CSS: atmosphere_image_mobile | ~133 |
+| 10:04 | Edited app/admin/(protected)/catalog/page.tsx | "id, event_type_id, name_h" → "id, event_type_id, name_h" | ~44 |
+| 10:05 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | CSS: src, alt | ~137 |
+| 10:05 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | "id, name_he, name_en, atm" → "id, name_he, name_en, atm" | ~28 |
+| 10:05 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | 2→1 lines | ~24 |
+| 10:05 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | CSS: md, md | ~149 |
+| 10:08 | Session end: 14 writes across 4 files (016_style_atmosphere_mobile.sql, catalog.ts, CatalogManager.tsx, page.tsx) | 3 reads | ~13090 tok |
+| 10:22 | Edited components/catalog/ProductCard.tsx | 16→16 lines | ~248 |

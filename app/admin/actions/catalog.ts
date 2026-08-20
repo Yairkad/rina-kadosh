@@ -89,6 +89,7 @@ export async function createDesignStyle(data: {
   status: ItemStatus;
   og_image?: string | null;
   atmosphere_image?: string | null;
+  atmosphere_image_mobile?: string | null;
   background_image?: string | null;
 }) {
   const supabase = await getAdminClient();
@@ -113,6 +114,7 @@ export async function updateDesignStyle(
     status?: ItemStatus;
     og_image?: string | null;
     atmosphere_image?: string | null;
+    atmosphere_image_mobile?: string | null;
     background_image?: string | null;
   }
 ) {

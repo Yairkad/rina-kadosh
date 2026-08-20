@@ -18,7 +18,7 @@ import { reorderProducts } from "@/app/admin/actions/products";
 type ItemStatus = "draft" | "published" | "archived";
 
 type EventType = { id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; image?: string | null; atmosphere_image?: string | null };
-type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; og_image?: string | null; atmosphere_image?: string | null; background_image?: string | null };
+type DesignStyle = { id: string; event_type_id: string; name_he: string; name_en: string; slug: string; display_order: number; status: ItemStatus; og_image?: string | null; atmosphere_image?: string | null; atmosphere_image_mobile?: string | null; background_image?: string | null };
 type Product = { id: string; name_he: string; status: string; design_style_id: string | null; event_type_id: string | null; display_order?: number };
 type FormData = { name_he: string; name_en: string; display_order: number; status: ItemStatus; event_type_id?: string };
 
@@ -35,10 +35,10 @@ function toSlug(text: string) {
   return text.toLowerCase().trim().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 }
 
-function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage, showOgImage, showAtmosphereImage, showBackgroundImage }: {
-  initial: FormData & { image?: string | null; og_image?: string | null; atmosphere_image?: string | null; background_image?: string | null };
-  onSave: (d: FormData & { image?: string | null; og_image?: string | null; atmosphere_image?: string | null; background_image?: string | null }) => void;
-  onCancel: () => void; loading: boolean; error: string; label: string; showImage?: boolean; showOgImage?: boolean; showAtmosphereImage?: boolean; showBackgroundImage?: boolean;
+function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage, showOgImage, showAtmosphereImage, showAtmosphereMobile, showBackgroundImage }: {
+  initial: FormData & { image?: string | null; og_image?: string | null; atmosphere_image?: string | null; atmosphere_image_mobile?: string | null; background_image?: string | null };
+  onSave: (d: FormData & { image?: string | null; og_image?: string | null; atmosphere_image?: string | null; atmosphere_image_mobile?: string | null; background_image?: string | null }) => void;
+  onCancel: () => void; loading: boolean; error: string; label: string; showImage?: boolean; showOgImage?: boolean; showAtmosphereImage?: boolean; showAtmosphereMobile?: boolean; showBackgroundImage?: boolean;
 }) {
   const [form, setForm] = useState(initial);
   const set = (k: keyof typeof form, v: string | number | null) => setForm((f) => ({ ...f, [k]: v }));
@@ -127,6 +127,21 @@ function ItemForm({ initial, onSave, onCancel, loading, error, label, showImage,
             value={form.atmosphere_image}
             onUpload={(url) => set("atmosphere_image", url)}
             onRemove={() => set("atmosphere_image", null)}
+          />
+        </div>
+      )}
+      {showAtmosphereMobile && (
+        <div>
+          <label className="block text-xs text-stone-500 mb-1.5">גרסת מובייל לתמונת האווירה (אופציונלי)</label>
+          <p className="text-xs text-stone-400 mb-2">אם ריק — נעשה שימוש בגרסה הרגילה גם במובייל. מומלץ יחס קרוב יותר לריבוע (למשל 1080×1080)</p>
+          <ImageUpload
+            bucket="catalog"
+            folder="atmosphere"
+            allowVideo
+            maxMB={50}
+            value={form.atmosphere_image_mobile}
+            onUpload={(url) => set("atmosphere_image_mobile", url)}
+            onRemove={() => set("atmosphere_image_mobile", null)}
           />
         </div>
       )}
@@ -335,8 +350,8 @@ export default function CatalogManager({ initialEventTypes, initialStyles, initi
                     <div key={style.id} className="bg-white rounded-xl border border-stone-200 overflow-hidden">
                       {editingStyle === style.id ? (
                         <div className="p-3">
-                          <ItemForm label="עריכת סגנון" showOgImage showAtmosphereImage showBackgroundImage
-                            initial={{ name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, og_image: style.og_image, atmosphere_image: style.atmosphere_image, background_image: style.background_image }}
+                          <ItemForm label="עריכת סגנון" showOgImage showAtmosphereImage showAtmosphereMobile showBackgroundImage
+                            initial={{ name_he: style.name_he, name_en: style.name_en, display_order: style.display_order, status: style.status, event_type_id: et.id, og_image: style.og_image, atmosphere_image: style.atmosphere_image, atmosphere_image_mobile: style.atmosphere_image_mobile, background_image: style.background_image }}
                             loading={isPending} error={formError}
                             onCancel={() => { setEditingStyle(null); setFormError(""); }}
                             onSave={(data) => handleAction(() => updateDesignStyle(style.id, data))} />

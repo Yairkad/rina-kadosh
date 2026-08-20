@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-08-19T19:18:14.092Z
-> Files: 145 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-08-20T07:22:01.975Z
+> Files: 146 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/plans/
 
@@ -88,7 +88,7 @@
 
 ## app/[locale]/(public)/catalog/[event]/[style]/
 
-- `page.tsx` — revalidate (~2842 tok)
+- `page.tsx` — Renders a single atmosphere source as video or image, based on its file extension. (~2914 tok)
 
 ## app/[locale]/(public)/catalog/[event]/[style]/[product]/
 
@@ -134,7 +134,7 @@
 
 ## app/admin/(protected)/catalog/
 
-- `page.tsx` — CatalogPage (~384 tok)
+- `page.tsx` — CatalogPage (~391 tok)
 
 ## app/admin/(protected)/coupons/
 
@@ -191,7 +191,7 @@
 ## app/admin/actions/
 
 - `bundles.ts` — Exports BundleItem, BundleFormData, createBundle, updateBundle, archiveBundle (~773 tok)
-- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1463 tok)
+- `catalog.ts` — Exports createEventType, updateEventType, deleteEventType, createDesignStyle + 3 more (~1488 tok)
 - `coupons.ts` — Exports CouponData, createCoupon, updateCoupon, deleteCoupon (~535 tok)
 - `create-order.ts` — Exports ManualOrderItem, ManualOrderData, createManualOrder (~465 tok)
 - `gallery.ts` — Exports GalleryFormData, createGalleryItem, updateGalleryItem, deleteGalleryItem (~362 tok)
@@ -229,7 +229,7 @@
 - `ArchiveBundleButton.tsx` — ArchiveBundleButton — uses useRouter (~284 tok)
 - `ArchiveProductButton.tsx` — ArchiveProductButton — uses useRouter (~276 tok)
 - `BundleForm.tsx` — Field — uses useRouter, useState, useEffect (~3851 tok)
-- `CatalogManager.tsx` — EMPTY_FORM (~7538 tok)
+- `CatalogManager.tsx` — EMPTY_FORM (~7798 tok)
 - `CouponsManager.tsx` — EMPTY — uses useState (~2779 tok)
 - `CreateOrderForm.tsx` — Input — uses useState, useEffect, useRouter (~3824 tok)
 - `DeleteGalleryItemButton.tsx` — DeleteGalleryItemButton — uses useRouter (~227 tok)
@@ -251,7 +251,7 @@
 ## components/catalog/
 
 - `ExpandingEventCards.tsx` — ExpandingEventCards (~1667 tok)
-- `ProductCard.tsx` — ProductCard — uses useState (~910 tok)
+- `ProductCard.tsx` — ProductCard (~952 tok)
 
 ## components/gallery/
 
@@ -336,3 +336,4 @@
 - `014_products_display_order.sql` — Migration 014: Add display_order to products for drag-to-reorder within a style, backfilled per design_style (~180 tok)
 - `014_products_display_order.sql` — ============================================================ (~211 tok)
 - `015_style_background_image.sql` — Migration 015: Add background_image to design_styles (~88 tok)
+- `016_style_atmosphere_mobile.sql` — Migration 016: Add atmosphere_image_mobile to design_styles (~75 tok)
