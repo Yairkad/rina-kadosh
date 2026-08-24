@@ -1,6 +1,7 @@
 # Memory
 
 > Chronological action log. Hooks and AI append to this file automatically.
+| 22:04 | Hero rebuilt as 3-photo crossfade carousel (real event photos from ATAR/1-3.jpg, all 1920x1080 — copied to public/hero/); logo swapped to landscape logo2.png masked to exact #222813, h-16; navbar "home" link removed (logo click covers it), catalog/contact labels updated. Dev server moved to :3001 (something else is on :3000). | components/home/HeroSection.tsx, components/layout/Navbar.tsx, messages/he.json, messages/en.json, public/hero/*, public/images/logo2.png | tsc clean, verified via designqc screenshot on :3001 — looks good. 2 new nav items (שולחן שוק, ברים ממותגים) pending — user hasn't said what page they link to | ~2400 |
 | 10:07 | Added optional mobile-specific override for design_styles.atmosphere_image (migration 016, NOT YET APPLIED) — separate video/image can be uploaded for mobile vs desktop, avoids the crop tradeoff discussed with user (single ratio can't fit both well) | supabase/migrations/016_style_atmosphere_mobile.sql, components/admin/CatalogManager.tsx, app/admin/actions/catalog.ts, app/admin/(protected)/catalog/page.tsx, app/[locale]/(public)/catalog/[event]/[style]/page.tsx | tsc clean, confirmed column missing live (42703) — user must run migration SQL | ~1600 |
 | 22:19 | Added design_styles.background_image (new column, migration 015 NOT YET APPLIED to live DB) — lets admin override the marble-bg behind the product grid on /catalog/[event]/[style], per collection. Wired: admin form field, catalog.ts actions, admin catalog.ts select, public style page. | supabase/migrations/015_style_background_image.sql, components/admin/CatalogManager.tsx, app/admin/actions/catalog.ts, app/admin/(protected)/catalog/page.tsx, app/[locale]/(public)/catalog/[event]/[style]/page.tsx | tsc clean, confirmed column missing live (42703) — user must run migration SQL manually, no DB write access in this session | ~1800 |
 | 22:07 | Wired up event_types.atmosphere_image (existed in DB since migration 002, never used anywhere) — admin can now upload a per-category background image/video on /catalog/[event], falls back to shared marble-bg.jpg when unset | components/admin/CatalogManager.tsx, app/[locale]/(public)/catalog/[event]/page.tsx | tsc clean, verified all 5 event_types currently null (no surprise change), designqc screenshot pending | ~1200 |
@@ -1241,3 +1242,30 @@
 | 10:05 | Edited app/[locale]/(public)/catalog/[event]/[style]/page.tsx | CSS: md, md | ~149 |
 | 10:08 | Session end: 14 writes across 4 files (016_style_atmosphere_mobile.sql, catalog.ts, CatalogManager.tsx, page.tsx) | 3 reads | ~13090 tok |
 | 10:22 | Edited components/catalog/ProductCard.tsx | 16→16 lines | ~248 |
+| 16:55 | Session end: 15 writes across 5 files (016_style_atmosphere_mobile.sql, catalog.ts, CatalogManager.tsx, page.tsx, ProductCard.tsx) | 4 reads | ~14473 tok |
+| 17:18 | Session end: 15 writes across 5 files (016_style_atmosphere_mobile.sql, catalog.ts, CatalogManager.tsx, page.tsx, ProductCard.tsx) | 4 reads | ~14473 tok |
+
+## Session: 2026-08-24 19:52
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-24 19:52
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-24 19:53
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 21:48 | Edited components/home/HeroSection.tsx | modified HeroSection() | ~396 |
+| 21:49 | Edited components/home/HeroSection.tsx | inline fix | ~12 |
+| 21:50 | Session end: 2 writes across 1 files (HeroSection.tsx) | 4 reads | ~1615 tok |
+| 21:50 | designqc: captured 2 screenshots (40KB, ~5000 tok) | / | ready for eval | ~0 |
+| 21:51 | Session end: 2 writes across 1 files (HeroSection.tsx) | 4 reads | ~1615 tok |
+| 21:55 | Edited components/layout/Navbar.tsx | charcoal() → color() | ~148 |
+| 21:57 | designqc: captured 6 screenshots (345KB, ~15000 tok) | / | ready for eval | ~0 |
+| 22:03 | Edited components/layout/Navbar.tsx | 6→5 lines | ~56 |
+| 22:03 | Edited messages/he.json | 4→4 lines | ~34 |
+| 22:03 | Edited messages/en.json | inline fix | ~10 |

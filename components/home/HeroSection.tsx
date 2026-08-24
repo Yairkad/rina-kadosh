@@ -1,36 +1,48 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { GeometricPattern } from "@/components/ui/GeometricPattern";
+
+const HERO_IMAGES = ["/hero/hero-1.jpg", "/hero/hero-2.jpg", "/hero/hero-3.jpg"];
+const SLIDE_DURATION_MS = 5500;
 
 export default function HeroSection() {
   const t = useTranslations("home");
   const locale = useLocale();
+  const [slide, setSlide] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setSlide((i) => (i + 1) % HERO_IMAGES.length);
+    }, SLIDE_DURATION_MS);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <section className="relative -mt-16 min-h-[100dvh] flex items-center justify-center overflow-hidden">
-      {/* Marble background */}
-      <Image
-        src="/textures/marble-bg.jpg"
-        alt=""
-        fill
-        priority
-        quality={65}
-        sizes="100vw"
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-white/55" />
-
-      {/* Decorative pattern — full-bleed across the whole hero background */}
-      <GeometricPattern
-        className="absolute inset-0 pointer-events-none"
-        color="var(--terracotta)"
-        opacity={0.08}
-        size={48}
-      />
+      {/* Rotating background photos, crossfaded */}
+      {HERO_IMAGES.map((src, i) => (
+        <motion.div
+          key={src}
+          className="absolute inset-0"
+          animate={{ opacity: i === slide ? 1 : 0 }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+        >
+          <Image
+            src={src}
+            alt=""
+            fill
+            priority={i === 0}
+            quality={80}
+            sizes="100vw"
+            className="object-cover"
+          />
+        </motion.div>
+      ))}
+      <div className="absolute inset-0 bg-white/35" />
 
       {/* Main content */}
       <div className="relative text-center px-4 max-w-3xl mx-auto">

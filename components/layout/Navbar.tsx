@@ -31,7 +31,6 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { href: `/${locale}`, label: t("home") },
     { href: `/${locale}/catalog`, label: t("catalog") },
     { href: `/${locale}/gallery`, label: t("gallery") },
     { href: `/${locale}/contact`, label: t("contact") },
@@ -49,17 +48,17 @@ export default function Navbar() {
         transition={{ duration: 0.3 }}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          {/* Logo — masked to charcoal (source PNG is olive) */}
+          {/* Logo — masked to force the exact brand color (source PNG is already close, but not guaranteed exact) */}
           <Link href={`/${locale}`} className="shrink-0">
             <span
               role="img"
               aria-label="Rina Kadosh"
-              className="block h-14"
+              className="block h-16"
               style={{
-                aspectRatio: "220 / 158",
-                backgroundColor: "var(--charcoal)",
-                WebkitMaskImage: "url(/images/logo.png)",
-                maskImage: "url(/images/logo.png)",
+                aspectRatio: "3900 / 1000",
+                backgroundColor: "#222813",
+                WebkitMaskImage: "url(/images/logo2.png)",
+                maskImage: "url(/images/logo2.png)",
                 WebkitMaskSize: "contain",
                 maskSize: "contain",
                 WebkitMaskRepeat: "no-repeat",
