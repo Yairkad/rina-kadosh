@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-08-24T19:03:52.982Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-08-24T19:51:47.994Z
 > Files: 146 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/plans/
@@ -261,14 +261,14 @@
 ## components/home/
 
 - `AboutSection.tsx` — STATS (~749 tok)
-- `HeroSection.tsx` — HERO_IMAGES (~1202 tok)
+- `HeroSection.tsx` — HERO_IMAGES (~1283 tok)
 - `ProcessSteps.tsx` — ProcessSteps (~897 tok)
 
 ## components/layout/
 
 - `BottomNav.tsx` — BottomNav (~436 tok)
 - `Footer.tsx` — Footer (~718 tok)
-- `Navbar.tsx` — Navbar (~1917 tok)
+- `Navbar.tsx` — Navbar (~1943 tok)
 - `WhatsAppButton.tsx` — WHATSAPP_NUMBER — uses useState (~870 tok)
 
 ## components/product/
@@ -311,8 +311,8 @@
 
 ## messages/
 
-- `en.json` (~1260 tok)
-- `he.json` (~1150 tok)
+- `en.json` (~1306 tok)
+- `he.json` (~1192 tok)
 
 ## supabase/.temp/
 

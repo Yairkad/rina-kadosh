@@ -32,6 +32,8 @@ export default function Navbar() {
 
   const navLinks = [
     { href: `/${locale}/catalog`, label: t("catalog") },
+    { href: "#", label: t("brandedBars") },
+    { href: "#", label: t("marketTable") },
     { href: `/${locale}/gallery`, label: t("gallery") },
     { href: `/${locale}/contact`, label: t("contact") },
   ];
@@ -53,7 +55,7 @@ export default function Navbar() {
             <span
               role="img"
               aria-label="Rina Kadosh"
-              className="block h-16"
+              className="block h-14"
               style={{
                 aspectRatio: "3900 / 1000",
                 backgroundColor: "#222813",

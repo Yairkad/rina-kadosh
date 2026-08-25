@@ -44,41 +44,53 @@ export default function HeroSection() {
       ))}
       <div className="absolute inset-0 bg-white/35" />
 
-      {/* Main content */}
-      <div className="relative text-center px-4 max-w-3xl mx-auto">
+      {/* Circles motif — spans the full hero height, tiled across the width, behind the content */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-60"
+        style={{
+          backgroundImage: "url(/hero/circles-pattern.png)",
+          backgroundRepeat: "repeat-x",
+          backgroundSize: "auto 100%",
+          backgroundPosition: "center",
+        }}
+      />
+
+      {/* Main content — pinned to the physical left regardless of RTL document direction */}
+      <div
+        className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center text-center"
+        style={{ left: "14%" }}
+      >
         <motion.div
-          className="flex items-center justify-center gap-3 mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          className="w-28 sm:w-36"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.6 }}
+          transition={{ duration: 1, ease: "easeOut" }}
         >
-          <span aria-hidden className="text-[var(--terracotta)] text-xs">✦</span>
-          <span className="text-xs font-semibold text-[var(--terracotta)] tracking-[0.25em] uppercase">
-            {t("tagline")}
-          </span>
-          <span aria-hidden className="text-[var(--terracotta)] text-xs">✦</span>
+          <Image
+            src="/hero/monogram.png"
+            alt="Rina Kadosh"
+            width={1604}
+            height={1000}
+            className="w-full h-auto"
+          />
         </motion.div>
 
         <motion.h1
-          className="text-5xl sm:text-6xl md:text-7xl font-bold text-[var(--charcoal)] leading-tight"
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, delay: 0.15 }}
+          className="mt-5 text-2xl sm:text-3xl md:text-4xl font-bold leading-tight whitespace-nowrap"
+          style={{ color: "#222813" }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.6 }}
+          transition={{ duration: 0.85, delay: 0.25 }}
         >
-          {t("title")}
+          {t("hero_line1")}
+          <br />
+          {t("hero_line2")}
         </motion.h1>
 
-        <motion.p
-          className="mt-6 text-lg sm:text-xl text-[var(--muted)] max-w-xl mx-auto leading-relaxed"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.32 }}
-        >
-          {t("subtitle")}
-        </motion.p>
-
         <motion.div
-          className="mt-10 flex flex-wrap items-center justify-center gap-4"
+          className="mt-8 flex flex-wrap items-center justify-center gap-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.48 }}

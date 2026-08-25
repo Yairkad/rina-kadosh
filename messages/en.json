@@ -2,6 +2,8 @@
   "nav": {
     "home": "Welcome",
     "catalog": "Branded Products",
+    "brandedBars": "Branded Bars",
+    "marketTable": "Market Table",
     "gallery": "Happy Customers",
     "contact": "Nice to Meet You",
     "cart": "Cart"
@@ -11,6 +13,8 @@
     "subtitle": "Branded printed products for memorable events",
     "cta": "Catalog",
     "tagline": "Because every detail matters",
+    "hero_line1": "Raising the Standard",
+    "hero_line2": "In the World of Events",
     "events_title": "Every event, its own style",
     "events_subtitle": "Weddings, bar mitzvahs, Shabbat, corporate — personalized design for every occasion",
     "why_title": "Why choose Rina Kadosh?",

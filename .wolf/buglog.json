@@ -2794,6 +2794,70 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-08-24T19:03:53.010Z"
+    },
+    {
+      "id": "bug-172",
+      "timestamp": "2026-08-24T19:23:23.258Z",
+      "error_message": "CSS fix: sm",
+      "file": "components/home/HeroSection.tsx",
+      "root_cause": "sm: text-xl text-[var(--muted)] max-w-xl mx-auto leading-relaxed\" → text-5xl md:text-6xl font-bold text-[var(--charcoal)] leading-tight\"",
+      "fix": "Changed sm: text-xl text-[var(--muted)] max-w-xl mx-auto leading-relaxed\" → text-5xl md:text-6xl font-bold text-[var(--charcoal)] leading-tight\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-24T19:23:23.258Z"
+    },
+    {
+      "id": "bug-173",
+      "timestamp": "2026-08-24T19:25:41.046Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/layout/Navbar.tsx",
+      "root_cause": "Had \"block h-16\"",
+      "fix": "Changed to \"block h-14\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-24T19:25:41.046Z"
+    },
+    {
+      "id": "bug-174",
+      "timestamp": "2026-08-24T19:32:48.219Z",
+      "error_message": "CSS fix: sm",
+      "file": "components/home/HeroSection.tsx",
+      "root_cause": "sm: text-5xl md:text-6xl font-bold text-[var(--charcoal)] leading-tight\" → text-5xl md:text-6xl font-bold leading-tight\"",
+      "fix": "Changed sm: text-5xl md:text-6xl font-bold text-[var(--charcoal)] leading-tight\" → text-5xl md:text-6xl font-bold leading-tight\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-08-24T19:37:43.340Z"
+    },
+    {
+      "id": "bug-175",
+      "timestamp": "2026-08-24T19:45:10.571Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/home/HeroSection.tsx",
+      "root_cause": "Had \"mt-8 flex flex-wrap items-center gap-4\"",
+      "fix": "Changed to \"mt-8 flex flex-wrap items-center justify-center g",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-08-24T19:46:04.195Z"
     }
   ]
 }
