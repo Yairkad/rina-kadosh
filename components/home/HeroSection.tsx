@@ -1,49 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 
-const HERO_IMAGES = ["/hero/hero-1.jpg", "/hero/hero-2.jpg", "/hero/hero-3.jpg"];
-const SLIDE_DURATION_MS = 5500;
+// Photo carousel removed until better-quality hero photos are provided —
+// see components/home/HeroSection.tsx entry in .wolf/cerebrum.md. Also
+// need a dedicated (not just scaled-down) mobile hero image when those arrive.
 
 export default function HeroSection() {
   const t = useTranslations("home");
   const locale = useLocale();
-  const [slide, setSlide] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setSlide((i) => (i + 1) % HERO_IMAGES.length);
-    }, SLIDE_DURATION_MS);
-    return () => clearInterval(id);
-  }, []);
 
   return (
-    <section className="relative -mt-16 min-h-[100dvh] flex items-center justify-center overflow-hidden">
-      {/* Rotating background photos, crossfaded */}
-      {HERO_IMAGES.map((src, i) => (
-        <motion.div
-          key={src}
-          className="absolute inset-0"
-          animate={{ opacity: i === slide ? 1 : 0 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
-        >
-          <Image
-            src={src}
-            alt=""
-            fill
-            priority={i === 0}
-            quality={80}
-            sizes="100vw"
-            className="object-cover"
-          />
-        </motion.div>
-      ))}
-      <div className="absolute inset-0 bg-white/35" />
-
+    <section className="relative -mt-16 min-h-[100dvh] flex items-center justify-center overflow-hidden bg-marble bg-cover bg-center">
       {/* Circles motif — spans the full hero height, tiled across the width, behind the content */}
       <div
         className="absolute inset-0 pointer-events-none opacity-60"
@@ -55,13 +26,10 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Main content — pinned to the physical left regardless of RTL document direction */}
-      <div
-        className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center text-center"
-        style={{ left: "14%" }}
-      >
+      {/* Main content — centered on the physical middle of the section regardless of RTL document direction */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center px-4">
         <motion.div
-          className="w-28 sm:w-36"
+          className="w-40 sm:w-52 md:w-60"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.6 }}
@@ -77,7 +45,7 @@ export default function HeroSection() {
         </motion.div>
 
         <motion.h1
-          className="mt-5 text-2xl sm:text-3xl md:text-4xl font-bold leading-tight whitespace-nowrap"
+          className="mt-6 font-heading text-3xl sm:text-4xl md:text-5xl font-bold leading-tight whitespace-nowrap"
           style={{ color: "#222813" }}
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

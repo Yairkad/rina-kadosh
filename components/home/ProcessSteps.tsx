@@ -32,7 +32,7 @@ export default function ProcessSteps() {
           transition={{ duration: 0.6 }}
         >
           <span aria-hidden className="text-[var(--terracotta)] text-xs">✦</span>
-          <h2 className="mt-3 text-2xl sm:text-3xl font-semibold text-[var(--charcoal)]">
+          <h2 className="mt-3 font-heading text-2xl sm:text-3xl font-semibold text-[var(--charcoal)]">
             {t("process_title")}
           </h2>
         </motion.div>

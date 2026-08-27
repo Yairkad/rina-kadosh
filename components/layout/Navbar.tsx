@@ -74,7 +74,7 @@ export default function Navbar() {
           {/* Desktop links */}
           <ul className="hidden md:flex items-center gap-4">
             {navLinks.map((link, i) => (
-              <li key={link.href} className="flex items-center gap-4">
+              <li key={link.label} className="flex items-center gap-4">
                 <Link
                   href={link.href}
                   className="text-sm font-medium text-[var(--charcoal)] hover:text-[var(--terracotta)] transition-colors relative group"
@@ -138,7 +138,7 @@ export default function Navbar() {
             >
               <ul className="px-4 py-4 flex flex-col gap-4">
                 {navLinks.map((link) => (
-                  <li key={link.href}>
+                  <li key={link.label}>
                     <Link
                       href={link.href}
                       onClick={() => setMobileOpen(false)}

@@ -1,9 +1,9 @@
 export const revalidate = 300; // cache 5 min
 
-import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { getLocale, getTranslations } from "next-intl/server";
 import HeroSection from "@/components/home/HeroSection";
+import FloatingProducts from "@/components/home/FloatingProducts";
 import ProcessSteps from "@/components/home/ProcessSteps";
 import ExpandingEventCards from "@/components/catalog/ExpandingEventCards";
 import type { EventTypeItem } from "@/components/catalog/ExpandingEventCards";
@@ -31,41 +31,32 @@ export default async function HomePage() {
     <>
       <HeroSection />
 
-      {/* Event Type Selection — ExpandingCards */}
-      {eventItems.length > 0 && (
-        <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
-          {/* Marble texture — short strip at the very top only, ends well above the cards */}
-          <div className="absolute top-0 inset-x-0 h-[320px] sm:h-[380px] -z-20 overflow-hidden">
-            <Image
-              src="/textures/marble-bg.jpg"
-              alt=""
-              fill
-              quality={60}
-              sizes="100vw"
-              className="object-cover"
+      {/* FloatingProducts + event-type selection share one continuous marble
+          surface — no seam/fade between them, per explicit request. */}
+      <div className="relative bg-marble bg-cover bg-center">
+        <FloatingProducts />
+
+        {eventItems.length > 0 && (
+          <section className="relative isolate py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+            <GeometricPattern
+              className="absolute inset-8 sm:inset-10 lg:inset-12 -z-10"
+              color="var(--terracotta)"
+              opacity={0.14}
+              size={40}
             />
-            <div className="absolute inset-0 bg-[var(--cream)]/70" />
-          </div>
 
-          {/* Geometric pattern — inset on all 4 sides (never touches the section edges), taller than the marble strip */}
-          <GeometricPattern
-            className="absolute inset-8 sm:inset-10 lg:inset-12 -z-10"
-            color="var(--terracotta)"
-            opacity={0.14}
-            size={40}
-          />
-
-          <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl font-semibold text-[var(--charcoal)]">
-                {t("events_title")}
-              </h2>
-              <p className="mt-3 text-[var(--muted)] text-sm">{t("events_subtitle")}</p>
+            <div className="max-w-7xl mx-auto relative z-10">
+              <div className="text-center mb-10">
+                <h2 className="font-heading text-3xl font-semibold text-[var(--charcoal)]">
+                  {t("events_title")}
+                </h2>
+                <p className="mt-3 text-[var(--muted)] text-sm">{t("events_subtitle")}</p>
+              </div>
+              <ExpandingEventCards items={eventItems} />
             </div>
-            <ExpandingEventCards items={eventItems} />
-          </div>
-        </section>
-      )}
+          </section>
+        )}
+      </div>
 
       <ProcessSteps />
 

@@ -1,6 +1,18 @@
 # Memory
 
 > Chronological action log. Hooks and AI append to this file automatically.
+| 22:35 | Found the ACTUAL cause of the "tearing" bug after 3 wrong CSS-theory attempts: ran a controlled test (disabled animate-float entirely on products) and the user confirmed the glitch persisted with zero animation running — proving it was never a rendering bug. User's follow-up "only on the 2 right elements" (gift-box + wax-seal, not scroll-seal/bencher) was the real clue: those two were adjacent Illustrator artboards (13/14) and each had a stray fragment baked into its own PNG from the neighboring artboard's crop boundary (wax-seal's houndstooth pattern bled into gift-box.png's bottom-right corner; gift-box's own green/pink content bled into wax-seal.png's top-left corner) — I'd actually already spotted the gift-box fragment during an earlier unrelated inspection and didn't act on it. Fixed by clearing those two corner rectangles to transparent via PowerShell/System.Drawing (Graphics.CompositingMode=SourceCopy + FillRectangle(Transparent)) rather than cropping (preserves the images' overall dimensions/anchor). Restored animate-float on the products (was only removed as a diagnostic). | public/floating/gift-box.png, public/floating/wax-seal.png, components/home/FloatingProducts.tsx | tsc clean, verified via screenshot — fragments gone, real artwork untouched | ~4000 |
+| 22:15 | User reported the tearing glitch STILL happens after the leaf-filter fix, and separately reported GeometricPattern (circles/half-circles decoration) had disappeared from the top of the event-cards section — both regressions from this session's work, not pre-existing. (1) GeometricPattern: root cause was `-z-10` on it needing a stacking context to resolve against; wrapping the event-cards section in a new parent div (for the shared marble background) meant `-z-10` no longer resolved the same way. Fixed by adding `isolate` to the section itself (forces a local stacking context) — confirmed back in a screenshot. (2) Tearing glitch: my filter-on-leaf fix apparently wasn't the actual cause either (user said it's unchanged). New hypothesis, still unverified since it's a mid-animation-only artifact no screenshot can prove: the pearls-overlay layer has `scale(1.15)` on a full-bleed, overflow-clipped, animated (animate-float-slow) layer sitting at z-40 (top, above the gift-box) — a large static scale pushes much of the image outside the visible bounds where it gets clipped, and combined with clipping + animation this is a known Chromium tearing trigger, independent of the filter theory. Removed the scale (kept the translateX shift only) as the next fix attempt; pearls will track the shifted products less precisely as a result — asked user to verify live again. | app/[locale]/(public)/page.tsx, components/home/FloatingProducts.tsx | GeometricPattern fix confirmed via screenshot; tearing-glitch fix NOT yet confirmed — needs live browser check, this is the second failed attempt at that specific bug | ~2500 |
+| 21:55 | User asked to try Bona Nova SC (Google Fonts, Hebrew subset) as the Hebrew font. next/font/google doesn't bundle the SC variant (only non-SC "Bona Nova" — checked node_modules/next/dist/compiled/@next/font/dist/google/index.d.ts), so self-hosted it manually like happyBirthday.ttf: curled the actual CSS2 API response with a modern Chrome UA to get the real per-subset woff2 URLs, downloaded just the hebrew-unicode-range files (400+700, only 2 weights exist upstream) into app/fonts/bona-nova-sc/, wired via next/font/local. First swapped it in globally (replacing Rubik entirely, matching the original ask literally) — user then said it doesn't fit everywhere, wanted a hybrid: Bona Nova SC for section headings only, Rubik for nav/product names/buttons/body (everything else). Restored Rubik as --font-hebrew (body default), moved Bona Nova SC to a new --font-heading-he variable, pointed tailwind's `font-heading` utility at it, and applied `font-heading` class to the actual heading elements: HeroSection h1, page.tsx events h2, ProcessSteps h2, FloatingProducts lead paragraph. Verified thoroughly since it wasn't visually obvious in a screenshot at first glance: both woff2 assets return 200 with correct sizes/content-type, @font-face + CSS variable + utility class + element class all confirmed present in the actual served HTML/CSS chain — technically correct end to end. Hebrew glyphs in this font apparently don't look as dramatically different from a sans-serif as the Latin "small caps" styling would suggest (Hebrew has no case distinction, so the SC treatment is a Latin-only feature) — difference is real but subtle, not dramatic. | app/fonts/index.ts, app/fonts/bona-nova-sc/*.woff2 (new), app/[locale]/layout.tsx, tailwind.config.ts, components/home/{HeroSection,ProcessSteps,FloatingProducts}.tsx, app/[locale]/(public)/page.tsx | tsc clean, verified via curl the full font-loading chain end to end (not just a screenshot glance, which was inconclusive) | ~9000 |
+| 22:05 | Fixed a real rendering bug the user spotted (screenshot with a yellow-circled torn/duplicated fragment on the gift-box during its float animation): `drop-shadow-xl` (a CSS filter) was on the same div as `animate-float` (a transform animation) — Chromium mis-composites when filter+animated-transform share an element, producing visible tearing. Moved drop-shadow to the static outer wrapper, kept animate-float alone on the inner one (same pattern as the earlier translate-vs-animation conflict, but this time it's filter-vs-transform, a different combination). Also enlarged all FloatingProducts text per request, and repositioned all 4 product images + the text block to match an annotated screenshot the user sent with arrows showing exactly where each element should move (scroll-seal up-right, gift-box+wax-seal pair down-right, bencher further left, text up). | components/home/FloatingProducts.tsx | tsc clean, verified via designqc screenshot — positions match the arrows, no more overlap, text sized up | ~3000 |
+| 21:38 | Fixed 4 more issues on FloatingProducts from live feedback: (1) text still wasn't visually centered — was text-align:right (matched original mockup literally) but user wanted text-align:center + more design polish (added terracotta star accent, bumped lead line size/tracking); (2) one pearl was overlapping the gift-box ("chocolates") — root cause: previous round shifted product positions to recenter/spread them but left pearls-overlay unshifted (still at original mockup coords), so a pearl that was designed to sit in empty space near the gift-box ended up directly on it once the gift-box moved. Fixed properly this time: derived the exact CSS transform (translateX(12.25%) scale(1.15) with transform-origin 37.75% 50%) that reproduces the same scale+shift formula applied to the product coordinates, so pearls now move in sync with the repositioned products instead of drifting independently — first attempt used a flat translateX only (no scale) which fixed pearl alignment but reintroduced text/image overlap since it undid the spacing spread, had to redo with matching scale+translate to get both right. (3) pearls still weren't animating — same root cause as the very first `float` bug: `float-slow` keyframe was added to tailwind.config.ts mid-session but the already-running dev server never recompiled it in (verified via curl+grep on compiled CSS — absent). Killed and restarted the dev server, confirmed present after restart. Also had to redo the transform-conflict fix (nested divs) on the pearls layer itself since I'd added the translateX fix as an inline style directly alongside animate-float-slow on the same element — same class of bug as the product images earlier. (4) user mused elements shouldn't all move "together" — varied animationDuration per product image (5.4s-7.2s, not just delay) so they drift in/out of phase instead of reading as one synchronized group. | components/home/FloatingProducts.tsx, tailwind.config.ts | tsc clean, verified via designqc screenshot — text centered, no more text/image overlap, pearl no longer on the gift-box, float-slow confirmed in compiled CSS. Noted one pearl still sits on the bencher-stand's face — flagged as a known minor remaining item, inherent to using one static pearls layer against repositioned products; not chasing zero-overlap further without more specific feedback | ~7000 |
+| 21:22 | Polish round on FloatingProducts per live feedback: (1) recentered whole composition (text+4 images) horizontally to section center — mockup coords were left-weighted, computed bounding-box center and shifted+scaled all centerXPct/centerYPct values outward for both centering and "more space between elements"; (2) user sent final shortened copy (2 paragraphs instead of 3) — updated messages/{he,en}.json, removed floating_body2 key/usage; (3) added animate-float-slow (new lighter/slower keyframe, ±8px vs ±16px) to the pearls-overlay image so it moves too, not just the product cutouts — safe here since next/image `fill` doesn't set inline transform (no repeat of the earlier transform-conflict bug); (4) pearls z-index raised to z-40 (topmost layer, above images z-20 and text z-30) per explicit request; (5) nudged gift-box centerYPct 21→25 after it started crowding the navbar again post-recenter. | components/home/FloatingProducts.tsx, tailwind.config.ts, messages/{he,en}.json | tsc clean, verified via designqc desktop screenshot — well-centered, good spacing, pearls visibly on top of product images where they overlap | ~4500 |
+| 20:52 | 4-part fix request from user: (1) removed Hero photo carousel per "not high quality, remove until I bring others" — reverted to bg-marble, noted need for dedicated mobile hero image later; (2) FloatingProducts+event-cards section merged into one continuous bg-marble surface (wrapped both in one parent div, removed event-cards' old top-strip-fade-to-cream treatment) per "one unit, no transition"; (3) Hero content enlarged + physically centered (was left:14% pinned); (4) user shared a network path (\\DESKTOP-EODP1E7\...\jsa\) with 5 new assets + a precise Illustrator mockup image (2169x1000 canvas) for FloatingProducts layout. Copied assets to public/floating/, rebuilt FloatingProducts.tsx entirely: aspect-[2169/1000] section so all positions (4 product images + right-aligned 3-paragraph text block + pearls-overlay.png, which is exactly 2169x1000) stay aligned as percentages at any width. Replaced placeholder heading with user's final 3-paragraph copy (floating_lead/body1/body2). Found+fixed a real bug mid-build: inline transform:translate(-50%,-50%) conflicts with animate-float class on the same element (animation clobbers the whole transform) — split into nested divs. | components/home/HeroSection.tsx, components/home/FloatingProducts.tsx, app/[locale]/(public)/page.tsx, messages/{he,en}.json, public/floating/*.png (5 new/replaced) | tsc clean, verified via openwolf designqc desktop screenshots — matches mockup closely, no seam between sections, animation confirmed via compiled CSS. Mobile unverified (tool flaked repeatedly this session). | ~14000 |
+| 21:09 | Fixed FloatingProducts per live user feedback ("no float animation, wrong image positions, text should be centered+big not above"): (1) animation was missing because tailwind.config.ts was edited after the dev server started — the running server's compiled CSS never picked up the new float keyframe/utility (verified via curl+grep on the served CSS: animate-float absent). Killed the stale server (PID 4388) and started fresh — confirmed animate-float + @keyframes float now present in compiled CSS. (2) Rewrote layout from "heading block above a separate image stage" to a single overlay section (GeometricPattern z-0, images absolute z-10, centered big text z-20) matching the original pasted reference's structure. (3) Nudged top-anchored images down (top-4/top-0 → top-10/top-8) after a screenshot showed the wax-seal image crowding the fixed navbar. Also downscaled gift-box.png 1181x1181→900x900 (914KB→511KB) via PowerShell System.Drawing since it was oversized for its ~200px display width. Verified final layout via openwolf designqc desktop screenshot — confirmed centered heading, image positions, all 3 corners populated. Mobile screenshot capture failed repeatedly (designqc tool flakiness, not code-related — see cerebrum). | components/home/FloatingProducts.tsx, public/floating/gift-box.png | desktop verified via screenshot, tsc clean, mobile unverified (tool flaked ~4x in a row) — recommend user spot-check on phone | ~11000 |
+| 20:35 | Built FloatingProducts.tsx (new home section, right after HeroSection) per user decision: floating product cutouts below Hero, extensible array for future additions. Copied 3 real cutout PNGs from ATAR/PN (1/2/3).png to public/floating/{gift-box,wax-seal,bencher-stand}.png (got real pixel dims via PowerShell System.Drawing: 1181x1181, 537x703, 820x881). Added float keyframe/animation to tailwind.config.ts (project is Tailwind v3, not v4). Added home.floating_title/floating_subtitle i18n keys (he+en, my own copy, not yet user-approved). Wired into app/[locale]/(public)/page.tsx. | components/home/FloatingProducts.tsx, tailwind.config.ts, messages/{he,en}.json, app/[locale]/(public)/page.tsx, public/floating/*.png | tsc clean; designqc screenshot verification in progress | ~3200 |
+| 08:07 | Hero content block redesigned to match user's reference mockup: centered composition (monogram + 2-line headline + centered buttons), pinned left at 14% (fixed RTL positioning bug — absolute-positioned block was defaulting to right-anchored), text color #222813, monogram+headline now use whileInView (viewport once:false) to replay on scroll-back per request. Added monogram.png + circles-pattern.png assets. | components/home/HeroSection.tsx, public/hero/monogram.png, public/hero/circles-pattern.png | tsc clean, layout verified via animate-swap screenshot trick (whileInView itself can't be screenshotted — see cerebrum), pushing | ~5500 |
+| 20:31 | User asked to actually verify all recorded project tasks/requests and produce an updated TODO. Read all 4 memory TODO sources + cerebrum + buglog, then verified each item against current code (not just memory). Found 2 previously-unflagged-as-open real issues: order-status page still does direct anon .from("orders").select() with no RLS policy for it (confirmed no anon SELECT policy in any migration 001-016 — feature is silently broken in prod), and cart logo upload has zero server-side/RLS-level MIME or size validation (client-side check only, storage policy 006 allows anon insert of any file/size). Confirmed fixed: SEC-1 (submit-order.ts server-side pricing), SEC-2 (og route safeImgUrl allowlist), 2/3 admin button error-swallowing bugs, CreateOrderForm qty/rounding, catalog.ts revalidatePath, CartContext catches, keep-alive fail-open+daily cron. Confirmed still open: DeleteGalleryItemButton still swallows errors, 2 navbar links still href="#", getAdminClient() duplicated in 5 files, no health check endpoint, no tests. No code changed — pure audit. | (read-only across ~15 files) | consolidated into new memory/todo_2026_08_25.md, archived audit_findings + design_todo_2026_08_11 | ~9000 |
+| 19:49 | User pasted FloatingFoodHero (hero-section-7) shadcn component, asked if images swappable for use in hero/gallery. Confirmed feasible (images is a swappable prop array), checked project fit: Tailwind v3 not v4 (keyframe goes in tailwind.config.ts not index.css), cn already exists in lib/utils.ts, generic shadcn tokens need remap to terracotta/olive/marble. Flagged conflict with just-shipped Hero redesign (last 2 commits) — recommended Gallery page instead. User said: don't implement yet, just confirm feasibility + save to memory. No code changed. | .wolf/cerebrum.md (updated stale "Hero waiting for photos" note — now resolved) | info gathered, saved to memory, no implementation | ~600 |
 | 22:04 | Hero rebuilt as 3-photo crossfade carousel (real event photos from ATAR/1-3.jpg, all 1920x1080 — copied to public/hero/); logo swapped to landscape logo2.png masked to exact #222813, h-16; navbar "home" link removed (logo click covers it), catalog/contact labels updated. Dev server moved to :3001 (something else is on :3000). | components/home/HeroSection.tsx, components/layout/Navbar.tsx, messages/he.json, messages/en.json, public/hero/*, public/images/logo2.png | tsc clean, verified via designqc screenshot on :3001 — looks good. 2 new nav items (שולחן שוק, ברים ממותגים) pending — user hasn't said what page they link to | ~2400 |
 | 10:07 | Added optional mobile-specific override for design_styles.atmosphere_image (migration 016, NOT YET APPLIED) — separate video/image can be uploaded for mobile vs desktop, avoids the crop tradeoff discussed with user (single ratio can't fit both well) | supabase/migrations/016_style_atmosphere_mobile.sql, components/admin/CatalogManager.tsx, app/admin/actions/catalog.ts, app/admin/(protected)/catalog/page.tsx, app/[locale]/(public)/catalog/[event]/[style]/page.tsx | tsc clean, confirmed column missing live (42703) — user must run migration SQL | ~1600 |
 | 22:19 | Added design_styles.background_image (new column, migration 015 NOT YET APPLIED to live DB) — lets admin override the marble-bg behind the product grid on /catalog/[event]/[style], per collection. Wired: admin form field, catalog.ts actions, admin catalog.ts select, public style page. | supabase/migrations/015_style_background_image.sql, components/admin/CatalogManager.tsx, app/admin/actions/catalog.ts, app/admin/(protected)/catalog/page.tsx, app/[locale]/(public)/catalog/[event]/[style]/page.tsx | tsc clean, confirmed column missing live (42703) — user must run migration SQL manually, no DB write access in this session | ~1800 |
@@ -1297,3 +1309,154 @@
 | 22:55 | designqc: captured 4 screenshots (303KB, ~10000 tok) | / | ready for eval | ~0 |
 | 23:00 | Session end: 18 writes across 4 files (HeroSection.tsx, Navbar.tsx, he.json, en.json) | 9 reads | ~7177 tok |
 | 23:00 | designqc: captured 6 screenshots (377KB, ~15000 tok) | / | ready for eval | ~0 |
+| 08:11 | Session end: 18 writes across 4 files (HeroSection.tsx, Navbar.tsx, he.json, en.json) | 9 reads | ~7177 tok |
+
+## Session: 2026-08-25 17:11
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-25 17:11
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-25 17:11
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 19:49 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_references.md | expanded (+13 lines) | ~640 |
+| 19:49 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_references.md | 6→7 lines | ~79 |
+| 19:50 | Session end: 2 writes across 1 files (design_references.md) | 5 reads | ~2570 tok |
+| 19:55 | Created ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/todo_2026_08_25.md | — | ~2142 |
+| 19:56 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/MEMORY.md | 7→8 lines | ~278 |
+| 19:56 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/audit_findings_2026_05_28.md | 6→8 lines | ~152 |
+| 19:56 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_todo_2026_08_11.md | 1→3 lines | ~115 |
+| 19:57 | Session end: 6 writes across 5 files (design_references.md, todo_2026_08_25.md, MEMORY.md, audit_findings_2026_05_28.md, design_todo_2026_08_11.md) | 22 reads | ~18612 tok |
+| 20:02 | Session end: 6 writes across 5 files (design_references.md, todo_2026_08_25.md, MEMORY.md, audit_findings_2026_05_28.md, design_todo_2026_08_11.md) | 22 reads | ~18612 tok |
+| 20:09 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_references.md | 2→2 lines | ~112 |
+| 20:09 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/todo_2026_08_25.md | 2→2 lines | ~126 |
+| 20:09 | Session end: 8 writes across 5 files (design_references.md, todo_2026_08_25.md, MEMORY.md, audit_findings_2026_05_28.md, design_todo_2026_08_11.md) | 22 reads | ~18867 tok |
+| 20:24 | Edited tailwind.config.ts | expanded (+9 lines) | ~110 |
+| 20:24 | Created components/home/FloatingProducts.tsx | — | ~804 |
+| 20:24 | Edited messages/he.json | 2→4 lines | ~73 |
+| 20:24 | Edited messages/en.json | 2→4 lines | ~92 |
+| 20:24 | Edited app/[locale]/(public)/page.tsx | added 1 import(s) | ~52 |
+| 20:24 | Edited app/[locale]/(public)/page.tsx | 3→5 lines | ~30 |
+| 20:28 | designqc: captured 0 screenshots (0KB, ~0 tok) | /he | ready for eval | ~0 |
+| 20:28 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_references.md | 2→2 lines | ~238 |
+| 20:32 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/todo_2026_08_25.md | 2→2 lines | ~132 |
+| 20:32 | designqc: captured 0 screenshots (0KB, ~0 tok) | /he | ready for eval | ~0 |
+| 20:37 | Created components/home/FloatingProducts.tsx | — | ~867 |
+| 20:43 | designqc: captured 0 screenshots (0KB, ~0 tok) | /he | ready for eval | ~0 |
+| 20:47 | designqc: captured 6 screenshots (350KB, ~15000 tok) | /he | ready for eval | ~0 |
+| 20:49 | Edited components/home/FloatingProducts.tsx | 4→3 lines | ~34 |
+| 20:52 | designqc: captured 0 screenshots (0KB, ~0 tok) | /he | ready for eval | ~0 |
+| 20:55 | designqc: captured 5 screenshots (321KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 20:56 | Edited components/home/FloatingProducts.tsx | CSS: once | ~40 |
+| 20:58 | designqc: captured 0 screenshots (0KB, ~0 tok) | /he | ready for eval | ~0 |
+| 20:59 | designqc: captured 5 screenshots (315KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 20:59 | Edited components/home/FloatingProducts.tsx | 9→9 lines | ~87 |
+| 21:01 | designqc: captured 5 screenshots (329KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 21:02 | Edited components/home/FloatingProducts.tsx | 4→4 lines | ~45 |
+| 21:04 | designqc: captured 0 screenshots (0KB, ~0 tok) | /he | ready for eval | ~0 |
+| 21:06 | designqc: captured 5 screenshots (340KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 21:08 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/todo_2026_08_25.md | 2→2 lines | ~306 |
+| 21:09 | Session end: 22 writes across 10 files (design_references.md, todo_2026_08_25.md, MEMORY.md, audit_findings_2026_05_28.md, design_todo_2026_08_11.md) | 39 reads | ~26199 tok |
+| 21:10 | Session end: 22 writes across 10 files (design_references.md, todo_2026_08_25.md, MEMORY.md, audit_findings_2026_05_28.md, design_todo_2026_08_11.md) | 39 reads | ~26199 tok |
+| 21:37 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/todo_2026_08_25.md | 1→3 lines | ~179 |
+| 21:37 | Session end: 23 writes across 10 files (design_references.md, todo_2026_08_25.md, MEMORY.md, audit_findings_2026_05_28.md, design_todo_2026_08_11.md) | 39 reads | ~26391 tok |
+| 22:06 | Edited components/layout/Navbar.tsx | 7→7 lines | ~102 |
+| 22:07 | Edited components/layout/Navbar.tsx | 2→2 lines | ~24 |
+| 22:08 | Session end: 25 writes across 11 files (design_references.md, todo_2026_08_25.md, MEMORY.md, audit_findings_2026_05_28.md, design_todo_2026_08_11.md) | 39 reads | ~26517 tok |
+
+## Session: 2026-08-26 20:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-26 20:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-26 20:11
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-08-26 20:11
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 20:19 | Edited components/home/HeroSection.tsx | modified HeroSection() | ~216 |
+| 20:19 | Edited components/home/HeroSection.tsx | 23→20 lines | ~239 |
+| 20:19 | Edited components/home/FloatingProducts.tsx | "relative w-full min-h-[60" → "relative w-full min-h-[60" | ~44 |
+| 20:21 | designqc: captured 5 screenshots (390KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 20:25 | designqc: captured 6 screenshots (424KB, ~15000 tok) | /he | ready for eval | ~0 |
+| 20:30 | Edited messages/he.json | 2→3 lines | ~156 |
+| 20:31 | Edited messages/en.json | 2→3 lines | ~206 |
+| 20:31 | Created components/home/FloatingProducts.tsx | — | ~1010 |
+| 20:31 | Edited components/home/FloatingProducts.tsx | 2→1 lines | ~13 |
+| 20:32 | Edited components/home/FloatingProducts.tsx | "relative w-full aspect-[2" → "relative w-full aspect-[2" | ~29 |
+| 20:33 | Edited app/[locale]/(public)/page.tsx | reduced (-11 lines) | ~309 |
+| 20:33 | Edited app/[locale]/(public)/page.tsx | 2→1 lines | ~16 |
+| 20:35 | designqc: captured 5 screenshots (400KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 20:37 | Edited components/home/FloatingProducts.tsx | 22→23 lines | ~236 |
+| 20:38 | designqc: captured 5 screenshots (398KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 20:39 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/todo_2026_08_25.md | expanded (+7 lines) | ~564 |
+| 20:40 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/todo_2026_08_25.md | expanded (+6 lines) | ~203 |
+| 20:41 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_references.md | CTA() → Hero() | ~192 |
+| 20:42 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/design_references.md | modified share() | ~443 |
+| 20:44 | Session end: 15 writes across 7 files (HeroSection.tsx, FloatingProducts.tsx, he.json, en.json, page.tsx) | 13 reads | ~9395 tok |
+| 21:00 | Edited tailwind.config.ts | 9→14 lines | ~127 |
+| 21:01 | Edited components/home/FloatingProducts.tsx | 40→40 lines | ~219 |
+| 21:01 | Edited messages/he.json | 3→2 lines | ~99 |
+| 21:01 | Edited messages/en.json | 3→2 lines | ~132 |
+| 21:02 | Edited components/home/FloatingProducts.tsx | 9→9 lines | ~120 |
+| 21:02 | Edited components/home/FloatingProducts.tsx | 19→16 lines | ~198 |
+| 21:04 | designqc: captured 5 screenshots (394KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 21:04 | Edited components/home/FloatingProducts.tsx | "object-cover pointer-even" → "object-cover pointer-even" | ~26 |
+| 21:05 | Edited components/home/FloatingProducts.tsx | 3→3 lines | ~17 |
+| 21:07 | designqc: captured 5 screenshots (383KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 21:08 | Edited ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/todo_2026_08_25.md | modified 25() | ~165 |
+| 21:09 | Session end: 24 writes across 8 files (HeroSection.tsx, FloatingProducts.tsx, he.json, en.json, page.tsx) | 13 reads | ~10554 tok |
+| 21:15 | Created components/home/FloatingProducts.tsx | — | ~1315 |
+| 21:15 | Edited components/home/FloatingProducts.tsx | CSS: below | ~276 |
+| 21:18 | designqc: captured 5 screenshots (391KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 21:21 | Created components/home/FloatingProducts.tsx | — | ~1396 |
+| 21:22 | designqc: captured 5 screenshots (383KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 21:29 | Edited app/fonts/index.ts | expanded (+7 lines) | ~215 |
+| 21:30 | Edited app/[locale]/layout.tsx | inline fix | ~16 |
+| 21:30 | Edited app/[locale]/layout.tsx | "antialiased ${rubik.varia" → "antialiased ${bonaNovaSC." | ~25 |
+| 21:37 | Edited app/fonts/index.ts | expanded (+9 lines) | ~346 |
+| 21:37 | Edited app/[locale]/layout.tsx | inline fix | ~18 |
+| 21:37 | Edited app/[locale]/layout.tsx | "antialiased ${bonaNovaSC." → "antialiased ${rubik.varia" | ~30 |
+| 21:39 | Edited tailwind.config.ts | 2→2 lines | ~30 |
+| 21:40 | Edited components/home/FloatingProducts.tsx | CSS: too | ~273 |
+| 21:40 | Edited components/home/FloatingProducts.tsx | 7→7 lines | ~118 |
+| 21:41 | Edited components/home/FloatingProducts.tsx | "34%" → "31%" | ~17 |
+| 21:42 | Edited components/home/ProcessSteps.tsx | 3→3 lines | ~44 |
+| 21:42 | Edited components/home/HeroSection.tsx | "mt-6 text-3xl sm:text-4xl" → "mt-6 font-heading text-3x" | ~33 |
+| 21:43 | Edited app/[locale]/(public)/page.tsx | 3→3 lines | ~44 |
+| 21:49 | Edited components/home/FloatingProducts.tsx | 4→4 lines | ~21 |
+| 21:50 | Edited components/home/FloatingProducts.tsx | 4→4 lines | ~21 |
+| 21:50 | Edited components/home/FloatingProducts.tsx | 4→4 lines | ~21 |
+| 21:51 | Edited components/home/FloatingProducts.tsx | 4→4 lines | ~21 |
+| 21:51 | Edited components/home/FloatingProducts.tsx | inline fix | ~17 |
+| 21:53 | designqc: captured 5 screenshots (391KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 22:06 | Session end: 45 writes across 11 files (HeroSection.tsx, FloatingProducts.tsx, he.json, en.json, page.tsx) | 19 reads | ~17242 tok |
+| 23:08 | Edited components/home/FloatingProducts.tsx | animation() → that() | ~450 |
+| 23:10 | designqc: captured 5 screenshots (399KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 23:12 | Session end: 46 writes across 11 files (HeroSection.tsx, FloatingProducts.tsx, he.json, en.json, page.tsx) | 19 reads | ~17692 tok |
+| 23:22 | Edited app/[locale]/(public)/page.tsx | "relative py-16 px-4 sm:px" → "relative isolate py-16 px" | ~26 |
+| 23:22 | Edited components/home/FloatingProducts.tsx | scale() → translation() | ~217 |
+| 23:23 | Edited components/home/FloatingProducts.tsx | inline fix | ~14 |
+| 23:24 | Edited components/home/FloatingProducts.tsx | 5→4 lines | ~96 |
+| 23:26 | designqc: captured 5 screenshots (397KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 23:29 | Session end: 50 writes across 11 files (HeroSection.tsx, FloatingProducts.tsx, he.json, en.json, page.tsx) | 19 reads | ~18164 tok |
+| 23:32 | Edited components/home/FloatingProducts.tsx | CSS: DIAGNOSTIC | ~132 |
+| 23:35 | Session end: 51 writes across 11 files (HeroSection.tsx, FloatingProducts.tsx, he.json, en.json, page.tsx) | 19 reads | ~18258 tok |
+| 07:43 | Edited components/home/FloatingProducts.tsx | guesses() → item() | ~122 |
+| 07:46 | designqc: captured 5 screenshots (402KB, ~12500 tok) | /he | ready for eval | ~0 |
+| 07:50 | Session end: 52 writes across 11 files (HeroSection.tsx, FloatingProducts.tsx, he.json, en.json, page.tsx) | 20 reads | ~18218 tok |

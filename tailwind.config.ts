@@ -26,7 +26,21 @@ const config: Config = {
       },
       fontFamily: {
         script: ["var(--font-script)", "cursive"],
-        heading: ["var(--font-hebrew)", "sans-serif"],
+        heading: ["var(--font-heading-he)", "serif"],
+      },
+      keyframes: {
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-16px)" },
+        },
+        "float-slow": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
+      },
+      animation: {
+        float: "float 6s ease-in-out infinite",
+        "float-slow": "float-slow 9s ease-in-out infinite",
       },
     },
   },

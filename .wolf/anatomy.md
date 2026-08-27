@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-08-24T19:51:47.994Z
-> Files: 146 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-08-27T04:43:53.840Z
+> Files: 149 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../.claude/plans/
 
@@ -10,9 +10,11 @@
 
 ## ../../../.claude/projects/c--Users-----------Desktop-projects-rina-kadosh/memory/
 
-- `design_references.md` — Design References — Rina Kadosh (~1509 tok)
-- `design_todo_2026_08_11.md` — TODO עיצוב/תוכן — Rina Kadosh (נפתח 2026-08-11) (~934 tok)
-- `MEMORY.md` — Memory Index — Rina Kadosh Project (~213 tok)
+- `audit_findings_2026_05_28.md` — ממצאי בדיקות — 2026-05-28 (~1226 tok)
+- `design_references.md` — Design References — Rina Kadosh (~2395 tok)
+- `design_todo_2026_08_11.md` — TODO עיצוב/תוכן — Rina Kadosh (נפתח 2026-08-11) (~982 tok)
+- `MEMORY.md` — Memory Index — Rina Kadosh Project (~261 tok)
+- `todo_2026_08_25.md` — TODO מאוחד — Rina Kadosh (2026-08-25) (~3077 tok)
 - `vercel_workflow.md` — $dep.state → READY / ERROR / BUILDING (~521 tok)
 
 ## ../../../.claude/skills/supabase-keepalive/
@@ -34,7 +36,7 @@
 - `postcss.config.mjs` — Declares config (~36 tok)
 - `README.md` — Project documentation (~363 tok)
 - `SPEC.md` — רינה קדוש / Rina Kadosh — מפרט פרויקט מלא (~3397 tok)
-- `tailwind.config.ts` — /*.{js,ts,jsx,tsx,mdx}", (~255 tok)
+- `tailwind.config.ts` — /*.{js,ts,jsx,tsx,mdx}", (~385 tok)
 - `tsconfig.json` — TypeScript configuration (~170 tok)
 - `tsconfig.tsbuildinfo` (~30917 tok)
 - `vercel.json` (~30 tok)
@@ -66,13 +68,13 @@
 
 ## app/[locale]/
 
-- `layout.tsx` — metadata (~617 tok)
+- `layout.tsx` — metadata (~627 tok)
 - `not-found.tsx` — NotFound (~179 tok)
 
 ## app/[locale]/(public)/
 
 - `layout.tsx` — PublicLayout (~150 tok)
-- `page.tsx` — revalidate (~737 tok)
+- `page.tsx` — revalidate (~646 tok)
 
 ## app/[locale]/(public)/cart/
 
@@ -221,7 +223,7 @@
 
 ## app/fonts/
 
-- `index.ts` — Hebrew body/heading font — Google Fonts (open license, no web-license purchase needed). Replaces mek (~177 tok)
+- `index.ts` — Hebrew body font — Google Fonts (open license, no web-license purchase needed). Replaces mekomi, whi (~412 tok)
 
 ## components/admin/
 
@@ -261,8 +263,9 @@
 ## components/home/
 
 - `AboutSection.tsx` — STATS (~749 tok)
-- `HeroSection.tsx` — HERO_IMAGES (~1283 tok)
-- `ProcessSteps.tsx` — ProcessSteps (~897 tok)
+- `FloatingProducts.tsx` — PEARLS_TRANSFORM (~1380 tok)
+- `HeroSection.tsx` — HeroSection (~1086 tok)
+- `ProcessSteps.tsx` — ProcessSteps (~901 tok)
 
 ## components/layout/
 
@@ -311,8 +314,8 @@
 
 ## messages/
 
-- `en.json` (~1306 tok)
-- `he.json` (~1192 tok)
+- `en.json` (~1438 tok)
+- `he.json` (~1292 tok)
 
 ## supabase/.temp/
 
