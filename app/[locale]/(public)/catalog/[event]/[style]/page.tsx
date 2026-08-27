@@ -11,6 +11,15 @@ interface Props {
   params: Promise<{ locale: string; event: string; style: string }>;
 }
 
+/** Renders a single atmosphere source as video or image, based on its file extension. */
+function AtmosphereMedia({ src, alt }: { src: string; alt: string }) {
+  return /\.(mp4|webm|mov)$/i.test(src) ? (
+    <video src={src} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+  ) : (
+    <Image src={src} alt={alt} fill className="object-cover" priority />
+  );
+}
+
 export default async function StylePage({ params }: Props) {
   const { event, style } = await params;
   const locale = await getLocale();
@@ -27,7 +36,7 @@ export default async function StylePage({ params }: Props) {
 
   const { data: designStyle } = await supabase
     .from("design_styles")
-    .select("id, name_he, name_en, atmosphere_image, background_image")
+    .select("id, name_he, name_en, atmosphere_image, atmosphere_image_mobile, background_image")
     .eq("slug", style)
     .eq("event_type_id", eventType.id)
     .eq("status", "published")
@@ -52,7 +61,6 @@ export default async function StylePage({ params }: Props) {
   const styleName = locale === "he" ? designStyle.name_he : designStyle.name_en;
   const eventName = locale === "he" ? eventType.name_he : eventType.name_en;
   const hasAtmosphere = true; // always show hero — placeholder until image uploaded
-  const isAtmosphereVideo = /\.(mp4|webm|mov)$/i.test(designStyle.atmosphere_image ?? "");
 
   return (
     <div className="min-h-screen">
@@ -67,24 +75,17 @@ export default async function StylePage({ params }: Props) {
           }}
         >
           {designStyle.atmosphere_image ? (
-            isAtmosphereVideo ? (
-              <video
-                src={designStyle.atmosphere_image}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            ) : (
-              <Image
-                src={designStyle.atmosphere_image}
-                alt={styleName}
-                fill
-                className="object-cover"
-                priority
-              />
-            )
+            <>
+              <div className="absolute inset-0 md:hidden">
+                <AtmosphereMedia
+                  src={designStyle.atmosphere_image_mobile || designStyle.atmosphere_image}
+                  alt={styleName}
+                />
+              </div>
+              <div className="absolute inset-0 hidden md:block">
+                <AtmosphereMedia src={designStyle.atmosphere_image} alt={styleName} />
+              </div>
+            </>
           ) : (
             <Image
               src="/textures/marble-bg.jpg"
